@@ -1,0 +1,16 @@
+{
+  "name": "Prepared Pro",
+  "short_name": "Prepared Pro",
+  "description": "By Ascent Studios. Plan talks, classes, books, films and edits, and see exactly what is still missing before the deadline.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F1E9D8",
+  "theme_color": "#F1E9D8",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
