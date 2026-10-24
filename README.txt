@@ -367,3 +367,7 @@ VERSION 3.21
 
 VERSION 3.22
 - Sources: "Where to find it" and "What you used it for" (or "About this source") are now larger boxes you can resize, with room for a long quote, an ISBN or a full address. They hold up to 2000 characters and keep line breaks.
+
+VERSION 3.23
+- A project's Overview now has a Notes from my Notebook panel listing every note filed under that project, with Open, New note for this project and See all in the Notebook.
+- Tab in a notes box now moves the line in by 5 spaces (Shift+Tab moves it back). Speaker view, the outline and exports show the indent.
