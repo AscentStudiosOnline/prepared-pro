@@ -377,3 +377,6 @@ VERSION 3.24
 - Projects made from a template show the template's name under the title.
 - My day (left column): to-dos and follow-ups that do not belong to one project, with a due date, a Today / Overdue / Coming up view, a person for follow-ups, and a list of what is due this week from your projects. It is included in search, backup and restore.
 - Sharing: Share this project (Go to menu) and Share on each of My templates make a file you can send. Anyone can open a shared file in Backup and restore (it is added, nothing is replaced). Sending needs a Team code (PT1-...), made with the license maker. Team codes include everything in the full version.
+
+VERSION 3.25
+- With a Team code, the left column, the opening screen and the license window now say Team edition unlocked instead of Full version.

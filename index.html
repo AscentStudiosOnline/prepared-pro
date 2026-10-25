@@ -3483,7 +3483,7 @@ async function verifyStoredLicense(){
 const splash = document.getElementById('splash'), helpdlg = document.getElementById('helpdlg');
 
 /* Version, install hint, backup nudge, support */
-const APP_VERSION = '3.24';
+const APP_VERSION = '3.25';
 const SUPPORT_EMAIL = 'AscentStudiosOnline@gmail.com';
 const instDlg = document.getElementById('insthint');
 function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
@@ -3522,7 +3522,7 @@ function eulaOk(){ try{ return localStorage.getItem('preparedpro.eula') === EULA
 function eulaAccept(){ try{ localStorage.setItem('preparedpro.eula', EULA_VER); }catch(e){} window.__eulaMem = true; }
 function splashStatus(){
   const el = document.getElementById('splic'); if(!el) return;
-  el.textContent = licensed() ? 'Full version unlocked' : !ENFORCE_LIMIT ? 'Test version: no project limit' : 'Free version: up to ' + FREE_LIMIT + ' projects';
+  el.textContent = licensed() ? (ui.tier === 'team' ? 'Team edition unlocked' : 'Full version unlocked') : !ENFORCE_LIMIT ? 'Test version: no project limit' : 'Free version: up to ' + FREE_LIMIT + ' projects';
   const ok = eulaOk();
   document.getElementById('spgo').textContent = ok ? 'Open Prepared Pro' : 'I agree. Open Prepared Pro';
   document.getElementById('spterms').innerHTML = ok ? '<button type="button" class="link" data-a="eula">License agreement and copyright</button>' : 'By pressing the button you agree to the <button type="button" class="link" data-a="eula">License Agreement</button>. Please read it first.';
@@ -3541,7 +3541,7 @@ document.addEventListener('keydown', e => { if(!splash.hidden && e.key === 'Esca
 const ugdlg = document.getElementById('ugdlg'), ugform = document.getElementById('ugform');
 function licenseStatusLine(){
   const b = document.getElementById('licbtn'); if(!b) return;
-  splashStatus(); b.textContent = licensed() ? 'Full version unlocked' : !ENFORCE_LIMIT ? 'Test version: no project limit. License' : 'Free version: ' + Math.min(realCount(), FREE_LIMIT) + ' of ' + FREE_LIMIT + ' projects. Unlock';
+  splashStatus(); b.textContent = licensed() ? (ui.tier === 'team' ? 'Team edition unlocked' : 'Full version unlocked') : !ENFORCE_LIMIT ? 'Test version: no project limit. License' : 'Free version: ' + Math.min(realCount(), FREE_LIMIT) + ' of ' + FREE_LIMIT + ' projects. Unlock';
 }
 const setdlg = document.getElementById('setdlg'), setform = document.getElementById('setform');
 function openAppearance(){
@@ -4121,7 +4121,7 @@ function aiApply(){
 }
 function openLicense(blocked){
   const isFull = licensed();
-  document.getElementById('ugtitle').textContent = isFull ? 'Full version' : (blocked === 'notebook' ? 'The Notebook is part of the full version' : blocked ? 'You have reached the free limit' : 'Unlock the full version');
+  document.getElementById('ugtitle').textContent = isFull ? (ui.tier === 'team' ? 'Team edition' : 'Full version') : (blocked === 'notebook' ? 'The Notebook is part of the full version' : blocked ? 'You have reached the free limit' : 'Unlock the full version');
   const team = isFull && ui.tier === 'team', upg = isFull && !team;
   document.getElementById('ugfree').hidden = isFull && !upg; document.getElementById('uglic').hidden = !isFull;
   document.getElementById('ugact').hidden = isFull && !upg;
@@ -4142,7 +4142,7 @@ async function activateLicense(){
   msg.textContent = 'Checking the code...';
   let id, tier = 'full'; try{ const r = await checkCodeFull(raw); id = r ? r.id : null; tier = r ? r.tier : 'full'; }catch(e){ msg.textContent = 'Activation needs a secure web address (one that starts with https). Open the app from your website and try again.'; return; }
   if(!id){ msg.textContent = 'That code did not work. Check that you pasted all of it, with nothing missing at the start or end.'; return; }
-  state.license = String(raw).replace(/\s+/g, ''); ui.licensed = id; ui.tier = tier; save(); render(true);
+  state.license = String(raw).replace(/\s+/g, ''); ui.licensed = id; ui.tier = tier; save(); render(true); licenseStatusLine();
   ugdlg.close(); toast(tier === 'team' ? 'Team edition unlocked. Sharing is on. Thank you!' : 'Full version unlocked. Thank you!', true);
 }
 
