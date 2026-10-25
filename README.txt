@@ -75,7 +75,7 @@ New in this version
   License code: the free version allows 2 projects. A license code (from your receipt) unlocks unlimited
   projects. Codes are checked inside the app with no internet needed. Nothing is ever locked or deleted
   when someone is over the limit. To point the Buy button at your Podia page, open index.html, find
-  BUY_URL near the top of the script and replace the address. Make codes with license-maker.html (kept private).
+  BUY_URL near the top of the script and replace the address. Make codes with Prepared Pro Code Maker.html (kept private).
   Export or print (Go to menu, or the Outline page): Word document, PowerPoint slides, Print or save as PDF,
   or copy as text. Choose what to include and a look (Clean, Classic, Bold). PowerPoint puts your talking
   notes in the speaker notes. Books export to Word only.
@@ -371,3 +371,9 @@ VERSION 3.22
 VERSION 3.23
 - A project's Overview now has a Notes from my Notebook panel listing every note filed under that project, with Open, New note for this project and See all in the Notebook.
 - Tab in a notes box now moves the line in by 5 spaces (Shift+Tab moves it back). Speaker view, the outline and exports show the indent.
+
+VERSION 3.24
+- Template gallery: New project now has a Browse templates button (and the first screen has Start from a template). 15 ready-made starts in five groups: Business and office, Executive assistant, Construction audit and inspection, Technology, School and personal. Your own saved templates appear first. Everything in a template can be changed.
+- Projects made from a template show the template's name under the title.
+- My day (left column): to-dos and follow-ups that do not belong to one project, with a due date, a Today / Overdue / Coming up view, a person for follow-ups, and a list of what is due this week from your projects. It is included in search, backup and restore.
+- Sharing: Share this project (Go to menu) and Share on each of My templates make a file you can send. Anyone can open a shared file in Backup and restore (it is added, nothing is replaced). Sending needs a Team code (PT1-...), made with the license maker. Team codes include everything in the full version.
