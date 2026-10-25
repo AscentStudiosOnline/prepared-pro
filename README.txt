@@ -380,3 +380,15 @@ VERSION 3.24
 
 VERSION 3.25
 - With a Team code, the left column, the opening screen and the license window now say Team edition unlocked instead of Full version.
+
+VERSION 3.26
+- Every printout now looks like a finished document: centered title block with a rule, centered section headings, indented paragraphs, tidy shaded tables that repeat their header on each page, checklist boxes on the status sheet, a readiness bar, and a footer with the title and "Page X of Y".
+- Word files match: centered titles and headings, indented paragraphs, and a footer with page numbers on every document (export, schedule, call sheet, release form, series overview).
+- New Help section: Sharing with the Team edition. The license section now mentions Team codes.
+- The left column is tidied: My day is first, then Projects and Series (each opens to show New project or New series and what you have made), then Contacts, Meetings, Sources, Notebook and Search everything. Backup, Calendar, Appearance, Lock, Help and License sit at the bottom.
+
+VERSION 3.27
+- Team review. When you share a project, your name goes in the file. The other person works on their copy and uses Send back to you (no Team code needed). You open their small file in Backup and restore and see every change with what it was and what it is now. Tick what you want. Accepted changes are marked "from Bob, date" on the checklist item or outline section, and the project overview lists changes from your team. If you changed the same thing, it is flagged and not ticked.
+- Shared projects are labelled in the project list and on the overview ("Shared by Rik", "Shared with Bob"). A project you received shows how many of your changes are not sent back yet. The printed status sheet shows it too.
+- Calendar moved up in the left column, next to Meetings, and is now just called Calendar.
+- New Help section: Updating Prepared Pro (how updates arrive, getting one right away, moving to a new web address).

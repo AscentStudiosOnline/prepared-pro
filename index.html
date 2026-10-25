@@ -177,7 +177,21 @@ button{cursor:pointer}
 @media print{.sidehide,.sideshow{display:none!important}}
 .brand h1{margin:0;font:600 26px/1.1 var(--serif);letter-spacing:.2px}
 .brand p{margin:6px 0 0;color:var(--muted);font-size:14px}
-.plist{padding:6px 12px;flex:1}
+.plist{padding:2px 0 6px}
+.snav{flex:1;padding:6px 14px 10px;display:grid;gap:8px;align-content:start}
+.snav .nav{text-align:left;display:flex;justify-content:space-between;align-items:center}
+.nhead{position:relative;display:flex;gap:6px}
+.nhead .nav{flex:1}
+.nhead>.ncar{position:absolute;right:14px;top:50%;margin-top:-9px;font-size:20px;line-height:18px;color:var(--muted);transition:transform .15s;pointer-events:none}
+.nhead .ncarb{position:absolute;right:0;top:0;bottom:0;width:48px;background:none;border:0;cursor:pointer}
+.nhead .ncarb .ncar{position:absolute;right:14px;top:50%;margin-top:-9px;font-size:20px;line-height:18px;color:var(--muted);transition:transform .15s}
+.ngrp.open .ncar{transform:rotate(90deg)}
+.nbody{padding:8px 0 4px 10px;display:grid;gap:8px;border-left:2px solid var(--line);margin:6px 0 2px 8px}
+.nbody[hidden]{display:none}
+.nser{display:block;width:100%;text-align:left;background:none;border:0;padding:9px 8px;min-height:40px;font:600 15px var(--sans);color:var(--ink);cursor:pointer;border-radius:6px}
+.nser:hover{background:var(--bg)}
+.nser .n{color:var(--muted);font-weight:400;font-size:13px}
+.nser.sel{background:var(--bg);box-shadow:inset 3px 0 0 var(--ready)}
 .nbwrap{display:grid;grid-template-columns:230px minmax(0,1fr);gap:18px;align-items:start}
 .nbrail{border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:8px;display:grid;gap:2px;position:sticky;top:8px;max-height:calc(100vh - 40px);overflow:auto;align-content:start}
 .nbr{display:flex;justify-content:space-between;gap:8px;text-align:left;background:none;border:1px solid transparent;border-radius:6px;padding:9px 10px;min-height:44px;font:inherit;color:var(--ink);align-items:center;width:100%}
@@ -478,16 +492,41 @@ table.sgrid{border-collapse:separate;border-spacing:0;min-width:100%}
 .crow label.chk{white-space:nowrap}
 #printarea{display:none}
 @media print{
+  @page{margin:0.85in 0.9in 0.95in}
   html,body{height:auto!important;background:#fff!important}
   .app,dialog,.toast{display:none!important}
-  #printarea{display:block!important;color:#000;padding:0;font-size:12pt;line-height:1.45}
-  #printarea h1{font-size:24pt;margin:0 0 4pt}
-  #printarea h2{font-size:16pt;margin:18pt 0 4pt;break-after:avoid}
-  #printarea h3{font-size:13pt;margin:12pt 0 3pt;break-after:avoid}
+  #printarea{display:block!important;color:#111;padding:0;font:11.5pt/1.55 Georgia,"Times New Roman",serif}
+  #printarea .pdoc{max-width:100%}
+  #printarea h1{font-size:25pt;line-height:1.15;text-align:center;margin:0 0 5pt;font-weight:700;letter-spacing:.2pt}
+  #printarea h2{font-size:14pt;text-align:center;text-transform:uppercase;letter-spacing:1.4pt;margin:20pt 0 8pt;padding:0 0 4pt;border-bottom:1px solid #999;break-after:avoid;font-weight:700}
+  #printarea h3{font-size:12.5pt;margin:15pt 0 3pt;break-after:avoid;font-weight:700;border-left:3pt solid #444;padding-left:6pt}
   #printarea p,#printarea li{orphans:3;widows:3}
+  #printarea p{margin:0 0 7pt;text-indent:.3in;text-align:left}
+  #printarea p.sub,#printarea p.lead,#printarea p.nox,#printarea .lab-row,#printarea .relrow{text-indent:0}
   #printarea .sub{color:#444;margin:0 0 10pt}
+  #printarea p.sub{text-align:center;font-style:italic}
+  #printarea .dh{text-align:center;margin:0 0 16pt;padding:0 0 10pt;border-bottom:2.5pt double #333}
+  #printarea .dh p{text-indent:0;text-align:center;margin:0}
+  #printarea .dh .kick{font:600 9pt Helvetica,Arial,sans-serif;letter-spacing:2.2pt;text-transform:uppercase;color:#555;margin:0 0 6pt}
+  #printarea .dh .sub{margin:3pt 0 0;font-style:italic}
+  #printarea .dh .rbar{height:7pt;border:1px solid #555;border-radius:4pt;margin:9pt auto 0;width:62%;position:relative;overflow:hidden;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #printarea .dh .rbar i{position:absolute;left:0;top:0;bottom:0;background:#333;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   #printarea .lab{font-weight:700}
+  #printarea p.kv{text-indent:0;padding-left:.3in}
   #printarea .notes{white-space:pre-wrap}
+  #printarea .notes.fmt{white-space:normal}
+  #printarea .notes.fmt p{text-indent:.3in}
+  #printarea ul{margin:0 0 8pt;padding-left:.55in}
+  #printarea li{margin:0 0 3pt}
+  #printarea ul.chk{list-style:none;padding-left:.3in}
+  #printarea ul.chk li{position:relative;padding-left:20pt}
+  #printarea ul.chk li:before{content:"";position:absolute;left:0;top:3.5pt;width:9pt;height:9pt;border:1.2pt solid #222}
+  #printarea table{width:100%;border-collapse:collapse;font:10pt/1.4 Helvetica,Arial,sans-serif;margin:0 0 10pt}
+  #printarea thead{display:table-header-group}
+  #printarea tr{break-inside:avoid}
+  #printarea th,#printarea td{border:1px solid #888;padding:4pt 6pt;text-align:left;vertical-align:top}
+  #printarea th{background:#e6e6e6;font-weight:700;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #printarea tbody tr:nth-child(even) td{background:#f6f6f6;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   #printarea .relrow{display:flex;gap:8pt;align-items:flex-end;margin:11pt 0 0}
   #printarea .relrow .l{flex:0 0 auto;font-weight:700}
   #printarea .relrow .ln{flex:1;border-bottom:1px solid #000;min-height:15pt}
@@ -499,6 +538,8 @@ table.sgrid{border-collapse:separate;border-spacing:0;min-width:100%}
 .evdl dd{margin:2px 0 0;overflow-wrap:anywhere;white-space:pre-wrap}
 .evdl a{color:var(--ready);font-weight:600}
 .item .txt b{font-weight:600}
+.cbtag{color:var(--ready);font-weight:600}
+.rvrow{align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:10px}
 dialog .grp{font:600 16px var(--serif);margin:6px 0 -4px}
 dialog .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media (max-width:420px){dialog .two{grid-template-columns:1fr}}
@@ -566,9 +607,6 @@ textarea.big{min-height:180px;font-size:14px;line-height:1.45}
 .cs table{width:100%;border-collapse:collapse;font-size:15px;margin:0 0 6px}
 .cs th,.cs td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
 .cs th{background:var(--bg)}
-#printarea table{width:100%;border-collapse:collapse;font-size:10.5pt;margin:0 0 6pt}
-#printarea th,#printarea td{border:1px solid #777;padding:3pt 5pt;text-align:left;vertical-align:top}
-#printarea th{background:#eee}
 .tmseg{display:flex;gap:8px;justify-content:center}
 .tmseg label{display:flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border:1px solid var(--line);border-radius:99px;cursor:pointer}
 .tmclock{margin:4px 0;text-align:center;font:600 clamp(56px,16vw,96px)/1.05 var(--sans);font-variant-numeric:tabular-nums}
@@ -611,9 +649,26 @@ dialog{border-radius:12px;box-shadow:0 26px 60px -22px rgba(40,26,6,.55)}
 <div class="app" id="app" data-view="list">
   <aside class="side" aria-label="Projects">
     <div class="brand"><h1>Prepared Pro</h1><p>Plan it, make it, deliver it.</p><button type="button" class="sidehide" data-a="side-toggle" aria-label="Hide the project list for full screen" title="Hide the project list">&laquo;</button></div>
-    <div class="psearch" id="psearch" hidden><input id="plq" type="search" placeholder="Find a project" aria-label="Find a project" autocomplete="off"></div>
-    <nav class="plist" id="plist"></nav>
-    <div class="foot"><button class="btn block" data-a="new">New project</button><button class="btn ghost block" data-a="day-home" id="daybtn">My day</button><button class="btn ghost block" data-a="series-home">Series</button><button class="btn ghost block" data-a="contacts-home">Contacts</button><button class="btn ghost block" data-a="meetings-home">Meetings</button><button class="btn ghost block" data-a="lib-home">Sources</button><button class="btn ghost block" data-a="notebook-home">Notebook</button><button class="btn ghost block" data-a="gsearch">Search everything</button><button class="link" data-a="backup" style="text-align:center;min-height:40px">Backup and restore</button><p class="hint" id="bkstat" style="text-align:center;margin:0"></p><button class="link" data-a="calendar" id="calbtn" style="text-align:center;min-height:40px">Calendar and reminders</button><button class="link" data-a="appearance" style="text-align:center;min-height:40px" id="appbtn">Appearance</button><button class="link" data-a="lock-open" style="text-align:center;min-height:40px" id="lockbtn">Lock</button><button class="link" data-a="help" style="text-align:center;min-height:40px">Help and about</button><button class="link" data-a="license" id="licbtn" style="text-align:center;min-height:40px"></button></div>
+    <div class="snav">
+      <button class="btn ghost block nav" data-a="day-home" id="daybtn">My day</button>
+      <div class="ngrp" id="ngp"><div class="nhead"><button type="button" class="btn ghost block nav" data-a="sgrp" data-g="_proj" id="nprojh" aria-expanded="true">Projects</button><span class="ncar" aria-hidden="true">&#8250;</span></div>
+        <div class="nbody" id="nprojb"><button class="btn block" data-a="new">New project</button>
+          <div class="psearch" id="psearch" hidden><input id="plq" type="search" placeholder="Find a project" aria-label="Find a project" autocomplete="off"></div>
+          <nav class="plist" id="plist"></nav></div></div>
+      <div class="ngrp" id="ngs"><div class="nhead"><button type="button" class="btn ghost block nav" data-a="series-home" id="nserh" aria-expanded="false">Series</button><button type="button" class="ncarb" data-a="sgrp" data-g="_ser" aria-label="Show or hide the list of series"><span class="ncar" aria-hidden="true">&#8250;</span></button></div>
+        <div class="nbody" id="nserb" hidden></div></div>
+      <button class="btn ghost block nav" data-a="contacts-home">Contacts</button>
+      <button class="btn ghost block nav" data-a="meetings-home">Meetings</button>
+      <button class="btn ghost block nav" data-a="calendar" id="calbtn">Calendar</button>
+      <button class="btn ghost block nav" data-a="lib-home">Sources</button>
+      <button class="btn ghost block nav" data-a="notebook-home">Notebook</button>
+      <button class="btn ghost block nav" data-a="gsearch">Search everything</button>
+    </div>
+    <div class="foot"><button class="link" data-a="backup" style="text-align:center;min-height:40px">Backup and restore</button><p class="hint" id="bkstat" style="text-align:center;margin:0"></p>
+<button class="link" data-a="appearance" style="text-align:center;min-height:40px" id="appbtn">Appearance</button>
+<button class="link" data-a="lock-open" style="text-align:center;min-height:40px" id="lockbtn">Lock</button>
+<button class="link" data-a="help" style="text-align:center;min-height:40px">Help and about</button>
+<button class="link" data-a="license" id="licbtn" style="text-align:center;min-height:40px"></button></div>
   </aside>
   <main class="main" id="main" tabindex="-1"></main>
 </div>
@@ -782,12 +837,21 @@ dialog{border-radius:12px;box-shadow:0 26px 60px -22px rgba(40,26,6,.55)}
     <div class="row"><span class="spacer"></span><button class="btn ghost" value="cancel" formnovalidate type="submit">Cancel</button><button class="btn" value="save" type="submit">Save</button></div>
   </form>
 </dialog>
+<dialog id="rvdlg" class="full">
+  <form method="dialog" id="rvform">
+    <h2 id="rvtitle">Changes</h2>
+    <p class="hint" id="rvtext" style="font-size:15px"></p>
+    <div id="rvlist" style="max-height:52vh;overflow:auto;display:grid;gap:10px;margin:8px 0"></div>
+    <div class="row"><button type="button" class="btn ghost" data-a="rv-all">Tick all</button><button type="button" class="btn ghost" data-a="rv-none">Tick none</button><span class="spacer"></span><button class="btn ghost" value="cancel" formnovalidate type="submit">Cancel</button><button type="button" class="btn" data-a="rv-apply" id="rvgo">Add the ticked changes</button></div>
+  </form>
+</dialog>
 <dialog id="fsdlg">
   <form method="dialog" id="fsform">
     <h2 id="fstitle">Share</h2>
     <p class="hint" id="fstext" style="font-size:15px"></p>
+    <label class="f" id="fsnamel" hidden>Your name<input id="fsname" maxlength="40" placeholder="For example: Rik" autocomplete="name"></label>
     <div id="fsopts" class="btnrow" style="margin:0"></div>
-    <p class="hint" style="font-size:14px">The file works on any device with Prepared Pro. The person you send it to opens Backup and restore, chooses the file, and presses Add it. Nothing they already have is replaced.</p>
+    <p class="hint" id="fsfoot" style="font-size:14px">The file works on any device with Prepared Pro. The person you send it to opens Backup and restore, chooses the file, and presses Add it. Nothing they already have is replaced.</p>
     <div class="row"><span class="spacer"></span><button class="btn ghost" value="close" formnovalidate type="submit">Close</button></div>
   </form>
 </dialog>
@@ -892,7 +956,7 @@ dialog{border-radius:12px;box-shadow:0 26px 60px -22px rgba(40,26,6,.55)}
 <div class="go"><button class="btn" id="spgo" data-a="splash-close">Open Prepared Pro</button><button class="btn ghost" data-a="splash-help">Help</button></div>
 <p class="terms" id="spterms"></p></div>
 <p class="by"><b>Ascent Studios</b><span>&copy; 2026 Ascent Studios LLC. All rights reserved.</span><span id="spver"></span></p></div>
-<dialog id="helpdlg"><form method="dialog"><h2>Help</h2><p class="hint" style="font-size:15px;margin:0">Tap a heading to open it.</p><div id="helpbody"><details open><summary>Getting started</summary><p>Prepared Pro, by Ascent Studios, helps you see what is still missing before you step up to speak, teach, publish or film. You make a project, work through its outline and checklist, and a readiness meter shows how prepared you are.</p><p>Press New project, give it a name, choose what you are preparing, and set the date it is due. You can start from a blank list, from the sample project, or from one of your own saved templates.</p><p>You do not have to work in order. The Overview has a Start anywhere section with every part of your project. Open any of them and fill in what you already know. The Next step box is only a suggestion.</p><p>Everything is saved on your own device as you go. Nothing is sent anywhere, and there is no account to make.</p><p>Meetings: press Meetings in the left column to keep your own meeting rooms (Zoom, FaceTime, Teams, Meet) as one-tap Join buttons and to see every meeting coming up. Each project can also have a Meetings page: tap Meetings under Also available on its Overview. Paste a meeting link or drag one onto the page and press Join to open the meeting app. Dated meetings show in the Calendar.</p><p>Ways to meet and groups: open a contact and press Add a way to meet. Choose the app (Zoom, FaceTime, Phone call, Teams and so on), type the Meeting ID, number, email or link, and give the button a name such as Zoom (work). One person can have several, and each shows as a button on their card and under People on the Meetings page. What a button does depends on the device. A phone number opens your phone or FaceTime, and FaceTime links work on Apple devices only. A group, made on the Contacts page, is a set of people such as your work team, your family or a weekly book club. A person can be in more than one group, and a group can have a meeting room. To invite people, press Invite beside a meeting, a room or a group, tick who to invite and choose Email or Text message. Prepared Pro opens your own mail or Messages app with the message ready, and you press Send. It never sends anything itself. With several email recipients the addresses go in Bcc. The passcode is left out unless you tick the box. Copy invitation text and a calendar file (.ics) are offered too. Repeating meetings: on a project's Meetings page, choose Repeats (every day, every weekday, every week, every 2 weeks or every month) and, if you like, a Repeat until date. Every occurrence shows on the calendar on the Meetings page and in Calendar and reminders, and the calendar file you download repeats them in your own calendar app. Tap the circle to Held when a repeating meeting is finished for good, and it stops showing. In Contacts, choose a group in the Group box (or press Show on a group) to see only its people. Meeting rooms can have a time too: open a room, fill in When does it meet, and it shows on both calendars. On the Meetings calendar, tap a day and press Add a meeting to create one, or press Edit on a meeting to change it. Hold the pointer over a day or a meeting on either calendar to see what it is and who is invited. Press Search everything in the left column to find a word across your projects, writing, checklists, contacts, meetings and notebook. If you delete something by mistake, press Undo on the message that appears for a few seconds. From a project, Go to, then Print status sheet, prints a one-page summary of what is done and what is left. Press Lock in the left column to set a password that hides your work when you step away. You can lock at once or have it lock itself after a few minutes. It hides the screen but does not scramble the stored files, and a forgotten password can only be cleared by erasing the work on this device, so keep a backup. Press Sources in the left column to keep your books, websites and people in one list. Add a source once, tick the projects that should have it, and it appears in each project's Sources. Inside a project, press Add from my Sources to pick more. Load a sample project from the opening screen to look around; it does not count toward the free limit and you can delete it any time. Writing boxes (notes, outline sections, sources) have a Full screen button at the top right for more room; press Exit full screen to return. A project's Overview lists the Notebook notes filed under it. In a notes box, Tab moves a line in by 5 spaces and Shift+Tab moves it back. Browse templates, when you start a new project, shows ready-made starts for events, onboarding, audits, construction, IT, an assistant's week and more. My day, in the left column, keeps to-dos and follow-ups that are not tied to one project. The Team edition adds Share this project and Share on your templates, which make a file another person can add in Backup and restore.</p><p>On a large screen, press the « button next to the Prepared Pro title to hide the project list and use the whole window for your work. Press Projects at the top left to bring it back. Your choice is remembered on that device.</p></details><details><summary>Installing on your device</summary><p>Prepared Pro works in your web browser and can be installed like an app.</p><ul><li>iPad or iPhone: open it in Safari, press the Share button, then Add to Home Screen.</li><li>Android: open it in Chrome, open the menu, then Install app or Add to Home screen.</li><li>Computer: open it in Chrome or Edge and press the install icon at the end of the address bar.</li></ul><p>After the first visit it also works with no internet connection. Your projects are saved on your own device, never on our server.</p><p><b>Please install it to the Home Screen on iPad and iPhone.</b> Safari can clear the saved data of a website you have not opened for about a week, but an app added to the Home Screen is kept. Clearing Safari's website data also erases your projects, so use Backup now and then. Apps that open web pages inside other apps, such as HTML viewers, are not supported. Use Safari on iPad and iPhone, and Chrome, Edge or Safari on a computer.</p></details><details><summary>The seven kinds of project</summary><ul><li>Teaching and Talks: a sermon, lesson, talk or devotional.</li><li>Event and Keynote: a conference, banquet or any stage appearance, with travel and a bring list.</li><li>Writing and Publishing: an article, a book chapter or a whole book.</li><li>Class and Workshop: a series of sessions with handouts and materials.</li><li>Script and Film: a script, a shoot or an episode.</li><li>Video Editing and Post: cutting footage into a finished video, with review rounds and a list of deliverables.</li><li>Goals and Objectives: a business plan, a year plan, team or office goals, organization objectives, a budget year, a grant plan or a personal target, with owners, measures and regular check-ins.</li></ul><p>Each kind starts with a checklist that fits it. You can add a Marketing checklist and a Publishing and rights checklist when you create a project, or later under Edit project.</p></details><details><summary>The readiness meter and stages</summary><p>The meter at the top of each project shows how much of the work is done. A done item counts fully, a started item counts half, and an empty item counts nothing. Items marked required count twice as much as optional ones.</p><p>Your outline can count too. If the box for outline sections is ticked in Edit project, each section counts as started once you have added something to it, and done when you mark it done.</p><p>The project moves through its stages on its own: Planning, Drafting, Polishing and Ready. You mark it Delivered yourself when it is over, and you can reopen it if you need to.</p></details><details><summary>Outline</summary><p>Each section has an Owner box for the person responsible. It offers the people on the project's People page, and you can type any name. The owner shows on the section's row, a Show list above the outline lets you see one person's sections, and the name is included when you export or print. Import script brings in a script you already wrote. Paste it, or choose a Word (.docx), text (.txt) or Markdown (.md) file. Prepared Pro splits it at headings, scene headings (INT. and EXT.), numbered or capitalized lines, or into parts of about 300 words, and shows you the sections first. Rename a section, untick one you do not want, or join two together, then press Import. Each section keeps your text in its talking notes, so Speaker view can scroll it. Press Undo right after if you change your mind. The Outline page is where you build the shape of your talk, chapter, class or script. Add a section, give it a heading, a subject, bullets and notes, and mark it empty, started or done.</p><p>Use the arrow buttons to move sections up or down. If you are stuck, the Ideas button offers questions and starting points for openings, points, illustrations and application. These are built into the program and do not use AI.</p></details><details><summary>Checklist</summary><p>The Checklist page lists everything you need to finish, grouped by category. On a Writing and Publishing project, Add blog post checks adds a Blog post group: headlines, keyword, description, image with alt text, links, scheduling and sharing. Tap an item to change it from empty to started to done. Add a note to any item, or add your own items.</p><p>You can edit the wording of any item, mark it required or optional, and remove what does not apply. Your changes belong to that project only.</p></details><details><summary>Event and travel, and the Bring list</summary><p>For events, enter the place, time, travel plans and contacts on the Event and travel page. The Bring list keeps track of what must go with you. You can save your usual list and start the next event from it.</p></details><details><summary>Filming and shoot days</summary><p>Script and Film projects include the filming pages. For any other kind of project, press Choose extras (or Go to, then Add or remove extras) and switch on Filming and shoot days.</p><ul><li>People: your cast and crew with role, phone, email and call time. Tap the circle to move each person from Not asked to Asked to Confirmed, and track each release form as Needs one, Sent or Signed. Add from Contacts and Save to Contacts share names with your Contacts book.</li><li>Places: each location with address, contact, parking, power and permits, and your light and weather plan. A Map link opens the address.</li><li>Gear: your equipment list. Mark each piece as yours, rented, borrowed, to buy, or brought by the crew, and tick it off as it is packed.</li><li>Shots: the shots you need, so nothing is missed on the day. Mark each To shoot, Partly or Got it.</li><li>Schedule: when and where the work happens. Add studio bookings, setup, tapings, rehearsals and editing sessions with a date, times, the studio or place and who is needed. Tap the circle to move each from Wanted to Held to Booked. If the same studio is used twice at the same time, even by two different projects, both are flagged. Print the schedule, make a Word document or copy it as text. Booked and held times also appear in Calendar and reminders.</li><li>Production: set up the cameras, format, background, lights and sound, and plan the post-production (editor, delivery, music and licenses, notes). Buttons there add green screen checks and post-production checks to your Checklist. The camera and sound setup also prints on the call sheet.</li><li>Call sheet: set the shoot day (date, general call, wrap, weather, nearest hospital, safety notes) and Prepared Pro builds a one-page call sheet from everything above. Print it or save it as a PDF, make a Word document, or copy it as text to send.</li></ul><p>The film checklist also includes Shoot-day checks for camera settings, a microphone test, lighting and wrap-up. On another kind of project, open Shots and press Add camera, sound and light checks.</p></details><details><summary>Notebook: ideas, notes and pictures</summary><p>The Notebook is part of the full version. It is one place for ideas that do not belong to any single project yet. Press Notebook in the left column. Make folders of your own, such as Sermon ideas, Illustrations or Book two. Add notes with a title, tags and as much text as you like. You can format the text the same way as your talking notes. Add pictures to a note too. They are shrunk to a sensible size and kept on your device. The Notebook shows your folders on the left and the notes on the right (on a phone or small tablet, tap Folders to switch). There are four built-in views: All notes, Unfiled, Recent and Photos, which gathers every picture from every note into one gallery; tap a picture to open its note. My folders are the ones you make yourself. Project folders appear by themselves once a note is filed under a project, and projects in a series are grouped under the series name. Choose where a note lives with the Folder box when you open it. Add a photo makes a new note around a picture. Add to project files a note that has no folder under that project. If you delete a project, its notes move to Unfiled.</p><ul><li>Search looks through titles, words, tags and folder names. Press a tag to see everything with that tag.</li><li>Add to project puts a note into a project: into the talking notes of a section you choose, or as a new checklist item. Pictures stay in the Notebook. You can undo it.</li><li>While you edit a section, Insert from my Notebook brings a note in, and Save these notes to my Notebook keeps what you wrote for later.</li><li>Rename or delete a folder from the folder list. Deleting a folder keeps its notes and moves them to Unfiled.</li><li>Backup and restore saves the Notebook too. Tick Include my Notebook pictures if you want the pictures in the file. The file is larger.</li></ul><p>Everything stays on your own device. Clearing your browser's website data erases the Notebook, so back up now and then.</p></details><details><summary>Formatting your notes</summary><p>In an outline section, the Talking notes box has a row of buttons above it. They make your notes look good on screen, in Speaker view, when printed, and in Word.</p><ul><li>Bold and Italic: select words and press the button, or type **two stars** around bold words and *one star* around italic words.</li><li>List makes a bulleted list and 1. List makes a numbered list. Press Enter to start the next line. Press Enter on an empty line to end the list. Numbers fix themselves if you add or remove a line.</li><li>In and Out, or the Tab and Shift+Tab keys, move a line in or out. You can go four levels deep. Bullets change shape and numbers change to letters as you go in. Press Escape first if you want Tab to leave the box.</li><li>Text pasted from Word or a web page keeps its bullets and indents.</li></ul><p>Everything is saved as plain text, so older notes are not changed.</p></details><details><summary>Goals, check-ins and risks</summary><p>A Goals and Objectives project is for work that runs for weeks or months instead of ending on one day. Use it for a business or organization plan, a year or quarter plan, goals for an office or a team, a grant or budget year, or a personal target. Set the final date as the due date. The checklist walks you through four steps: define the goal, plan it, get agreement, and review it. The outline holds one objective per section, with the reason, the measure, the starting point and the target.</p><ul><li>Check-ins: plan a check-in for each month or quarter. After you meet, write down how you are doing, what changed and what you decided. Tap the circle to move it from Planned to Held to Actions closed.</li><li>Risks and decisions: list what could get in the way and what must be decided, with an owner and a date. Tap the circle to move each from Open to Working on it to Resolved.</li><li>People holds the owners and helpers. Schedule holds review meetings. Check-in and resolve dates appear in Calendar and reminders.</li></ul><p>On any other kind of project, press Choose extras and switch on Goals and check-ins.</p></details><details><summary>Video editing, review rounds and deliverables</summary><p>A Video Editing and Post project starts with a checklist for the whole job: intake, footage, the edit, sound and picture, review and delivery. The outline holds the edit as segments, with notes for each one, so you can write down timecodes and what to fix. Imported scripts and transcripts work here too.</p><ul><li>Review rounds: keep each version you send, such as Cut 1 and Cut 2, with the date sent, when feedback is due, who is reviewing, a link or file name, and their notes. Tap the circle to move a round from Not sent to Sent, waiting to Approved.</li><li>Deliverables: list every file you must hand over, with its settings, where it goes and when it is due. Tap the circle to move each from To export to Exported to Checked and sent.</li><li>People, Gear and Schedule work as they do for filming. Feedback and delivery dates appear in Calendar and reminders.</li></ul><p>On any other kind of project, press Choose extras (or Go to, then Add or remove extras) and switch on Editing and review rounds.</p></details><details><summary>Timer</summary><p>The Timer (in the Go to menu, and on the Shots and Call sheet pages) has two modes. Stopwatch counts up, and Mark take records each take with its own length. Countdown counts down from 1 to 30 minutes, or from minutes you enter, and sounds and vibrates when time is up. It keeps running when you close the window, and keeps the screen awake while it runs.</p></details><details><summary>Release form</summary><p>Press Release form on the People page (or on Contacts) for a blank release for anyone who appears in your work. Change the wording to suit you, add your company name, and choose whether it has lines for a parent or guardian. Keep your changes as your standard form for every project, or for this project only. Reset brings back the original wording.</p><p>Print or save as PDF, make a Word document, or copy it as text. On the People page you can also choose a person, and their name, phone and email are filled in. The form is a general starting point and is not legal advice, so have an attorney review it before you rely on it.</p></details><details><summary>Contacts</summary><p>Contacts (in the left column) is one address book for every project: name, role, organization, phone, email, address, category and notes. Search by anything you remember, or filter by category. Tap a phone number or email to call or write. People can have a small photo. In Contacts or on a People page, open someone and choose Add a photo; the picture is cropped square and shrunk to a thumbnail, so it takes almost no room. Without a photo, a circle with their initials is shown. Photos stay on this device, are part of your backup, are carried when you add someone from Contacts or save them to Contacts, travel in the .vcf contacts file, and print in the whole-project report when Show people's photos is ticked. A person on a project with no photo of their own shows the photo of the contact with the same email or name, even if the photo was added to Contacts later.</p><p>Anyone you add to a project's People page, and each place's contact person, is also saved here for you. On a film project's People page, Add from Contacts puts the people you choose on that project, and Save to Contacts keeps the people you typed in there for next time. You can save your Contacts as a file that your phone or computer contacts app can open (.vcf), as a spreadsheet, or copy them as text. Contacts are part of your backup.</p><p>Import contacts: on the Contacts page press Import contacts and choose a spreadsheet (.csv) or a contacts file (.vcf) from Google, Outlook, Apple or another program. Prepared Pro matches the columns it recognizes (name, first and last name, role, organization, phone, email, address, category, groups and notes), and you can change any match. A list shows who was found, with anyone already in your Contacts left out. Untick anyone you do not want, then press Import. Undo is offered right afterward. A Groups column (names separated by semicolons) puts people into those groups and makes any that are missing. Imported people come in without ways to meet, which you can add afterward. The spreadsheet you save from Contacts has the same columns, so you can move your contacts between devices.</p></details><details><summary>Sources and research tools</summary><p>Keep your references on the Sources page: books, articles, links and notes. The Research tools page holds the links you use most. Add your own, and they stay with you across projects.</p></details><details><summary>Speaker view</summary><p>Press Scroll to start automatic scrolling, like a teleprompter, and use the minus and plus buttons to change its speed (1 is slowest, 10 is fastest). Tap the text, or press Pause, to stop for a moment, and tap again to go on. If you scroll by hand it carries on from where you left it. Press Look to choose the colors (including your own text and background colors), the font, the line spacing and bold text, to show a reading line, or to mirror the text for a teleprompter glass. Your choices are remembered on this device. Open Speaker view from the Go to menu or the Outline page. It shows one section at a time in large type, with a timer, so you can follow your outline while you speak. On supported devices it keeps the screen awake. Use the Next and Back buttons to move through your sections.</p></details><details><summary>Ask my AI (optional)</summary><p>Prepared Pro does not contain an AI and never sends your work anywhere. If you use an AI of your own, the Ask my AI button builds a clear request from your project, and Copy for my AI puts it on your clipboard so you can paste it into the AI you choose. Only the parts you select are included.</p></details><details><summary>Series</summary><p>A series groups related projects, such as the books of a study or the weeks of a course. Open Series from the left column to make one, add projects to it and put them in order with the arrow buttons. When you make a series you say what its parts are called (books, episodes, films, lessons, talks, weeks or projects), and the buttons and milestone columns use that word; films and episodes start with Scripted, Filmed, Edited, Approved, Published and Promoted. The series page shows how ready the whole set is. In the left column a series is one folder row with its combined progress and next due date; tap it to open or close the list of its projects (the three dots open the series page). The folder opens by itself when you choose one of its projects. Once you have six or more projects the list is grouped into Due soon (the next two weeks and anything late), In progress, and Delivered, which is folded away until you open it. A search box above the list finds a project by title, type, series or stage.</p><p>Each series also has an overview for the whole set: its theme, audience, source, arc, tone, notes and planned number of parts. Press Add series overview on the series page. You can print it, make a Word document or copy it as text. When you write the big picture of a project in the series, a button fills in the series theme and audience for you.</p></details><details><summary>My templates</summary><p>When you have a checklist and outline you like, open the Go to menu and choose Save as template. You can start a new project from it any time. Manage or rename your templates from the New project screen.</p></details><details><summary>Deleting, copying and renaming projects</summary><p>In the left column, press the three dots on a project, or right-click it on a computer, or press and hold it on an iPad or phone. A menu offers Open, Rename, Duplicate and Delete. On a touch screen you can also swipe a project to the left to show a red Delete button.</p><p>Delete always asks first, and for a few seconds afterward a message offers Undo. Duplicate makes a copy called &quot;(copy)&quot; with the dates cleared and everything else kept, including your progress. In the free version a copy counts as a project. You can also delete from Edit project, in the project menu.</p></details><details><summary>Print, Word and PowerPoint</summary><p><b>Printing the whole project.</b> In Export or print, the box called Include the rest of the project adds a readiness summary at the top, and after the outline the checklist with what is done and what is still missing, then each extra page your project uses: event and travel, people, places, gear, shots, schedule, review rounds, deliverables, check-ins, and risks and decisions. Untick any part you do not want. It works for Print or save as PDF, Word and Copy as text. PowerPoint slides hold the outline only.</p><p>Choose Export or print on a project. You can make a Word document, PowerPoint slides (one slide per section, with your notes in the speaker notes), a printed page or PDF, or plain text to paste elsewhere.</p><p>Three looks are offered: Clean, Classic and Bold. On an iPad or iPhone the file may open in a preview first. Use the Share button there to save it to Files or send it to another app.</p></details><details><summary>Calendar and reminders</summary><p>The project Overview shows a This week and overdue box with everything due in the next seven days or already late, from all your projects. Tap a row to open that project. Calendar and reminders (in the left column) makes a calendar file of your due dates. Pick how early you want a reminder. Open the file and your calendar app adds the events. Projects marked Delivered are left out. The Calendar window has two views. List shows what is coming up in order; Month shows a calendar page with each delivery date, event and trip on its day (red is a delivery date, green an event, shoot or booking, gold travel). Tap a day to see its items, and tap an item to open its project.</p><p>If your device will not download the file directly, send it to yourself by email and open it from there.</p></details><details><summary>Backup and restore</summary><p>Because your work lives on this device, make a backup now and then. Choose Backup and restore, then Save a backup file. Keep it somewhere safe, such as your cloud storage or an email to yourself.</p><p>To restore, choose the same screen and pick your file. You can Add the backup&#x27;s projects to what you have, or Replace everything with the backup. The left column reminds you when it has been a while.</p><p>Clearing the browser&#x27;s website data on your device erases your projects, so back up first.</p></details><details><summary>Appearance</summary><p>Under Appearance you can choose light, dark or automatic, a larger text size, one of four type styles and one of three accent colors. These settings are for this device only and are not part of a backup.</p></details><details><summary>Free version and your license code</summary><p>The free version lets you keep up to two projects. The full version removes that limit. It is a one-time purchase with no subscription.</p><p>After you buy, you receive a license code. To unlock:</p><ul><li>Open Prepared Pro and press the License line at the bottom of the left column.</li><li>Paste your code exactly as it appears in your receipt.</li><li>Press Activate. The line then reads Full version unlocked.</li></ul><p>The code works without an internet connection. You enter it once on each device where you use the program. Keep your receipt, because it is your proof of purchase. If you ever clear your browser data, enter the code again.</p></details><details><summary>Your privacy</summary><p>Your projects are stored only on your device. Ascent Studios does not receive, see or keep them. Back up regularly, because we cannot recover what is not on your device.</p></details><details><summary>Help and contact</summary><p>If something does not work as described, write to AscentStudiosOnline@gmail.com and tell us what you were doing, what you expected and what happened. Include the version number shown under About Prepared Pro.</p></details></div>
+<dialog id="helpdlg"><form method="dialog"><h2>Help</h2><p class="hint" style="font-size:15px;margin:0">Tap a heading to open it.</p><div id="helpbody"><details open><summary>Getting started</summary><p>Prepared Pro, by Ascent Studios, helps you see what is still missing before you step up to speak, teach, publish or film. You make a project, work through its outline and checklist, and a readiness meter shows how prepared you are.</p><p>Press New project, give it a name, choose what you are preparing, and set the date it is due. You can start from a blank list, from the sample project, or from one of your own saved templates.</p><p>You do not have to work in order. The Overview has a Start anywhere section with every part of your project. Open any of them and fill in what you already know. The Next step box is only a suggestion.</p><p>Everything is saved on your own device as you go. Nothing is sent anywhere, and there is no account to make.</p><p>Meetings: press Meetings in the left column to keep your own meeting rooms (Zoom, FaceTime, Teams, Meet) as one-tap Join buttons and to see every meeting coming up. Each project can also have a Meetings page: tap Meetings under Also available on its Overview. Paste a meeting link or drag one onto the page and press Join to open the meeting app. Dated meetings show in the Calendar.</p><p>Ways to meet and groups: open a contact and press Add a way to meet. Choose the app (Zoom, FaceTime, Phone call, Teams and so on), type the Meeting ID, number, email or link, and give the button a name such as Zoom (work). One person can have several, and each shows as a button on their card and under People on the Meetings page. What a button does depends on the device. A phone number opens your phone or FaceTime, and FaceTime links work on Apple devices only. A group, made on the Contacts page, is a set of people such as your work team, your family or a weekly book club. A person can be in more than one group, and a group can have a meeting room. To invite people, press Invite beside a meeting, a room or a group, tick who to invite and choose Email or Text message. Prepared Pro opens your own mail or Messages app with the message ready, and you press Send. It never sends anything itself. With several email recipients the addresses go in Bcc. The passcode is left out unless you tick the box. Copy invitation text and a calendar file (.ics) are offered too. Repeating meetings: on a project's Meetings page, choose Repeats (every day, every weekday, every week, every 2 weeks or every month) and, if you like, a Repeat until date. Every occurrence shows on the calendar on the Meetings page and in Calendar and reminders, and the calendar file you download repeats them in your own calendar app. Tap the circle to Held when a repeating meeting is finished for good, and it stops showing. In Contacts, choose a group in the Group box (or press Show on a group) to see only its people. Meeting rooms can have a time too: open a room, fill in When does it meet, and it shows on both calendars. On the Meetings calendar, tap a day and press Add a meeting to create one, or press Edit on a meeting to change it. Hold the pointer over a day or a meeting on either calendar to see what it is and who is invited. Press Search everything in the left column to find a word across your projects, writing, checklists, contacts, meetings and notebook. If you delete something by mistake, press Undo on the message that appears for a few seconds. From a project, Go to, then Print status sheet, prints a one-page summary of what is done and what is left. Press Lock in the left column to set a password that hides your work when you step away. You can lock at once or have it lock itself after a few minutes. It hides the screen but does not scramble the stored files, and a forgotten password can only be cleared by erasing the work on this device, so keep a backup. Press Sources in the left column to keep your books, websites and people in one list. Add a source once, tick the projects that should have it, and it appears in each project's Sources. Inside a project, press Add from my Sources to pick more. Load a sample project from the opening screen to look around; it does not count toward the free limit and you can delete it any time. Writing boxes (notes, outline sections, sources) have a Full screen button at the top right for more room; press Exit full screen to return. A project's Overview lists the Notebook notes filed under it. In a notes box, Tab moves a line in by 5 spaces and Shift+Tab moves it back. Browse templates, when you start a new project, shows ready-made starts for events, onboarding, audits, construction, IT, an assistant's week and more. My day, in the left column, keeps to-dos and follow-ups that are not tied to one project. The Team edition adds Share this project and Share on your templates, which make a file another person can add in Backup and restore.</p><p>On a large screen, press the « button next to the Prepared Pro title to hide the project list and use the whole window for your work. Press Projects at the top left to bring it back. Your choice is remembered on that device.</p></details><details><summary>Installing on your device</summary><p>Prepared Pro works in your web browser and can be installed like an app.</p><ul><li>iPad or iPhone: open it in Safari, press the Share button, then Add to Home Screen.</li><li>Android: open it in Chrome, open the menu, then Install app or Add to Home screen.</li><li>Computer: open it in Chrome or Edge and press the install icon at the end of the address bar.</li></ul><p>After the first visit it also works with no internet connection. Your projects are saved on your own device, never on our server.</p><p><b>Please install it to the Home Screen on iPad and iPhone.</b> Safari can clear the saved data of a website you have not opened for about a week, but an app added to the Home Screen is kept. Clearing Safari's website data also erases your projects, so use Backup now and then. Apps that open web pages inside other apps, such as HTML viewers, are not supported. Use Safari on iPad and iPhone, and Chrome, Edge or Safari on a computer.</p></details><details><summary>The seven kinds of project</summary><ul><li>Teaching and Talks: a sermon, lesson, talk or devotional.</li><li>Event and Keynote: a conference, banquet or any stage appearance, with travel and a bring list.</li><li>Writing and Publishing: an article, a book chapter or a whole book.</li><li>Class and Workshop: a series of sessions with handouts and materials.</li><li>Script and Film: a script, a shoot or an episode.</li><li>Video Editing and Post: cutting footage into a finished video, with review rounds and a list of deliverables.</li><li>Goals and Objectives: a business plan, a year plan, team or office goals, organization objectives, a budget year, a grant plan or a personal target, with owners, measures and regular check-ins.</li></ul><p>Each kind starts with a checklist that fits it. You can add a Marketing checklist and a Publishing and rights checklist when you create a project, or later under Edit project.</p></details><details><summary>The readiness meter and stages</summary><p>The meter at the top of each project shows how much of the work is done. A done item counts fully, a started item counts half, and an empty item counts nothing. Items marked required count twice as much as optional ones.</p><p>Your outline can count too. If the box for outline sections is ticked in Edit project, each section counts as started once you have added something to it, and done when you mark it done.</p><p>The project moves through its stages on its own: Planning, Drafting, Polishing and Ready. You mark it Delivered yourself when it is over, and you can reopen it if you need to.</p></details><details><summary>Outline</summary><p>Each section has an Owner box for the person responsible. It offers the people on the project's People page, and you can type any name. The owner shows on the section's row, a Show list above the outline lets you see one person's sections, and the name is included when you export or print. Import script brings in a script you already wrote. Paste it, or choose a Word (.docx), text (.txt) or Markdown (.md) file. Prepared Pro splits it at headings, scene headings (INT. and EXT.), numbered or capitalized lines, or into parts of about 300 words, and shows you the sections first. Rename a section, untick one you do not want, or join two together, then press Import. Each section keeps your text in its talking notes, so Speaker view can scroll it. Press Undo right after if you change your mind. The Outline page is where you build the shape of your talk, chapter, class or script. Add a section, give it a heading, a subject, bullets and notes, and mark it empty, started or done.</p><p>Use the arrow buttons to move sections up or down. If you are stuck, the Ideas button offers questions and starting points for openings, points, illustrations and application. These are built into the program and do not use AI.</p></details><details><summary>Checklist</summary><p>The Checklist page lists everything you need to finish, grouped by category. On a Writing and Publishing project, Add blog post checks adds a Blog post group: headlines, keyword, description, image with alt text, links, scheduling and sharing. Tap an item to change it from empty to started to done. Add a note to any item, or add your own items.</p><p>You can edit the wording of any item, mark it required or optional, and remove what does not apply. Your changes belong to that project only.</p></details><details><summary>Event and travel, and the Bring list</summary><p>For events, enter the place, time, travel plans and contacts on the Event and travel page. The Bring list keeps track of what must go with you. You can save your usual list and start the next event from it.</p></details><details><summary>Filming and shoot days</summary><p>Script and Film projects include the filming pages. For any other kind of project, press Choose extras (or Go to, then Add or remove extras) and switch on Filming and shoot days.</p><ul><li>People: your cast and crew with role, phone, email and call time. Tap the circle to move each person from Not asked to Asked to Confirmed, and track each release form as Needs one, Sent or Signed. Add from Contacts and Save to Contacts share names with your Contacts book.</li><li>Places: each location with address, contact, parking, power and permits, and your light and weather plan. A Map link opens the address.</li><li>Gear: your equipment list. Mark each piece as yours, rented, borrowed, to buy, or brought by the crew, and tick it off as it is packed.</li><li>Shots: the shots you need, so nothing is missed on the day. Mark each To shoot, Partly or Got it.</li><li>Schedule: when and where the work happens. Add studio bookings, setup, tapings, rehearsals and editing sessions with a date, times, the studio or place and who is needed. Tap the circle to move each from Wanted to Held to Booked. If the same studio is used twice at the same time, even by two different projects, both are flagged. Print the schedule, make a Word document or copy it as text. Booked and held times also appear in Calendar and reminders.</li><li>Production: set up the cameras, format, background, lights and sound, and plan the post-production (editor, delivery, music and licenses, notes). Buttons there add green screen checks and post-production checks to your Checklist. The camera and sound setup also prints on the call sheet.</li><li>Call sheet: set the shoot day (date, general call, wrap, weather, nearest hospital, safety notes) and Prepared Pro builds a one-page call sheet from everything above. Print it or save it as a PDF, make a Word document, or copy it as text to send.</li></ul><p>The film checklist also includes Shoot-day checks for camera settings, a microphone test, lighting and wrap-up. On another kind of project, open Shots and press Add camera, sound and light checks.</p></details><details><summary>Notebook: ideas, notes and pictures</summary><p>The Notebook is part of the full version. It is one place for ideas that do not belong to any single project yet. Press Notebook in the left column. Make folders of your own, such as Sermon ideas, Illustrations or Book two. Add notes with a title, tags and as much text as you like. You can format the text the same way as your talking notes. Add pictures to a note too. They are shrunk to a sensible size and kept on your device. The Notebook shows your folders on the left and the notes on the right (on a phone or small tablet, tap Folders to switch). There are four built-in views: All notes, Unfiled, Recent and Photos, which gathers every picture from every note into one gallery; tap a picture to open its note. My folders are the ones you make yourself. Project folders appear by themselves once a note is filed under a project, and projects in a series are grouped under the series name. Choose where a note lives with the Folder box when you open it. Add a photo makes a new note around a picture. Add to project files a note that has no folder under that project. If you delete a project, its notes move to Unfiled.</p><ul><li>Search looks through titles, words, tags and folder names. Press a tag to see everything with that tag.</li><li>Add to project puts a note into a project: into the talking notes of a section you choose, or as a new checklist item. Pictures stay in the Notebook. You can undo it.</li><li>While you edit a section, Insert from my Notebook brings a note in, and Save these notes to my Notebook keeps what you wrote for later.</li><li>Rename or delete a folder from the folder list. Deleting a folder keeps its notes and moves them to Unfiled.</li><li>Backup and restore saves the Notebook too. Tick Include my Notebook pictures if you want the pictures in the file. The file is larger.</li></ul><p>Everything stays on your own device. Clearing your browser's website data erases the Notebook, so back up now and then.</p></details><details><summary>Formatting your notes</summary><p>In an outline section, the Talking notes box has a row of buttons above it. They make your notes look good on screen, in Speaker view, when printed, and in Word.</p><ul><li>Bold and Italic: select words and press the button, or type **two stars** around bold words and *one star* around italic words.</li><li>List makes a bulleted list and 1. List makes a numbered list. Press Enter to start the next line. Press Enter on an empty line to end the list. Numbers fix themselves if you add or remove a line.</li><li>In and Out, or the Tab and Shift+Tab keys, move a line in or out. You can go four levels deep. Bullets change shape and numbers change to letters as you go in. Press Escape first if you want Tab to leave the box.</li><li>Text pasted from Word or a web page keeps its bullets and indents.</li></ul><p>Everything is saved as plain text, so older notes are not changed.</p></details><details><summary>Goals, check-ins and risks</summary><p>A Goals and Objectives project is for work that runs for weeks or months instead of ending on one day. Use it for a business or organization plan, a year or quarter plan, goals for an office or a team, a grant or budget year, or a personal target. Set the final date as the due date. The checklist walks you through four steps: define the goal, plan it, get agreement, and review it. The outline holds one objective per section, with the reason, the measure, the starting point and the target.</p><ul><li>Check-ins: plan a check-in for each month or quarter. After you meet, write down how you are doing, what changed and what you decided. Tap the circle to move it from Planned to Held to Actions closed.</li><li>Risks and decisions: list what could get in the way and what must be decided, with an owner and a date. Tap the circle to move each from Open to Working on it to Resolved.</li><li>People holds the owners and helpers. Schedule holds review meetings. Check-in and resolve dates appear in Calendar and reminders.</li></ul><p>On any other kind of project, press Choose extras and switch on Goals and check-ins.</p></details><details><summary>Video editing, review rounds and deliverables</summary><p>A Video Editing and Post project starts with a checklist for the whole job: intake, footage, the edit, sound and picture, review and delivery. The outline holds the edit as segments, with notes for each one, so you can write down timecodes and what to fix. Imported scripts and transcripts work here too.</p><ul><li>Review rounds: keep each version you send, such as Cut 1 and Cut 2, with the date sent, when feedback is due, who is reviewing, a link or file name, and their notes. Tap the circle to move a round from Not sent to Sent, waiting to Approved.</li><li>Deliverables: list every file you must hand over, with its settings, where it goes and when it is due. Tap the circle to move each from To export to Exported to Checked and sent.</li><li>People, Gear and Schedule work as they do for filming. Feedback and delivery dates appear in Calendar and reminders.</li></ul><p>On any other kind of project, press Choose extras (or Go to, then Add or remove extras) and switch on Editing and review rounds.</p></details><details><summary>Timer</summary><p>The Timer (in the Go to menu, and on the Shots and Call sheet pages) has two modes. Stopwatch counts up, and Mark take records each take with its own length. Countdown counts down from 1 to 30 minutes, or from minutes you enter, and sounds and vibrates when time is up. It keeps running when you close the window, and keeps the screen awake while it runs.</p></details><details><summary>Release form</summary><p>Press Release form on the People page (or on Contacts) for a blank release for anyone who appears in your work. Change the wording to suit you, add your company name, and choose whether it has lines for a parent or guardian. Keep your changes as your standard form for every project, or for this project only. Reset brings back the original wording.</p><p>Print or save as PDF, make a Word document, or copy it as text. On the People page you can also choose a person, and their name, phone and email are filled in. The form is a general starting point and is not legal advice, so have an attorney review it before you rely on it.</p></details><details><summary>Contacts</summary><p>Contacts (in the left column) is one address book for every project: name, role, organization, phone, email, address, category and notes. Search by anything you remember, or filter by category. Tap a phone number or email to call or write. People can have a small photo. In Contacts or on a People page, open someone and choose Add a photo; the picture is cropped square and shrunk to a thumbnail, so it takes almost no room. Without a photo, a circle with their initials is shown. Photos stay on this device, are part of your backup, are carried when you add someone from Contacts or save them to Contacts, travel in the .vcf contacts file, and print in the whole-project report when Show people's photos is ticked. A person on a project with no photo of their own shows the photo of the contact with the same email or name, even if the photo was added to Contacts later.</p><p>Anyone you add to a project's People page, and each place's contact person, is also saved here for you. On a film project's People page, Add from Contacts puts the people you choose on that project, and Save to Contacts keeps the people you typed in there for next time. You can save your Contacts as a file that your phone or computer contacts app can open (.vcf), as a spreadsheet, or copy them as text. Contacts are part of your backup.</p><p>Import contacts: on the Contacts page press Import contacts and choose a spreadsheet (.csv) or a contacts file (.vcf) from Google, Outlook, Apple or another program. Prepared Pro matches the columns it recognizes (name, first and last name, role, organization, phone, email, address, category, groups and notes), and you can change any match. A list shows who was found, with anyone already in your Contacts left out. Untick anyone you do not want, then press Import. Undo is offered right afterward. A Groups column (names separated by semicolons) puts people into those groups and makes any that are missing. Imported people come in without ways to meet, which you can add afterward. The spreadsheet you save from Contacts has the same columns, so you can move your contacts between devices.</p></details><details><summary>Sources and research tools</summary><p>Keep your references on the Sources page: books, articles, links and notes. The Research tools page holds the links you use most. Add your own, and they stay with you across projects.</p></details><details><summary>Speaker view</summary><p>Press Scroll to start automatic scrolling, like a teleprompter, and use the minus and plus buttons to change its speed (1 is slowest, 10 is fastest). Tap the text, or press Pause, to stop for a moment, and tap again to go on. If you scroll by hand it carries on from where you left it. Press Look to choose the colors (including your own text and background colors), the font, the line spacing and bold text, to show a reading line, or to mirror the text for a teleprompter glass. Your choices are remembered on this device. Open Speaker view from the Go to menu or the Outline page. It shows one section at a time in large type, with a timer, so you can follow your outline while you speak. On supported devices it keeps the screen awake. Use the Next and Back buttons to move through your sections.</p></details><details><summary>Ask my AI (optional)</summary><p>Prepared Pro does not contain an AI and never sends your work anywhere. If you use an AI of your own, the Ask my AI button builds a clear request from your project, and Copy for my AI puts it on your clipboard so you can paste it into the AI you choose. Only the parts you select are included.</p></details><details><summary>Series</summary><p>A series groups related projects, such as the books of a study or the weeks of a course. Open Series from the left column to make one, add projects to it and put them in order with the arrow buttons. When you make a series you say what its parts are called (books, episodes, films, lessons, talks, weeks or projects), and the buttons and milestone columns use that word; films and episodes start with Scripted, Filmed, Edited, Approved, Published and Promoted. The series page shows how ready the whole set is. In the left column a series is one folder row with its combined progress and next due date; tap it to open or close the list of its projects (the three dots open the series page). The folder opens by itself when you choose one of its projects. Once you have six or more projects the list is grouped into Due soon (the next two weeks and anything late), In progress, and Delivered, which is folded away until you open it. A search box above the list finds a project by title, type, series or stage.</p><p>Each series also has an overview for the whole set: its theme, audience, source, arc, tone, notes and planned number of parts. Press Add series overview on the series page. You can print it, make a Word document or copy it as text. When you write the big picture of a project in the series, a button fills in the series theme and audience for you.</p></details><details><summary>My templates</summary><p>When you have a checklist and outline you like, open the Go to menu and choose Save as template. You can start a new project from it any time. Manage or rename your templates from the New project screen.</p></details><details><summary>Deleting, copying and renaming projects</summary><p>In the left column, press the three dots on a project, or right-click it on a computer, or press and hold it on an iPad or phone. A menu offers Open, Rename, Duplicate and Delete. On a touch screen you can also swipe a project to the left to show a red Delete button.</p><p>Delete always asks first, and for a few seconds afterward a message offers Undo. Duplicate makes a copy called &quot;(copy)&quot; with the dates cleared and everything else kept, including your progress. In the free version a copy counts as a project. You can also delete from Edit project, in the project menu.</p></details><details><summary>Print, Word and PowerPoint</summary><p><b>Printing the whole project.</b> In Export or print, the box called Include the rest of the project adds a readiness summary at the top, and after the outline the checklist with what is done and what is still missing, then each extra page your project uses: event and travel, people, places, gear, shots, schedule, review rounds, deliverables, check-ins, and risks and decisions. Untick any part you do not want. It works for Print or save as PDF, Word and Copy as text. PowerPoint slides hold the outline only.</p><p>Choose Export or print on a project. You can make a Word document, PowerPoint slides (one slide per section, with your notes in the speaker notes), a printed page or PDF, or plain text to paste elsewhere.</p><p>Three looks are offered: Clean, Classic and Bold. On an iPad or iPhone the file may open in a preview first. Use the Share button there to save it to Files or send it to another app.</p></details><details><summary>Calendar and reminders</summary><p>The project Overview shows a This week and overdue box with everything due in the next seven days or already late, from all your projects. Tap a row to open that project. Calendar and reminders (in the left column) makes a calendar file of your due dates. Pick how early you want a reminder. Open the file and your calendar app adds the events. Projects marked Delivered are left out. The Calendar window has two views. List shows what is coming up in order; Month shows a calendar page with each delivery date, event and trip on its day (red is a delivery date, green an event, shoot or booking, gold travel). Tap a day to see its items, and tap an item to open its project.</p><p>If your device will not download the file directly, send it to yourself by email and open it from there.</p></details><details><summary>Updating Prepared Pro</summary><p>Prepared Pro updates itself. When a newer version is published, your device picks it up the next time you open the app while connected to the internet.</p><ul><li>To get it right away, close the app completely and open it again. On an iPad or iPhone, swipe it away first. If it still looks the same, reload the page once.</li><li>Your projects stay on your device through an update. Press Backup and restore now and then anyway. It takes a few seconds.</li><li>To see which version you have, look at the opening screen, where the version number is shown at the bottom.</li><li>Your projects live at the web address where you use the app. If you start using it at a different address, for example when the program moves to a new home, your projects do not follow by themselves. At the old address, press Backup and restore and save a backup. At the new address, open Backup and restore, choose that file and press Add to what I have.</li></ul></details><details><summary>Backup and restore</summary><p>Because your work lives on this device, make a backup now and then. Choose Backup and restore, then Save a backup file. Keep it somewhere safe, such as your cloud storage or an email to yourself.</p><p>To restore, choose the same screen and pick your file. You can Add the backup&#x27;s projects to what you have, or Replace everything with the backup. The left column reminds you when it has been a while.</p><p>Clearing the browser&#x27;s website data on your device erases your projects, so back up first.</p></details><details><summary>Appearance</summary><p>Under Appearance you can choose light, dark or automatic, a larger text size, one of four type styles and one of three accent colors. These settings are for this device only and are not part of a backup.</p></details><details><summary>Sharing with the Team edition</summary><p>The Team edition lets you send a project or a template to another person as a file. It does not sync live between people. Each person keeps their own copy.</p><p>To send a project:</p><ul><li>Open the project, open the Go to menu and choose Share this project.</li><li>Choose Share it as it is now to send everything, including what you have marked done. Or choose Share a clean starting copy, which keeps the checklist, outline and notes but clears what is marked done or started, so the other person begins fresh.</li><li>Prepared Pro makes a file. Send it by email, AirDrop, Messages or any way you like.</li></ul><p>Your Notebook notes and your Sources library are never included in a shared file.</p><p>To send a template, open New project, find the template under My templates, press Share, then press Make the file.</p><p>To receive a file, nobody needs a code. Open Prepared Pro, go to Backup and restore, choose the file and pick the merge option. The shared project or template is added to what you already have, and nothing is replaced.</p><p>When the other person finishes, they open the project, open the Go to menu and choose Send back to you. Prepared Pro makes a small file with only what they changed. They do not need a Team code to send changes back. They type their name once, so their changes carry it.</p><p>When you receive that file, open Backup and restore and choose it. A list opens showing each change: what it was, what it is now, and who made it. Tick the ones you want and press Add the ticked changes. If you changed the same thing yourself, it is not ticked and is marked so you can decide. Nothing is added until you say so.</p><p>Everything you add is marked "from Bob" with the date, on the checklist item or the outline section, and the project overview keeps a list of changes from your team. The mark clears if you later change that item or section yourself.</p><p>Sending needs a Team code. Press the License line, paste the code that starts with PT1 and press Activate. The line then reads Team edition unlocked. A Team code also unlocks everything in the full version.</p></details><details><summary>Free version and your license code</summary><p>The free version lets you keep up to two projects. The full version removes that limit. It is a one-time purchase with no subscription.</p><p>After you buy, you receive a license code. To unlock:</p><ul><li>Open Prepared Pro and press the License line at the bottom of the left column.</li><li>Paste your code exactly as it appears in your receipt.</li><li>Press Activate. The line then reads Full version unlocked, or Team edition unlocked if your code is a Team code.</li></ul><p>The code works without an internet connection. You enter it once on each device where you use the program. Keep your receipt, because it is your proof of purchase. If you ever clear your browser data, enter the code again.</p></details><details><summary>Your privacy</summary><p>Your projects are stored only on your device. Ascent Studios does not receive, see or keep them. Back up regularly, because we cannot recover what is not on your device.</p></details><details><summary>Help and contact</summary><p>If something does not work as described, write to AscentStudiosOnline@gmail.com and tell us what you were doing, what you expected and what happened. Include the version number shown under About Prepared Pro.</p></details></div>
 <div class="row"><button type="button" class="btn ghost" data-a="splash-show">About Prepared Pro</button><button type="button" class="btn ghost" data-a="eula">License agreement</button><button type="button" class="btn ghost" data-a="email-support">Email support</button><span class="spacer"></span><button class="btn" value="close" formnovalidate type="submit">Close</button></div></form></dialog>
 <dialog id="eula"><form method="dialog"><h2>Prepared Pro License Agreement</h2><div id="eulabody"><h3>Who this is from</h3><p>Prepared Pro (the &quot;Program&quot;) is published by Ascent Studios LLC, a Florida limited liability company (&quot;Ascent Studios&quot;, &quot;we&quot;, &quot;us&quot;). By pressing the agree button, or by using the Program, you accept this agreement. If you do not accept it, do not use the Program.</p><h3>Copyright</h3><p>Copyright © 2026 Ascent Studios LLC. All rights reserved. The Program, its design, its text, its icons and its artwork, including the Ascent Studios name and emblem, belong to Ascent Studios LLC and are protected by copyright and other laws. This agreement gives you a license to use the Program. It does not sell you the Program or any right in it beyond what is stated here.</p><h3>What you may do</h3><ul><li>Use the Program for your own preparation work, for yourself, on devices that you own or control.</li><li>Use the free version with up to two projects. Use the full version without a project limit after you enter a valid license code.</li><li>Make backup files of your own work and keep copies for your own use.</li><li>Use what you create with the Program, including your outlines, checklists, notes and exports, for any purpose you wish. Your work is yours.</li></ul><h3>What you may not do</h3><ul><li>Sell, rent, lend, share or give away the Program, a license code, or a copy of the Program to anyone else. A license code is for the person who bought it.</li><li>Publish a license code, or make codes of your own, or get around the free-version limit by any other means.</li><li>Copy the Program&#x27;s files to another website or app store, or present the Program as your own.</li><li>Take the Program apart, copy its design, or use its artwork, name or emblem, except where the law gives you that right despite this agreement.</li></ul><h3>Your work stays on your device</h3><p>Prepared Pro stores your projects on the device you use it on. Ascent Studios does not receive, see, store or back up your work. You are responsible for making backups (Backup and restore, in the left column). If you clear your browser&#x27;s website data, delete the Program, or lose the device, your work may be lost, and we cannot recover it.</p><p>If you use the Ask my AI buttons, you decide what to copy and where to paste it. What you give to another service is covered by that service&#x27;s own terms, not this agreement.</p><h3>Updates</h3><p>We may release updated versions. The Program may update itself when you open it with an internet connection. We are not required to provide any particular update or support.</p><h3>No warranty</h3><p>The Program is provided &quot;as is&quot; and &quot;as available&quot;, without any promise that it will be error-free, uninterrupted, or suited to your purpose. The readiness meter and checklists are planning aids. They do not guarantee that your talk, book, event or film will be ready or successful. To the fullest extent the law allows, Ascent Studios disclaims all warranties, express or implied.</p><h3>Limit of liability</h3><p>To the fullest extent the law allows, Ascent Studios will not be liable for lost work, lost data, lost time, lost income, or any indirect or consequential damage arising from your use of the Program or inability to use it. Our total liability for any claim will not be more than the amount you paid for the Program. Some places do not allow these limits, so they may not apply to you.</p><h3>Refunds</h3><p>Refunds, if any, are handled according to the purchase terms stated where you bought the Program.</p><h3>Ending this agreement</h3><p>This agreement lasts until it is ended. You may end it at any time by deleting the Program from your devices. It ends automatically if you break it. If it ends, you must stop using the Program and delete your copies.</p><h3>Other software included</h3><p>Prepared Pro includes the open-source libraries docx (MIT license) and PptxGenJS (MIT license), which make Word and PowerPoint files. Their license notices are included with the Program&#x27;s files. They are used under their own licenses.</p><h3>General</h3><p>This agreement is the whole agreement between you and Ascent Studios about the Program. If any part is found unenforceable, the rest stays in effect. This agreement is governed by the laws of the State of Florida, United States, without regard to its conflict-of-law rules.</p><p>Questions about this agreement can be sent to AscentStudiosOnline@gmail.com.</p></div><div class="row"><span class="spacer"></span><button class="btn" value="close" formnovalidate type="submit">Close</button></div></form></dialog>
 <dialog id="insthint"><form method="dialog"><h2>Install Prepared Pro</h2>
@@ -1615,7 +1679,7 @@ function noteDocx(text, D, run){
   noteBlocks(text).forEach(b => {
     if(b.k === 'gap'){ cnt.fill(0); return; }
     const left = 360 + b.lvl * 900;
-    if(b.k === 'p'){ cnt.fill(0); out.push(new D.Paragraph({spacing:{after:140, line:300}, indent:{left:b.lvl * 900}, children:runs(b.t)})); return; }
+    if(b.k === 'p'){ cnt.fill(0); out.push(new D.Paragraph({spacing:{after:140, line:300}, indent:{left:b.lvl * 900, firstLine:b.lvl ? 0 : 360}, children:runs(b.t)})); return; }
     cnt[b.lvl] = b.ord ? cnt[b.lvl] + 1 : 0; for(let i = b.lvl + 1; i <= NOTE_MAXLVL; i++) cnt[i] = 0;
     out.push(new D.Paragraph({spacing:{after:60, line:300}, indent:{left:left + 360, hanging:360}, tabStops:[{type:D.TabStopType.LEFT, position:left + 360}], children:[run(noteMarker(b, cnt) + '\t')].concat(runs(b.t))}));
   });
@@ -1742,12 +1806,16 @@ function bibliography(p){
   }).join('\n\n');
 }
 
+function pHead(title, sub, o){ o = o || {}; return '<div class="dh"><p class="kick">' + esc(o.kick || 'Prepared Pro') + '</p><h1>' + esc(title) + '</h1>' + (sub ? '<p class="sub">' + esc(sub) + '</p>' : '') + (o.pct != null ? '<div class="rbar"><i style="width:' + Math.max(0, Math.min(100, o.pct)) + '%"></i></div>' : '') + '</div>'; }
+function wrapPrint(html, title){ const t = String(title || '').replace(/[\\"<>\n\r]/g, ' ').slice(0, 90); return '<style>@page{@bottom-left{content:"' + t + '  \\00b7  Prepared Pro by Ascent Studios";font:8.5pt Helvetica,Arial,sans-serif;color:#555}@bottom-right{content:"Page " counter(page) " of " counter(pages);font:8.5pt Helvetica,Arial,sans-serif;color:#555}}</style><div class="pdoc">' + html + '</div>'; }
+function docFoot(D, text){ return {default:new D.Footer({children:[new D.Paragraph({alignment:D.AlignmentType.CENTER, children:[new D.TextRun({text:text + '   |   Page ', font:'Calibri', size:17, color:'666666'}), new D.TextRun({children:[D.PageNumber.CURRENT], font:'Calibri', size:17, color:'666666'})]})]})}; }
 function statusSheetHtml(p){
   const r = pctOf(p), pc = pace(p), miss = missing(p), done = p.items.filter(i => i.status === 'done'), ev = upcoming().filter(x => x.pid === p.id).slice(0, 8);
-  const L = ['<h1>' + esc(p.title) + '</h1><p class="sub">' + esc(kindOf(p)) + '. Stage: ' + esc(p.stage) + '. ' + (p.due ? 'Due ' + esc(fmtDate(p.due)) + '. ' : '') + r + '% ready (' + esc(pc.text.toLowerCase()) + '). Printed ' + esc(fmtDate(ymd(today()))) + '.</p>'];
+  const L = [pHead(p.title, kindOf(p) + '  \u00b7  Stage: ' + p.stage + (p.due ? '  \u00b7  Due ' + fmtDate(p.due) : '') + '  \u00b7  ' + r + '% ready (' + pc.text.toLowerCase() + ')', {kick:'Status sheet', pct:r})];
+  if(p.collab) L.push('<p class="sub" style="text-align:center">' + esc(cbLabel(p)) + '</p>');
   const b = p.brief || {}; const bl = [['Main message', b.message], ['Audience', b.audience], ['Outcome', b.outcome], ['Length', b.length]].filter(x => x[1]);
-  if(bl.length) L.push('<h2>The big picture</h2>' + bl.map(x => '<p><span class="lab">' + x[0] + ':</span> ' + esc(x[1]) + '</p>').join(''));
-  L.push('<h2>Still to do (' + miss.length + ')</h2>' + (miss.length ? '<ul>' + miss.slice(0, 25).map(i => '<li>' + (i.req ? '<b>' : '') + esc(i.text) + (i.req ? '</b>' : '') + ' <span class="sub">(' + esc(i.cat) + (i.status === 'started' ? ', in progress' : '') + ')</span></li>').join('') + '</ul>' + (miss.length > 25 ? '<p class="sub">and ' + (miss.length - 25) + ' more.</p>' : '') : '<p>Everything on the checklist is done.</p>'));
+  if(bl.length) L.push('<h2>The big picture</h2>' + bl.map(x => '<p class="kv"><span class="lab">' + x[0] + ':</span> ' + esc(x[1]) + '</p>').join(''));
+  L.push('<h2>Still to do (' + miss.length + ')</h2>' + (miss.length ? '<ul class="chk">' + miss.slice(0, 25).map(i => '<li>' + (i.req ? '<b>' : '') + esc(i.text) + (i.req ? '</b>' : '') + ' <span class="sub">(' + esc(i.cat) + (i.status === 'started' ? ', in progress' : '') + ')</span></li>').join('') + '</ul>' + (miss.length > 25 ? '<p class="sub">and ' + (miss.length - 25) + ' more.</p>' : '') : '<p>Everything on the checklist is done.</p>'));
   L.push('<h2>Done so far (' + done.length + ')</h2>' + (done.length ? '<p>' + done.slice(0, 30).map(i => esc(i.text)).join('. ') + (done.length > 30 ? '. And ' + (done.length - 30) + ' more.' : '.') + '</p>' : '<p>Nothing is ticked off yet.</p>'));
   if(ev.length) L.push('<h2>Coming up</h2><ul>' + ev.map(x => '<li>' + esc(fmtDate(x.date)) + (x.time ? ', ' + esc(fmtTime(x.time)) : '') + ': ' + esc(x.title) + '</li>').join('') + '</ul>');
   const ppl = p.shoot && Array.isArray(p.shoot.people) ? p.shoot.people.filter(x => x.name).slice(0, 15) : [];
@@ -1755,7 +1823,7 @@ function statusSheetHtml(p){
   return L.join('');
 }
 function printStatusSheet(p){
-  const pa = document.getElementById('printarea'); pa.innerHTML = statusSheetHtml(p);
+  const pa = document.getElementById('printarea'); pa.innerHTML = wrapPrint(statusSheetHtml(p), p.title);
   const done = () => { pa.innerHTML = ''; window.removeEventListener('afterprint', done); };
   window.addEventListener('afterprint', done); try{ window.print(); }catch(e){ done(); toast('Printing is not available here.'); }
 }
@@ -2032,7 +2100,7 @@ function projRow(p, ins, withSeries){
   const pc = pace(p), sr = withSeries && p.seriesId ? state.series.find(x => x.id === p.seriesId) : null;
   return `<div class="prow${ins ? ' ins' : ''}" data-id="${p.id}"><button type="button" class="pdelbtn" data-a="pswipe-del" data-id="${p.id}" tabindex="-1" aria-hidden="true">Delete</button><div class="pfront"><button class="pitem" data-a="select" data-id="${p.id}" aria-current="${p.id===state.selected && !ui.series && !ui.contacts}" aria-haspopup="menu">
       <div class="t"><span>${esc(p.title)}</span><span>${pctOf(p)}%</span></div>
-      <div class="m">${esc(kindOf(p))}${sr ? ' · ' + esc(sr.name) : ''}</div>${bar(p)}
+      <div class="m">${esc(kindOf(p))}${sr ? ' · ' + esc(sr.name) : ''}</div>${p.collab ? '<div class="m cbtag" data-share-tag>' + esc(cbLabel(p)) + '</div>' : ''}${bar(p)}
       <div class="pc"><span class="dot" style="background:${pc.color}"></span>${esc(pc.text)}</div></button><button type="button" class="pmore" data-a="pmenu" data-id="${p.id}" aria-label="More for ${esc(p.title)}: open, rename, duplicate, delete" aria-haspopup="menu">&#8943;</button></div></div>`;
 }
 function listEntries(){
@@ -2059,10 +2127,20 @@ function folderHtml(e, open){
       <div class="pc"${late ? ' style="color:var(--behind);font-weight:600"' : ''}>${esc(next)}</div></span></button><button type="button" class="pmore" data-a="sfopen" data-id="${sr.id}" aria-label="Open the ${esc(sr.name)} series page">&#8943;</button></div>`
     + (open ? bk.map(p => projRow(p, true, false)).join('') : '');
 }
+function sideGroups(){
+  const lo = state.listOpen && typeof state.listOpen === 'object' ? state.listOpen : {};
+  const po = lo._proj !== false, so = lo._ser === true;
+  const set = (gid, hid, bid, open) => { const g = document.getElementById(gid), h = document.getElementById(hid), bd = document.getElementById(bid); if(!g) return; g.classList.toggle('open', open); h.setAttribute('aria-expanded', open); bd.hidden = !open; };
+  set('ngp', 'nprojh', 'nprojb', po); set('ngs', 'nserh', 'nserb', so);
+  const sb = document.getElementById('nserb'); if(!sb) return;
+  const L = state.series || [];
+  sb.innerHTML = '<button class="btn block" data-a="series-new">New series</button>' + (L.length ? L.map(sr => { const n = state.projects.filter(p => p.seriesId === sr.id).length; return '<button class="nser' + (ui.series === sr.id ? ' sel' : '') + '" data-a="series-open" data-id="' + esc(sr.id) + '">' + esc(sr.name) + ' <span class="n">' + n + '</span></button>'; }).join('') : '<p class="hint" style="margin:0 4px;font-size:14px">Your series will appear here.</p>');
+}
 function renderList(){
+  sideGroups();
   const el = document.getElementById('plist'), box = document.getElementById('psearch');
   if(box) box.hidden = !(state.projects.length >= 6 || plq);
-  if(!state.projects.length){ el.innerHTML = '<p style="padding:10px;color:var(--muted);font-size:14px">Your projects will appear here.</p>'; return; }
+  if(!state.projects.length){ el.innerHTML = '<p style="padding:4px 4px;color:var(--muted);font-size:14px;margin:0">Your projects will appear here.</p>'; return; }
   if(!state.listOpen || typeof state.listOpen !== 'object') state.listOpen = {};
   if(state.selected !== lastSelOpen){ lastSelOpen = state.selected; const sp = state.projects.find(x => x.id === state.selected); if(sp && sp.seriesId && !state.listOpen[sp.seriesId]) state.listOpen[sp.seriesId] = true; }
   const q = plq.trim().toLowerCase();
@@ -2084,7 +2162,7 @@ function renderList(){
 document.addEventListener('input', e => { const t = e.target; if(t && t.id === 'plq'){ plq = t.value; renderList(); } });
 document.addEventListener('keydown', e => { const t = e.target; if(t && t.id === 'plq' && e.key === 'Escape' && plq){ e.preventDefault(); t.value = ''; plq = ''; renderList(); } });
 function itemRow(i, showCat, p){
-  const doneNote = i.status === 'done' && i.doneAt ? `<span class="cat">Done ${esc(fmtDate(i.doneAt))}</span>` : '';
+  const doneNote = (i.status === 'done' && i.doneAt ? `<span class="cat">Done ${esc(fmtDate(i.doneAt))}</span>` : '') + (cbTag(p || sel(), 'i:' + i.id) ? `<span class="cat cbtag">${esc(cbTag(p || sel(), 'i:' + i.id))}</span>` : '');
   const lk = p ? linkFor(p, i) : null;
   const open = lk ? `<button class="iedit" data-a="item-link" data-id="${i.id}" aria-label="Open where to write: ${esc(i.text)}">Write</button>` : '';
   const note = i.note ? `<span class="cat nfull">Note: ${esc(i.note)}</span>` : '';
@@ -2097,7 +2175,7 @@ function itemRow(i, showCat, p){
 }
 function setStatus(p, i, next, withUndo){
   const prev = i.status, prevAt = i.doneAt;
-  i.status = next;
+  i.status = next; if(p.tags) delete p.tags['i:' + i.id];
   if(next === 'done') i.doneAt = ymd(today()); else delete i.doneAt;
   save(); render(true);
   const nb = document.querySelector('.st[data-id="'+i.id+'"]'); if(nb) nb.focus({preventScroll:true});
@@ -2228,7 +2306,7 @@ function outlineHtml(p){
     lastPart = part;
     const open = !!ui.open[s.id];
     const w = words(s.notes);
-    const meta = [s.head ? esc(s.head) : '<i>No headline yet</i>', s.owner ? 'Owner: ' + esc(s.owner) : '', w ? w.toLocaleString() + (s.target ? ' of ' + Number(s.target).toLocaleString() : '') + ' words' : (s.target ? '0 of ' + Number(s.target).toLocaleString() + ' words' : '')].filter(Boolean).join('. ');
+    const meta = [s.head ? esc(s.head) : '<i>No headline yet</i>', s.owner ? 'Owner: ' + esc(s.owner) : '', cbTag(p, 'o:' + s.id) ? '<b class="cbtag">' + esc(cbTag(p, 'o:' + s.id)) + '</b>' : '', w ? w.toLocaleString() + (s.target ? ' of ' + Number(s.target).toLocaleString() : '') + ' words' : (s.target ? '0 of ' + Number(s.target).toLocaleString() + ' words' : '')].filter(Boolean).join('. ');
     const bl = String(s.bullets||'').split('\n').map(x => x.trim()).filter(Boolean);
     const srcN = (s.srcs || []).map(id => p.sources.find(x => x.id === id)).filter(Boolean);
     const body = open ? `<div class="obody">
@@ -2338,14 +2416,14 @@ function renderMain(){
       ${linksPanel(p)}
       <p class="hint">Need more? Use the Go to menu above. You can switch on sources, research tools and other extras when you want them. <button class="link" data-a="edit-extras">Choose extras</button></p>`;
   const counts = {overview:'', outline:outDone+' of '+p.outline.length, checklist:miss.length+' left', event:p.travel.length ? p.travel.filter(t => t.status==='done').length+' of '+p.travel.length : '', bring:p.bring.length ? p.bring.filter(i => i.status==='done').length+' of '+p.bring.length : '', people:shootCount(p, 'people'), meetings:shootCount(p, 'meetings'), places:shootCount(p, 'places'), shots:shootCount(p, 'shots'), callsheet:'', prod:'', sched:shootCount(p, 'sched'), rounds:shootCount(p, 'rounds'), checkins:shootCount(p, 'checkins'), risks:shootCount(p, 'risks'), deliver:shootCount(p, 'deliver'), sources:String(srcs.length), tools:''};
-  const content = page === 'overview' ? overview.replace('@@WEEK@@', weekPanel()).replace('@@START@@', startPanel(p, counts)).replace('@@NOTES@@', projNotesPanel(p)) : page === 'outline' ? outlineHtml(p) : page === 'checklist' ? checklistPage : page === 'event' ? eventHtml(p) : page === 'bring' ? bringHtml(p) : page === 'people' || page === 'meetings' || page === 'places' || page === 'shots' || page === 'sched' || page === 'rounds' || page === 'deliver' || page === 'checkins' || page === 'risks' ? shootListHtml(p, page) : page === 'callsheet' ? callsheetHtml(p) : page === 'prod' ? prodHtml(p) : page === 'sources' ? sourcesHtml : toolsPanel;
+  const content = page === 'overview' ? overview.replace('@@WEEK@@', weekPanel()).replace('@@START@@', startPanel(p, counts)).replace('@@NOTES@@', teamPanel(p) + projNotesPanel(p)) : page === 'outline' ? outlineHtml(p) : page === 'checklist' ? checklistPage : page === 'event' ? eventHtml(p) : page === 'bring' ? bringHtml(p) : page === 'people' || page === 'meetings' || page === 'places' || page === 'shots' || page === 'sched' || page === 'rounds' || page === 'deliver' || page === 'checkins' || page === 'risks' ? shootListHtml(p, page) : page === 'callsheet' ? callsheetHtml(p) : page === 'prod' ? prodHtml(p) : page === 'sources' ? sourcesHtml : toolsPanel;
   const menu = ui.menu ? `<div class="menu" role="menu" aria-label="Go to">${pagesFor(p).map(k =>
       `<button class="mi" role="menuitem" data-a="go" data-page="${k}" aria-current="${k===page}">${pn(p, k)}<span class="c">${counts[k]}</span></button>`).join('')}
-      <hr><button class="mi" role="menuitem" data-a="speak">Speaker view</button><button class="mi" role="menuitem" data-a="timer">Timer</button><button class="mi" role="menuitem" data-a="tpl-save">Save as template</button><button class="mi" role="menuitem" data-a="export">Export or print</button><button class="mi" role="menuitem" data-a="share-proj">Share this project</button><button class="mi" role="menuitem" data-a="status-print">Print status sheet</button><button class="mi" role="menuitem" data-a="edit-extras">Add or remove extras</button><button class="mi" role="menuitem" data-a="edit-project">Edit project</button></div>` : '';
+      <hr><button class="mi" role="menuitem" data-a="speak">Speaker view</button><button class="mi" role="menuitem" data-a="timer">Timer</button><button class="mi" role="menuitem" data-a="tpl-save">Save as template</button><button class="mi" role="menuitem" data-a="export">Export or print</button>${p.collab && p.collab.role === 'reviewer' ? '<button class="mi" role="menuitem" data-a="collab-send">Send back to ' + esc(p.collab.who || 'sender') + '</button>' : '<button class="mi" role="menuitem" data-a="share-proj">Share this project</button>'}<button class="mi" role="menuitem" data-a="status-print">Print status sheet</button><button class="mi" role="menuitem" data-a="edit-extras">Add or remove extras</button><button class="mi" role="menuitem" data-a="edit-project">Edit project</button></div>` : '';
   main.innerHTML = `<button class="backbtn" data-a="back">Back to main page</button>
   <div class="proj">
     <header class="phead">${dueTab}<h2>${esc(p.title)}</h2>
-      <p class="sub">${esc(kindOf(p))}.${dueTab ? '' : ' ' + esc(due) + '.'}${seriesOf(p) ? ' Part of ' + esc(seriesOf(p).name) + '.' : ''}</p>
+      <p class="sub">${esc(kindOf(p))}.${dueTab ? '' : ' ' + esc(due) + '.'}${seriesOf(p) ? ' Part of ' + esc(seriesOf(p).name) + '.' : ''}</p>${p.collab ? '<p class="sub cbtag" data-share-tag style="margin-top:2px">' + esc(cbLabel(p)) + '.</p>' : ''}
       <div class="nav"><button class="btn ghost menubtn" data-a="menu" aria-haspopup="true" aria-expanded="${!!ui.menu}" aria-label="Go to another page. You are on ${pn(p, page)}.">Go to: <b>${pn(p, page)}</b> <span aria-hidden="true">&#9662;</span></button>${menu}</div></header>
     <div class="body">${content}${page !== 'overview' ? '<p class="hint" style="margin:18px 0 0"><button class="link" data-a="pg-hide" data-page="' + page + '">Hide this page</button> from this project. Choose extras brings it back.</p>' : ''}</div>
   </div>`;
@@ -2360,7 +2438,7 @@ function render(keepScroll){
 
 /* ---------- Dialogs ---------- */
 const pdlg = document.getElementById('pdlg'), pform = document.getElementById('pform');
-const idlg = document.getElementById('idlg'), iform = document.getElementById('iform');
+const idlg = document.getElementById('idlg'), iform = document.getElementById('iform'), rvdlg = document.getElementById('rvdlg');
 let ctx = null;
 const cdlg = document.getElementById('cdlg'); let cbk = null;
 
@@ -2432,6 +2510,150 @@ function dayHtml(){
 }
 /* ---------- Sharing a project or template as a file (the Team edition) ---------- */
 const fsdlg = document.getElementById('fsdlg');
+/* ---------- Team review: Bob's changes come back tagged with his name ---------- */
+function cbItemF(){ return ['text', 'status', 'note']; }
+function cbSecF(){ return ['title', 'head', 'purpose', 'subject', 'bullets', 'notes', 'status']; }
+function cbBriefF(){ return ['message', 'audience', 'outcome', 'length']; }
+function cbCap(f){ return {text:240, note:2000, title:120, head:160, purpose:600, subject:2000, bullets:3000, notes:60000, message:800, audience:600, outcome:600, length:80}[f] || 200; }
+function cbFName(f){ return {text:'wording', status:'progress', note:'note', title:'title', head:'headline', purpose:'purpose', subject:'subject matter', bullets:'key points', notes:'notes', message:'main message', audience:'audience', outcome:'outcome', length:'length'}[f] || f; }
+function cbId(x){ return tstr(x, 40).replace(/[^A-Za-z0-9_-]/g, ''); }
+function cbSnap(p){
+  const s = {i:{}, o:{}, b:{}};
+  (p.items || []).forEach(i => { s.i[i.id] = {text:i.text, status:i.status, note:i.note || ''}; });
+  (p.outline || []).forEach(o => { const q = {}; cbSecF().forEach(f => { q[f] = o[f] || (f === 'status' ? 'empty' : ''); }); s.o[o.id] = q; });
+  cbBriefF().forEach(f => { s.b[f] = (p.brief || {})[f] || ''; });
+  return s;
+}
+function cbCleanBase(b){
+  b = obj(b); const out = {i:{}, o:{}, b:{}};
+  Object.entries(obj(b.i)).slice(0, 1000).forEach(([k, v]) => { v = obj(v); out.i[cbId(k)] = {text:tstr(v.text, 240), status:stat3(v.status), note:tstr(v.note, 2000)}; });
+  Object.entries(obj(b.o)).slice(0, 500).forEach(([k, v]) => { v = obj(v); const q = {}; cbSecF().forEach(f => { q[f] = f === 'status' ? stat3(v[f]) : tstr(v[f], cbCap(f)); }); out.o[cbId(k)] = q; });
+  cbBriefF().forEach(f => { out.b[f] = tstr(obj(b.b)[f], cbCap(f)); });
+  return out;
+}
+function cbCleanCollab(c){
+  if(!c || typeof c !== 'object') return undefined;
+  const sid = cbId(c.sid), role = c.role === 'owner' || c.role === 'reviewer' ? c.role : ''; if(!sid || !role) return undefined;
+  const o = {sid, role, who:tstr(c.who, 40)};
+  if(role === 'reviewer' && c.base) o.base = cbCleanBase(c.base);
+  o.log = arr(c.log, 30).map(x => { x = obj(x); return {by:tstr(x.by, 40), at:dstr(x.at), n:Math.max(0, Math.min(9999, parseInt(x.n, 10) || 0)), items:arr(x.items, 8).map(z => tstr(z, 80))}; });
+  return o;
+}
+function cbCleanTags(t){
+  const o = {}; Object.entries(obj(t)).slice(0, 800).forEach(([k, v]) => { if(!/^(i|o):[A-Za-z0-9_-]{1,40}$/.test(k) && k !== 'b') return; v = obj(v); const by = tstr(v.by, 40); if(by) o[k] = {by, at:dstr(v.at)}; });
+  return o;
+}
+function cbDiff(p){
+  const base = p.collab && p.collab.base; if(!base) return [];
+  const ch = [];
+  (p.items || []).forEach(i => { const b = base.i[i.id];
+    if(!b){ ch.push({t:'item+', id:i.id, label:i.text, item:{cat:i.cat, text:i.text, status:i.status, req:!!i.req, w:i.w, note:i.note || ''}}); return; }
+    cbItemF().forEach(f => { const cur = f === 'note' ? (i.note || '') : i[f]; if(cur !== b[f]) ch.push({t:'item', id:i.id, f, old:b[f], nw:cur, label:i.text}); }); });
+  (p.outline || []).forEach(o => { const b = base.o[o.id];
+    if(!b){ const sec = {part:o.part || '', owner:o.owner || '', target:o.target || 0}; cbSecF().forEach(f => { sec[f] = o[f] || (f === 'status' ? 'empty' : ''); }); ch.push({t:'sec+', id:o.id, label:o.title, sec}); return; }
+    cbSecF().forEach(f => { const cur = o[f] || (f === 'status' ? 'empty' : ''); if(cur !== b[f]) ch.push({t:'sec', id:o.id, f, old:b[f], nw:cur, label:o.title}); }); });
+  cbBriefF().forEach(f => { const cur = (p.brief || {})[f] || ''; if(cur !== base.b[f]) ch.push({t:'brief', f, old:base.b[f], nw:cur, label:'The big picture'}); });
+  return ch.slice(0, 400);
+}
+function cbCleanReview(raw){
+  const sid = cbId(raw.sid), from = tstr(raw.from, 40).trim(); if(!sid || !from) return null;
+  const changes = [];
+  arr(raw.changes, 400).forEach(c => { c = obj(c); const t = c.t;
+    if(t === 'item+'){ const it = obj(c.item), text = tstr(it.text, 240), cat = tstr(it.cat, 60); const id = cbId(c.id); if(!id || !text || !cat) return;
+      changes.push({t, id, label:text, item:{cat, text, status:stat3(it.status), req:!!it.req, w:[1,2,3].includes(Number(it.w)) ? Number(it.w) : 2, note:tstr(it.note, 2000)}}); return; }
+    if(t === 'sec+'){ const sc = obj(c.sec), title = tstr(sc.title, 120), id = cbId(c.id); if(!id || !title) return; const sec = {part:tstr(sc.part, 80), owner:tstr(sc.owner, 120), target:Math.max(0, Math.min(500000, parseInt(sc.target, 10) || 0))};
+      cbSecF().forEach(f => { sec[f] = f === 'status' ? stat3(sc[f]) : tstr(sc[f], cbCap(f)); }); changes.push({t, id, label:title, sec}); return; }
+    const f = tstr(c.f, 20); const id = cbId(c.id);
+    if(t === 'item' && cbItemF().includes(f) && id) changes.push({t, id, f, old:f === 'status' ? stat3(c.old) : tstr(c.old, cbCap(f)), nw:f === 'status' ? stat3(c.nw) : tstr(c.nw, cbCap(f)), label:tstr(c.label, 240)});
+    else if(t === 'sec' && cbSecF().includes(f) && id) changes.push({t, id, f, old:f === 'status' ? stat3(c.old) : tstr(c.old, cbCap(f)), nw:f === 'status' ? stat3(c.nw) : tstr(c.nw, cbCap(f)), label:tstr(c.label, 120)});
+    else if(t === 'brief' && cbBriefF().includes(f)) changes.push({t, f, old:tstr(c.old, cbCap(f)), nw:tstr(c.nw, cbCap(f)), label:'The big picture'});
+  });
+  return {sid, from, title:tstr(raw.title, 120), changes};
+}
+function cbTag(p, key){ const t = p && p.tags && p.tags[key]; return t ? 'from ' + t.by + (t.at ? ', ' + fmtDate(t.at) : '') : ''; }
+function cbName(){ return String(state.myName || '').trim().slice(0, 40); }
+function cbLabel(p){
+  const c = p.collab; if(!c) return '';
+  if(c.role === 'reviewer'){ const n = cbDiff(p).length; return 'Shared by ' + (c.who || 'a teammate') + (n ? '. ' + n + (n === 1 ? ' change' : ' changes') + ' not sent back yet' : ''); }
+  const names = [...new Set((c.log || []).map(x => x.by).filter(Boolean))];
+  return names.length ? 'Shared with ' + names.join(', ') : 'Shared with your team';
+}
+function teamPanel(p){
+  const c = p.collab; if(!c) return '';
+  if(c.role === 'reviewer'){
+    const n = cbDiff(p).length;
+    return `<div class="panel" style="margin-bottom:14px"><h3>Shared with you by ${esc(c.who || 'a teammate')}</h3><p style="margin:0 0 8px">Work on it here as usual. When you are done, send your changes back so ${esc(c.who || 'they')} can see what you added.</p><p class="hint" style="margin:0 0 10px">${n ? n + (n === 1 ? ' change' : ' changes') + ' so far.' : 'No changes yet.'}</p><button class="btn" data-a="collab-send">Send back to ${esc(c.who || 'them')}</button></div>`;
+  }
+  if(!(c.log || []).length) return `<div class="panel" style="margin-bottom:14px"><h3>Shared with your team</h3><p class="hint" style="margin:0">No changes have come back yet. When someone sends their changes, open Backup and restore and choose their file. You will see each change with their name on it.</p></div>`;
+  return `<div class="panel" style="margin-bottom:14px"><h3>Changes from your team</h3><ul style="margin:0;padding-left:20px">${c.log.slice(0, 8).map(x => `<li><b>${esc(x.by)}</b>${x.at ? ', ' + esc(fmtDate(x.at)) : ''}: ${x.n} ${x.n === 1 ? 'change' : 'changes'}${x.items && x.items.length ? ' (' + esc(x.items.join('; ')) + ')' : ''}</li>`).join('')}</ul></div>`;
+}
+function openSendBack(p){
+  const c = p.collab, ch = cbDiff(p), box = document.getElementById('fsopts');
+  ctx = {kind:'share', share:'back', id:p.id};
+  document.getElementById('fstitle').textContent = 'Send back to ' + (c.who || 'them');
+  document.getElementById('fstext').textContent = ch.length ? 'You changed ' + ch.length + (ch.length === 1 ? ' thing' : ' things') + ' in "' + p.title + '". This makes a small file with only your changes. ' + (c.who || 'They') + ' can look through them and choose which to add.' : 'You have not changed anything in "' + p.title + '" yet. Make your changes first, then send them back.';
+  const nl = document.getElementById('fsnamel'); nl.hidden = false; document.getElementById('fsname').value = cbName();
+  box.innerHTML = ch.length ? '<button type="button" class="btn" data-a="fs-back">Make the file to send back</button>' : '';
+  document.getElementById('fsfoot').textContent = (c.who || 'The person who sent it') + ' opens Backup and restore, chooses your file, and sees what you changed. Nothing is added until they say so. You do not need a Team code to send changes back.';
+  fsdlg.showModal();
+}
+function doSendBack(){
+  const c = ctx; if(!c || c.kind !== 'share' || c.share !== 'back') return; const p = state.projects.find(x => x.id === c.id); if(!p || !p.collab) return;
+  const name = document.getElementById('fsname').value.trim().slice(0, 40); if(!name){ toast('Type your name so they know who the changes are from.'); document.getElementById('fsname').focus(); return; }
+  state.myName = name;
+  const ch = cbDiff(p); if(!ch.length) return;
+  const top = {app:'preparedpro', version:1, shared:'review', sid:p.collab.sid, from:name, to:p.collab.who || '', title:p.title, exported:new Date().toISOString(), changes:ch};
+  const safe = String(p.title).replace(/[^\w .()-]+/g, '').trim().slice(0, 50) || 'Project';
+  downloadBlob(new Blob([JSON.stringify(top, null, 1)], {type:'application/json'}), 'Changes from ' + name.replace(/[^\w .()-]+/g, '').slice(0, 30) + ' - ' + safe + '.json');
+  p.collab.base = cbSnap(p); save(); fsdlg.close(); toast('The file is ready. Send it back to ' + (p.collab.who || 'them') + '.', true);
+}
+let rvCtx = null;
+function cbCur(p, c){
+  if(c.t === 'item'){ const i = p.items.find(x => x.id === c.id); return i ? (c.f === 'note' ? (i.note || '') : i[c.f]) : null; }
+  if(c.t === 'sec'){ const o = p.outline.find(x => x.id === c.id); return o ? (o[c.f] || (c.f === 'status' ? 'empty' : '')) : null; }
+  if(c.t === 'brief') return (p.brief || {})[c.f] || '';
+  if(c.t === 'item+') return p.items.some(x => x.id === c.id) ? 'x' : null;
+  if(c.t === 'sec+') return p.outline.some(x => x.id === c.id) ? 'x' : null;
+  return null;
+}
+function cbShow(f, v){ if(f === 'status') return STATUS_TEXT[v] || v; v = String(v || ''); return v ? (v.length > 220 ? v.slice(0, 217) + '...' : v) : '(empty)'; }
+function openReview(rv){
+  const p = state.projects.find(x => x.collab && x.collab.role === 'owner' && x.collab.sid === rv.sid);
+  if(!p){ toast('That file is from a project this device did not share, so it cannot be matched.'); return; }
+  const rows = [];
+  rv.changes.forEach(c => {
+    if(c.t === 'item' || c.t === 'sec' || c.t === 'brief'){ const cur = cbCur(p, c); if(cur === null) return; const st = cur === c.nw ? 'same' : (cur === c.old ? 'new' : 'conflict'); rows.push({c, st, cur}); }
+    else { const ex = cbCur(p, c) !== null; rows.push({c, st:ex ? 'same' : 'new', cur:null}); }
+  });
+  rvCtx = {pid:p.id, from:rv.from, rows};
+  document.getElementById('rvtitle').textContent = rv.from + ' changed "' + p.title + '"';
+  const nNew = rows.filter(r => r.st === 'new').length, nC = rows.filter(r => r.st === 'conflict').length;
+  document.getElementById('rvtext').textContent = rows.length ? nNew + (nNew === 1 ? ' change is' : ' changes are') + ' ready to add' + (nC ? ', and ' + nC + (nC === 1 ? ' needs' : ' need') + ' your decision because you changed the same thing' : '') + '. Tick what you want. Anything you add is marked "from ' + rv.from + '".' : 'There is nothing new in this file.';
+  document.getElementById('rvlist').innerHTML = rows.map((r, i) => {
+    const c = r.c, what = c.t === 'item+' ? 'New checklist item' : c.t === 'sec+' ? 'New ' + nounOf(p) : (c.t === 'item' ? 'Checklist' : c.t === 'sec' ? nounOf(p)[0].toUpperCase() + nounOf(p).slice(1) : '') + ' ' + cbFName(c.f);
+    const body = c.t === 'item+' ? esc(cbShow('', c.item.text)) : c.t === 'sec+' ? esc(cbShow('', c.sec.head || c.sec.notes || '')) : '<b>Now:</b> ' + esc(cbShow(c.f, c.nw)) + '<br><span class="hint">Was: ' + esc(cbShow(c.f, c.old)) + '</span>' + (r.st === 'conflict' ? '<br><span class="hint" style="color:var(--behind)">You have: ' + esc(cbShow(c.f, r.cur)) + '</span>' : '');
+    return `<label class="chk rvrow"><input type="checkbox" data-i="${i}"${r.st === 'new' ? ' checked' : ''}${r.st === 'same' ? ' disabled' : ''}> <span><b>${esc(c.label)}</b> <span class="hint">${esc(what)}${r.st === 'same' ? ' (already the same here)' : r.st === 'conflict' ? ' (you changed this too)' : ''}</span><br>${body}</span></label>`;
+  }).join('');
+  document.getElementById('rvgo').disabled = !rows.length;
+  rvdlg.showModal();
+}
+function rvApply(){
+  const r = rvCtx; if(!r) return; const p = state.projects.find(x => x.id === r.pid); if(!p) return;
+  const picks = [...document.querySelectorAll('#rvlist input[type=checkbox]:checked:not(:disabled)')].map(x => r.rows[Number(x.dataset.i)]).filter(Boolean);
+  if(!picks.length){ toast('Tick at least one change, or press Cancel.'); return; }
+  const at = ymd(today()); p.tags = p.tags || {}; const names = [];
+  picks.forEach(({c}) => {
+    if(c.t === 'item'){ const i = p.items.find(x => x.id === c.id); if(!i) return; if(c.f === 'note'){ if(c.nw) i.note = c.nw; else delete i.note; } else i[c.f] = c.nw; if(c.f === 'status'){ if(c.nw === 'done') i.doneAt = at; else delete i.doneAt; } p.tags['i:' + c.id] = {by:r.from, at}; }
+    else if(c.t === 'sec'){ const o = p.outline.find(x => x.id === c.id); if(!o) return; o[c.f] = c.nw; p.tags['o:' + c.id] = {by:r.from, at}; }
+    else if(c.t === 'brief'){ p.brief = p.brief || {}; p.brief[c.f] = c.nw; p.tags.b = {by:r.from, at}; }
+    else if(c.t === 'item+'){ if(p.items.some(x => x.id === c.id) || p.items.length >= 1000) return; const it = Object.assign({id:c.id, cat:c.item.cat, text:c.item.text, status:c.item.status, req:c.item.req, w:c.item.w, m:0}, c.item.note ? {note:c.item.note} : {}); if(it.status === 'done') it.doneAt = at; p.items.push(it); p.tags['i:' + c.id] = {by:r.from, at}; }
+    else if(c.t === 'sec+'){ if(p.outline.some(x => x.id === c.id) || p.outline.length >= 500) return; const o = Object.assign(blankSection(c.sec.title), c.sec, {id:c.id}); p.outline.push(o); p.tags['o:' + c.id] = {by:r.from, at}; }
+    if(names.length < 6 && !names.includes(c.label)) names.push(String(c.label).slice(0, 40));
+  });
+  p.collab.log = p.collab.log || []; p.collab.log.unshift({by:r.from, at, n:picks.length, items:names}); p.collab.log = p.collab.log.slice(0, 30);
+  rvCtx = null; rvdlg.close(); state.selected = p.id; ui.series = null; ui.contacts = false; ui.notebook = false; ui.meetings = false; ui.view = 'detail'; ui.page = 'overview'; save(); render(true);
+  toast('Added ' + picks.length + (picks.length === 1 ? ' change' : ' changes') + ' from ' + r.from + '.', true);
+}
 function shareFile(kind, obj, label){
   const data = {projects:[], tools:[], series:[], bringTemplate:[], templates:[], contacts:[], groups:[], rooms:[], lib:[], todo:[], release:{}, notebook:{folders:[], notes:[]}};
   if(kind === 'project') data.projects.push(obj); else data.templates.push(obj);
@@ -2439,15 +2661,21 @@ function shareFile(kind, obj, label){
   const safe = String(label).replace(/[^\w .()-]+/g, '').trim().slice(0, 60) || 'Shared';
   downloadBlob(new Blob([JSON.stringify(top, null, 1)], {type:'application/json'}), 'Shared - ' + safe + '.json');
 }
-function shareProject(p, clean){
-  const c = JSON.parse(JSON.stringify(p)); c.id = uid(); delete c.sample; c.seriesId = ''; delete c.pinned;
+function shareProject(p, clean, name){
+  const sid = p.collab && p.collab.role === 'owner' ? p.collab.sid : uid();
+  p.collab = {sid, role:'owner', who:name || cbName(), log:(p.collab && p.collab.role === 'owner' && p.collab.log) || []}; save(); renderList();
+  const c = JSON.parse(JSON.stringify(p)); c.id = uid(); delete c.sample; c.seriesId = ''; delete c.pinned; c.tags = {}; c.collab = {sid, role:'reviewer', who:name || cbName(), log:[]};
   (c.sources || []).forEach(x => { delete x.lib; });
   if(clean){ c.stage = 'Idea'; (c.items || []).forEach(i => { i.status = 'empty'; delete i.doneAt; }); (c.outline || []).forEach(o => { o.status = 'empty'; }); }
+  c.collab.base = cbSnap(c);
   shareFile('project', c, p.title);
 }
 function openShare(kind, id){
   const isP = kind === 'project', src = isP ? state.projects.find(x => x.id === id) : (state.templates || []).find(x => x.id === id); if(!src) return;
+  if(isP && src.collab && src.collab.role === 'reviewer'){ toast('This project was shared with you. Use Send back to ' + (src.collab.who || 'them') + ' in the menu.'); return; }
   const title = isP ? src.title : src.name, box = document.getElementById('fsopts'); ctx = {kind:'share', share:kind, id};
+  document.getElementById('fsnamel').hidden = !(isP && shareOn()); document.getElementById('fsname').value = cbName();
+  document.getElementById('fsfoot').textContent = 'The file works on any device with Prepared Pro. The person you send it to opens Backup and restore, chooses the file, and presses Add it. Nothing they already have is replaced. When they send their changes back, you will see them here with their name on each one.';
   document.getElementById('fstitle').textContent = 'Share ' + (isP ? 'this project' : 'this template');
   if(!shareOn()){
     document.getElementById('fstext').textContent = 'Sharing "' + title + '" as a file is part of the Team edition. Anyone can open a file you send them, but sending one needs a Team code.';
@@ -2463,7 +2691,7 @@ function openShare(kind, id){
 }
 function doShare(v){
   const c = ctx; if(!c || c.kind !== 'share' || !shareOn()) return;
-  if(c.share === 'project'){ const p = state.projects.find(x => x.id === c.id); if(!p) return; shareProject(p, v === 'clean'); }
+  if(c.share === 'project'){ const p = state.projects.find(x => x.id === c.id); if(!p) return; const nm = document.getElementById('fsname').value.trim().slice(0, 40); if(!nm){ toast('Type your name first, so the other person sees who sent it.'); document.getElementById('fsname').focus(); return; } state.myName = nm; shareProject(p, v === 'clean', nm); }
   else { const t = (state.templates || []).find(x => x.id === c.id); if(!t) return; const o = JSON.parse(JSON.stringify(t)); o.id = uid(); shareFile('template', o, t.name); }
   fsdlg.close(); toast('The file is ready. Send it to the person you want to share it with.', true);
 }
@@ -2766,7 +2994,7 @@ idlg.addEventListener('close', () => {
   if(v === 'save'){
     const text = iform.text.value.trim(), cat = iform.cat.value.trim(); if(!text || !cat) return;
     const note = iform.note.value.trim();
-    if(item){ item.text = text; item.cat = cat; item.w = Number(iform.w.value); item.req = iform.req.checked; if(note) item.note = note; else delete item.note; }
+    if(item){ if(p.tags) delete p.tags['i:' + item.id]; item.text = text; item.cat = cat; item.w = Number(iform.w.value); item.req = iform.req.checked; if(note) item.note = note; else delete item.note; }
     else p.items.push(Object.assign({id:uid(), text, cat, w:Number(iform.w.value), req:iform.req.checked, status:'empty', m: cat===MARKETING_CAT ? 1 : (cat===RIGHTS_CATS[p.mode] ? 2 : 0)}, note ? {note} : {}));
     save(); render(true);
   }else if(v === 'delete' && item){
@@ -3143,19 +3371,19 @@ function schedModel(p){
   const rows = p.shoot.sched.slice().sort(schedCmp).map(i => [i.date ? fmtDate(i.date) : 'Date open', i.start ? fmtTime(i.start) + (i.end ? ' to ' + fmtTime(i.end) : '') : '', i.name + (i.kind ? ' (' + i.kind + ')' : ''), i.where, i.who, SH.sched.stat[i.status]]);
   return {title:p.title, sub:'Schedule', head:['Date', 'Time', 'What', 'Studio or place', 'Who', 'Status'], rows};
 }
-function schedPrintHtml(m){ return '<h1>' + esc(m.title) + '</h1><p class="sub">' + esc(m.sub) + '</p><table><thead><tr>' + m.head.map(x => '<th>' + esc(x) + '</th>').join('') + '</tr></thead><tbody>' + m.rows.map(r => '<tr>' + r.map(c => '<td>' + esc(c || '') + '</td>').join('') + '</tr>').join('') + '</tbody></table>'; }
+function schedPrintHtml(m){ return pHead(m.title, m.sub, {kick:'Schedule'}) + '<table><thead><tr>' + m.head.map(x => '<th>' + esc(x) + '</th>').join('') + '</tr></thead><tbody>' + m.rows.map(r => '<tr>' + r.map(c => '<td>' + esc(c || '') + '</td>').join('') + '</tr>').join('') + '</tbody></table>'; }
 function schedText(m){ return [m.title.toUpperCase(), m.sub, ''].concat(m.rows.map(r => r.filter(Boolean).join(' | '))).join('\n'); }
 function buildSchedDocx(m){
   const D = window.docx, font = 'Calibri', run = (t, o) => new D.TextRun(Object.assign({text:String(t), font}, o || {}));
   const cell = (t, bold) => new D.TableCell({margins:{top:60, bottom:60, left:90, right:90}, children:[new D.Paragraph({children:[run(t || '', {bold:!!bold, size:19})]})]});
   const tbl = new D.Table({width:{size:100, type:D.WidthType.PERCENTAGE}, rows:[new D.TableRow({tableHeader:true, children:m.head.map(x => cell(x, true))}), ...m.rows.map(r => new D.TableRow({children:r.map(c => cell(c))}))]});
-  return new D.Document({creator:'Prepared Pro', sections:[{properties:{page:{size:{orientation:D.PageOrientation.LANDSCAPE}, margin:{top:800, bottom:800, left:800, right:800}}}, children:[new D.Paragraph({spacing:{after:60}, children:[run(m.title, {bold:true, size:44})]}), new D.Paragraph({spacing:{after:200}, children:[run(m.sub, {size:24, color:'555555'})]}), tbl]}]});
+  return new D.Document({creator:'Prepared Pro', sections:[{properties:{page:{size:{orientation:D.PageOrientation.LANDSCAPE}, margin:{top:800, bottom:800, left:800, right:800}}}, footers:docFoot(D, m.title), children:[new D.Paragraph({alignment:D.AlignmentType.CENTER, spacing:{after:60}, children:[run(m.title, {bold:true, size:44})]}), new D.Paragraph({alignment:D.AlignmentType.CENTER, spacing:{after:240}, border:{bottom:{style:D.BorderStyle.DOUBLE, size:6, color:'444444', space:6}}, children:[run(m.sub, {size:24, italics:true, color:'555555'})]}), tbl]}]});
 }
 function schedExport(p, how){
   const m = schedModel(p), slug = fileSlug(p.title);
   if(how === 'copy'){ copyText(schedText(m), 'Schedule copied. Paste it into a text or email.'); return; }
   if(how === 'print'){
-    const pa = document.getElementById('printarea'); pa.innerHTML = schedPrintHtml(m);
+    const pa = document.getElementById('printarea'); pa.innerHTML = wrapPrint(schedPrintHtml(m), m.title);
     const done = () => { pa.innerHTML = ''; window.removeEventListener('afterprint', done); };
     window.addEventListener('afterprint', done); try{ window.print(); }catch(e){ done(); toast('Printing is not available here.'); } return;
   }
@@ -3284,7 +3512,7 @@ function callModel(p){
 const callHasData = m => m.facts.length || m.setup.length || m.places.length || m.people.length || m.gear.length || m.shots.length || m.notes;
 function callPrintHtml(m){
   const T = (head, rows) => '<table><thead><tr>' + head.map(x => '<th>' + esc(x) + '</th>').join('') + '</tr></thead><tbody>' + rows.map(r => '<tr>' + r.map(c => '<td>' + esc(c || '').replace(/\n/g, '<br>') + '</td>').join('') + '</tr>').join('') + '</tbody></table>';
-  let h = '<h1>' + esc(m.title) + '</h1><p class="sub">' + esc(m.sub) + '</p>';
+  let h = pHead(m.title, m.sub, {kick:'Call sheet'});
   if(m.facts.length) h += T(['Shoot day', 'Details'], m.facts);
   if(m.setup.length) h += '<h2>Production setup</h2>' + T(['Setup', 'Details'], m.setup);
   if(m.people.length) h += '<h2>People</h2>' + T(['Call', 'Name', 'Role', 'Phone', 'Notes'], m.people.map(i => [i.call ? fmtTime(i.call) : '', i.name, i.role, i.phone || i.email, i.notes]));
@@ -3310,9 +3538,9 @@ function buildCallDocx(m){
   const run = (t, o) => new D.TextRun(Object.assign({text:String(t), font}, o || {}));
   const cell = (t, bold) => new D.TableCell({margins:{top:60, bottom:60, left:90, right:90}, children:String(t || '').split('\n').map(x => new D.Paragraph({children:[run(x, {bold:!!bold, size:19})]}))});
   const table = (head, rows) => new D.Table({width:{size:100, type:D.WidthType.PERCENTAGE}, rows:[new D.TableRow({tableHeader:true, children:head.map(x => cell(x, true))}), ...rows.map(r => new D.TableRow({children:r.map(c => cell(c))}))]});
-  const H = t => new D.Paragraph({spacing:{before:260, after:100}, children:[run(t, {bold:true, size:28, color:'17458A'})]});
+  const H = t => new D.Paragraph({alignment:D.AlignmentType.CENTER, spacing:{before:300, after:120}, border:{bottom:{style:D.BorderStyle.SINGLE, size:4, color:'999999', space:3}}, children:[run(String(t), {bold:true, allCaps:true, size:26, color:'17458A', characterSpacing:30})]});
   const gap = () => new D.Paragraph({children:[]});
-  const kids = [new D.Paragraph({spacing:{after:60}, children:[run(m.title, {bold:true, size:48})]}), new D.Paragraph({spacing:{after:200}, children:[run(m.sub, {size:24, color:'555555'})]})];
+  const kids = [new D.Paragraph({alignment:D.AlignmentType.CENTER, spacing:{after:60}, children:[run(m.title, {bold:true, size:48})]}), new D.Paragraph({alignment:D.AlignmentType.CENTER, spacing:{after:240}, border:{bottom:{style:D.BorderStyle.DOUBLE, size:6, color:'444444', space:6}}, children:[run(m.sub, {size:24, italics:true, color:'555555'})]})];
   if(m.facts.length){ m.facts.forEach(([a, b]) => kids.push(new D.Paragraph({spacing:{after:60}, children:[run(a + ': ', {bold:true}), run(b)]}))); }
   if(m.setup.length){ kids.push(H('Production setup'), table(['Setup', 'Details'], m.setup)); }
   if(m.people.length){ kids.push(H('People'), table(['Call', 'Name', 'Role', 'Phone', 'Notes'], m.people.map(i => [i.call ? fmtTime(i.call) : '', i.name, i.role, i.phone || i.email, i.notes]))); }
@@ -3320,7 +3548,7 @@ function buildCallDocx(m){
   if(m.shots.length){ kids.push(H('Shot list'), table(['No.', 'Shot', 'Kind', 'Where', 'Notes'], m.shots.map(i => [i.num, i.desc, i.kind, i.where, i.notes]))); }
   if(m.gear.length){ kids.push(H('Gear'), table(['Group', 'Items'], m.gear.map(g => [g.cat, g.items.join('\n')]))); }
   if(m.notes){ kids.push(H('Notes')); m.notes.split('\n').forEach(x => kids.push(new D.Paragraph({spacing:{after:80}, children:[run(x)]}))); }
-  return new D.Document({creator:'Prepared Pro', sections:[{properties:{page:{margin:{top:800, bottom:800, left:800, right:800}}}, children:kids}]});
+  return new D.Document({creator:'Prepared Pro', sections:[{properties:{page:{margin:{top:1000, bottom:1000, left:1000, right:1000}}}, footers:docFoot(D, m.title), children:kids}]});
 }
 function callsheetHtml(p){
   const m = callModel(p), has = callHasData(m);
@@ -3378,7 +3606,7 @@ function callExport(p, how){
   const m = callModel(p), slug = fileSlug(p.title);
   if(how === 'copy'){ copyText(callText(m), 'Call sheet copied. Paste it into a text or email.'); return; }
   if(how === 'print'){
-    const pa = document.getElementById('printarea'); pa.innerHTML = callPrintHtml(m);
+    const pa = document.getElementById('printarea'); pa.innerHTML = wrapPrint(callPrintHtml(m), m.title);
     const done = () => { pa.innerHTML = ''; window.removeEventListener('afterprint', done); };
     window.addEventListener('afterprint', done); try{ window.print(); }catch(e){ done(); toast('Printing is not available here.'); } return;
   }
@@ -3483,7 +3711,7 @@ async function verifyStoredLicense(){
 const splash = document.getElementById('splash'), helpdlg = document.getElementById('helpdlg');
 
 /* Version, install hint, backup nudge, support */
-const APP_VERSION = '3.25';
+const APP_VERSION = '3.27';
 const SUPPORT_EMAIL = 'AscentStudiosOnline@gmail.com';
 const instDlg = document.getElementById('insthint');
 function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
@@ -3946,7 +4174,7 @@ const daysAway = d => Math.round((parseD(d) - today()) / DAY);
 function calendarStatusLine(){
   const b = document.getElementById('calbtn'); if(!b) return;
   const n = upcoming().filter(x => daysAway(x.date) <= 7).length;
-  b.textContent = n ? 'Calendar and reminders (' + n + ' in the next week)' : 'Calendar and reminders';
+  b.textContent = n ? 'Calendar (' + n + ' this week)' : 'Calendar';
 }
 let calV = 'list', calMon = '', calDay = '';
 try{ if(localStorage.getItem('pp.calv') === 'month') calV = 'month'; }catch(e){}
@@ -3996,7 +4224,7 @@ function weekPanel(){
   const more = L.length > 6 ? L.length - 6 : 0;
   return '<div class="panel" id="weekbox"><h3>This week and overdue</h3><p class="hint" style="margin-top:0">From all your projects.</p>' + L.slice(0, 6).map(x =>
     `<button type="button" class="calrow" data-a="cal-go" data-id="${x.pid}"${x.rid ? ' data-rid="' + esc(x.rid) + '"' : ''}><b>${esc(x.title)}</b><span${daysAway(x.date) < 0 ? ' style="color:var(--behind);font-weight:600"' : ''}>${esc(weekWhen(x))}</span>${x.project ? `<span>${esc(x.project)}</span>` : ''}${x.detail ? `<span>${esc(x.detail)}</span>` : ''}</button>`).join('') +
-    (more ? '<p class="hint">and ' + more + ' more. Open Calendar and reminders in the left column to see them all.</p>' : '') + '</div>';
+    (more ? '<p class="hint">and ' + more + ' more. Open Calendar in the left column to see them all.</p>' : '') + '</div>';
 }
 const caldlg = document.getElementById('caldlg'), calform = document.getElementById('calform');
 const icsEsc = t => String(t || '').replace(/[\u0000-\u001f\u007f]+/g, ' ').replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').trim();
@@ -4201,7 +4429,7 @@ function wholeModel(p, keys, photos){
 }
 function wholeHtml(blocks){
   return blocks.map((b, idx) => {
-    if(b.kind === 'pairs') return `<h2>${esc(b.title)}</h2>` + b.rows.map(([a, t]) => `<p><span class="lab">${esc(a)}:</span> ${esc(t)}</p>`).join('');
+    if(b.kind === 'pairs') return `<h2>${esc(b.title)}</h2>` + b.rows.map(([a, t]) => `<p class="kv"><span class="lab">${esc(a)}:</span> ${esc(t)}</p>`).join('');
     const brk = idx === blocks.findIndex(x => x.k !== 'summary') ? ' style="break-before:page;page-break-before:always"' : '';
     if(b.kind === 'pre') return `<h2${brk}>${esc(b.title)}</h2><p style="white-space:pre-wrap">${esc(b.text)}</p>`;
     return `<h2${brk}>${esc(b.title)}</h2><table><thead><tr>${b.head.map(x => '<th>' + esc(x) + '</th>').join('')}</tr></thead><tbody>${b.rows.map((r, ri) => '<tr>' + r.map((c, ci) => '<td>' + (ci === 0 && b.photos && b.photos[ri] ? '<img src="' + b.photos[ri] + '" alt="" style="width:34px;height:34px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:8px">' : '') + esc(c).replace(/\n/g, '<br>') + '</td>').join('') + '</tr>').join('')}</tbody></table>`;
@@ -4263,14 +4491,14 @@ function modelText(m){
 }
 function modelPrintHtml(m, look){
   const lk = LOOKS[look] || LOOKS.clean;
-  let h = `<div style="font-family:${lk.font},Georgia,serif"><h1>${esc(m.title)}</h1><p class="sub">${esc(m.sub)}</p>`;
+  let h = `<div style="font-family:${lk.font},Georgia,serif">` + pHead(m.title, m.sub, {kick:'Prepared Pro'});
   const wsum = (m.whole || []).filter(b => b.k === 'summary'), wrest = (m.whole || []).filter(b => b.k !== 'summary');
   if(wsum.length) h += wholeHtml(wsum);
-  if(m.big.length) h += '<h2>The big picture</h2>' + m.big.map(([a, t]) => `<p><span class="lab">${esc(a)}:</span> ${esc(t)}</p>`).join('');
+  if(m.big.length) h += '<h2>The big picture</h2>' + m.big.map(([a, t]) => `<p class="kv"><span class="lab">${esc(a)}:</span> ${esc(t)}</p>`).join('');
   let part = null;
   m.sections.forEach(s => {
     if(s.part && s.part !== part) h += `<h2>${esc(s.part)}</h2>`; part = s.part;
-    h += `<h3>${esc(s.title)}</h3>` + (s.head ? `<p><i>${esc(s.head)}</i></p>` : '') + (s.owner ? `<p><span class="lab">Owner:</span> ${esc(s.owner)}</p>` : '') + (s.purpose ? `<p><span class="lab">Purpose:</span> ${esc(s.purpose)}</p>` : '') + (s.subject ? `<p class="notes"><span class="lab">Subject matter:</span> ${esc(s.subject)}</p>` : '');
+    h += `<h3>${esc(s.title)}</h3>` + (s.head ? `<p class="lead"><i>${esc(s.head)}</i></p>` : '') + (s.owner ? `<p class="kv"><span class="lab">Owner:</span> ${esc(s.owner)}</p>` : '') + (s.purpose ? `<p class="kv"><span class="lab">Purpose:</span> ${esc(s.purpose)}</p>` : '') + (s.subject ? `<p class="notes kv"><span class="lab">Subject matter:</span> ${esc(s.subject)}</p>` : '');
     if(s.bullets.length) h += '<ul>' + s.bullets.map(x => `<li>${esc(x)}</li>`).join('') + '</ul>';
     if(s.notes) h += `<div class="notes fmt">${noteHtml(s.notes)}</div>`;
     if(s.srcs.length) h += `<p class="sub">Sources: ${esc(s.srcs.join('; '))}</p>`;
@@ -4284,8 +4512,8 @@ function buildDocx(m, look){
   const run = (text, o) => new D.TextRun(Object.assign({text, font:lk.font}, o || {}));
   const paras = text => String(text).split(/\n{2,}/).map(chunk => new D.Paragraph({spacing:{after:140, line:300}, children:chunk.split('\n').map((ln, i) => run(ln, i ? {break:1} : {}))}));
   const kids = [];
-  kids.push(new D.Paragraph({spacing:{after:80}, children:[run(m.title, {bold:true, size:56, color:lk.accent})]}));
-  if(m.sub) kids.push(new D.Paragraph({spacing:{after:240}, children:[run(m.sub, {size:22, color:lk.sub})]}));
+  kids.push(new D.Paragraph({alignment:D.AlignmentType.CENTER, spacing:{after:80}, children:[run(m.title, {bold:true, size:56, color:lk.accent})]}));
+  if(m.sub) kids.push(new D.Paragraph({alignment:D.AlignmentType.CENTER, spacing:{after:280}, border:{bottom:{style:D.BorderStyle.DOUBLE, size:6, color:lk.accent, space:8}}, children:[run(m.sub, {size:22, italics:true, color:lk.sub})]}));
   const wsumD = (m.whole || []).filter(b => b.k === 'summary'), wrestD = (m.whole || []).filter(b => b.k !== 'summary');
   if(wsumD.length) kids.push(...wholeDocx(D, run, lk, wsumD, false));
   if(m.big.length){
@@ -4309,13 +4537,13 @@ function buildDocx(m, look){
     m.bib.forEach(x => kids.push(new D.Paragraph({spacing:{after:120}, indent:{left:360, hanging:360}, children:[run(x, {size:22})]})));
   }
   if(wrestD.length) kids.push(...wholeDocx(D, run, lk, wrestD, true));
-  const hs = (id, name, size, before) => ({id, name, basedOn:'Normal', next:'Normal', quickFormat:true, run:{font:lk.font, size, bold:true, color:lk.accent}, paragraph:{spacing:{before, after:120}, keepNext:true}});
+  const hs = (id, name, size, before) => ({id, name, basedOn:'Normal', next:'Normal', quickFormat:true, run:{font:lk.font, size, bold:true, color:lk.accent}, paragraph:{spacing:{before, after:120}, keepNext:true, alignment:id === 'Heading1' ? D.AlignmentType.CENTER : D.AlignmentType.LEFT}});
   return new D.Document({
     creator: m.by || 'Prepared Pro', title: m.title,
     styles:{default:{document:{run:{font:lk.font, size:24}}}, paragraphStyles:[hs('Heading1','Heading 1',34,360), hs('Heading2','Heading 2',28,280)]},
     numbering:{config:[{reference:'bul', levels:[{level:0, format:D.LevelFormat.BULLET, text:'•', alignment:D.AlignmentType.LEFT, style:{paragraph:{indent:{left:720, hanging:360}}}}]}]},
     sections:[{properties:{page:{margin:{top:1200, bottom:1200, left:1300, right:1300}}},
-      footers:{default:new D.Footer({children:[new D.Paragraph({alignment:D.AlignmentType.CENTER, children:[new D.TextRun({children:[D.PageNumber.CURRENT], font:lk.font, size:18, color:lk.sub})]})]})},
+      footers:{default:new D.Footer({children:[new D.Paragraph({alignment:D.AlignmentType.CENTER, children:[new D.TextRun({text:m.title + '   |   Page ', font:lk.font, size:18, color:lk.sub}), new D.TextRun({children:[D.PageNumber.CURRENT], font:lk.font, size:18, color:lk.sub})]})]})},
       children:kids}]
   });
 }
@@ -4400,7 +4628,7 @@ function runExport(p, fmt, look, o){
   if(!m.sections.length && !(m.whole && m.whole.some(b => b.k !== 'summary'))){ toast('Nothing to export yet. Write something in at least one ' + nounOf(p) + '.'); return; }
   if(fmt === 'text'){ copyText(modelText(m), 'Copied as text.'); return; }
   if(fmt === 'print'){
-    const pa = document.getElementById('printarea'); pa.innerHTML = modelPrintHtml(m, look);
+    const pa = document.getElementById('printarea'); pa.innerHTML = wrapPrint(modelPrintHtml(m, look), m.title);
     const done = () => { pa.innerHTML = ''; window.removeEventListener('afterprint', done); };
     window.addEventListener('afterprint', done); try{ window.print(); }catch(e){ done(); toast('Printing is not available here.'); } return;
   }
@@ -4443,6 +4671,7 @@ function normProject(r){
     shoot:cleanShoot(r.shoot),
     links:arr(r.links, 50).map(x => { x = obj(x); const name = tstr(x.name, 60), url = cleanUrl(tstr(x.url, 500)); return name && url ? {id:idOf(x.id), name, url} : null; }).filter(Boolean),
     checks:{}, seriesId:tstr(r.seriesId, 40).replace(/[^A-Za-z0-9_-]/g, ''), event:{}, travel:[], bring:[]};
+  { const cc = cbCleanCollab(r.collab); if(cc){ p.collab = cc; p.tags = cbCleanTags(r.tags); } }
   Object.entries(obj(r.checks)).slice(0, 100).forEach(([k, v]) => { if(v === true) p.checks[tstr(k, 40).replace(/[^A-Za-z0-9_-]/g, '')] = true; });
   const ev = obj(r.event); EV.forEach(([g, fs]) => fs.forEach(([k]) => { const t = tstr(ev[k], 2000).trim(); if(t) p.event[k] = t; }));
   p.travel = arr(r.travel, 200).map(x => { x = obj(x); const o = {id:idOf(x.id), status:stat3(x.status)};
@@ -4513,11 +4742,15 @@ document.getElementById('bkfile').addEventListener('change', e => {
   if(file.size > 150 * 1024 * 1024){ msg.textContent = 'That file is too large to be a Prepared Pro backup.'; return; }
   file.text().then(t => {
     let raw; try{ raw = JSON.parse(t); }catch(err){ msg.textContent = 'That file is not a Prepared Pro backup.'; return; }
+    if(raw && raw.app === 'preparedpro' && raw.shared === 'review'){
+      const rv = cbCleanReview(raw); if(!rv){ msg.textContent = 'That file of changes could not be read.'; return; }
+      document.getElementById('bkfile').value = ''; bkdlg.close(); openReview(rv); return;
+    }
     const ns = normState(raw);
     if(!ns){ msg.textContent = 'That file is not a Prepared Pro backup.'; return; }
     pendingImport = ns; const sh = raw && raw.shared;
     if(sh === 'project' || sh === 'template'){
-      msg.textContent = sh === 'project' ? 'This is a shared project: "' + (ns.projects[0] ? ns.projects[0].title : '') + '". Add it to your projects? Nothing you already have is changed.' : 'This is a shared template: "' + ((ns.templates || [])[0] ? ns.templates[0].name : '') + '". Add it to your templates? Nothing you already have is changed.';
+      const cb0 = ns.projects[0] && ns.projects[0].collab; msg.textContent = sh === 'project' ? (cb0 && cb0.role === 'reviewer' ? cb0.who + ' shared a project with you: "' + ns.projects[0].title + '". Add it, work on it, and then use Send back to ' + cb0.who + ' in its menu so they see what you changed.' : 'This is a shared project: "' + (ns.projects[0] ? ns.projects[0].title : '') + '". Add it to your projects? Nothing you already have is changed.') : 'This is a shared template: "' + ((ns.templates || [])[0] ? ns.templates[0].name : '') + '". Add it to your templates? Nothing you already have is changed.';
       choice.innerHTML = '<button type="button" class="btn" data-a="bk-merge">Add it</button>'; choice.hidden = false; return;
     }
     choice.innerHTML = '<button type="button" class="btn" data-a="bk-merge">Add to what I have</button><button type="button" class="btn danger" data-a="bk-replace">Replace everything</button>';
@@ -4530,11 +4763,12 @@ function applyImport(mode){
   const msg = document.getElementById('bkmsg');
   const finish = text => { pendingImport = null; document.getElementById('bkchoice').hidden = true; document.getElementById('bkfile').value = ''; ui.series = null; ui.contacts = false; ui.notebook = false; ui.meetings = false; ui.page = 'overview'; ui.view = state.projects.length ? 'list' : 'detail'; save(); render(); backupStatusLine(); msg.textContent = text; };
   if(mode === 'replace'){
-    const keep = state.lastBackup, lic = state.license, prefs = state.prefs;
+    const keep = state.lastBackup, lic = state.license, prefs = state.prefs, mname = state.myName;
     state = {v:1, projects:ns.projects, tools:ns.tools, series:ns.series, bringTemplate:ns.bringTemplate, templates:ns.templates || [], contacts:ns.contacts || [], groups:ns.groups || [], rooms:ns.rooms || [], lib:ns.lib || [], todo:ns.todo || [], release:ns.release, nb:ns.nb, selected:ns.selected, lastBackup:keep};
     nbRestoreImages(ns, true);
     if(lic) state.license = lic;
     if(prefs) state.prefs = prefs;
+    if(mname) state.myName = mname;
     finish('Restored ' + ns.projects.length + (ns.projects.length === 1 ? ' project.' : ' projects.'));
   }else{
     const tBefore = (state.templates || []).length;
@@ -5382,7 +5616,7 @@ function relModel(cfg, project, person){
 }
 function relPrintHtml(m){
   const R = rows => rows.map(([l, v]) => '<div class="relrow"><span class="l">' + esc(l) + ':</span><span class="ln">' + esc(v || '') + '</span></div>').join('');
-  const P = x => '<p style="margin:0 0 8pt">' + esc(x).replace(/\n/g, '<br>') + '</p>', last = m.paras.length ? m.paras[m.paras.length - 1] : '';
+  const P = x => '<p style="margin:0 0 9pt;text-indent:0;text-align:justify">' + esc(x).replace(/\n/g, '<br>') + '</p>', last = m.paras.length ? m.paras[m.paras.length - 1] : '';
   return '<h1 style="text-align:center;font-size:19pt;margin:0 0 12pt">' + esc(m.title) + '</h1>' + m.paras.slice(0, -1).map(P).join('')
     + '<div style="break-inside:avoid">' + (last ? P(last) : '') + '<div style="margin-top:8pt">' + R(m.rows) + (m.minor ? '<p style="margin:14pt 0 0">' + esc(m.minor.note) + '</p>' + R(m.minor.rows) : '') + '</div></div>';
 }
@@ -5393,11 +5627,11 @@ function relText(m){
 function buildRelDocx(m){
   const D = window.docx, font = 'Calibri';
   const run = (t, o) => new D.TextRun(Object.assign({text:String(t), font, size:23}, o || {}));
-  const para = (t, o) => new D.Paragraph(Object.assign({spacing:{after:140}, children:String(t).split('\n').flatMap((x, i) => i ? [new D.TextRun({break:1, font}), run(x)] : [run(x)])}, o || {}));
+  const para = (t, o) => new D.Paragraph(Object.assign({spacing:{after:140}, indent:{firstLine:360}, children:String(t).split('\n').flatMap((x, i) => i ? [new D.TextRun({break:1, font}), run(x)] : [run(x)])}, o || {}));
   const R = rows => rows.map(([l, v]) => new D.Paragraph({spacing:{before:300}, children:[run(l + ': ', {bold:true}), run(v || '______________________________________________')]}));
   const kids = [new D.Paragraph({alignment:D.AlignmentType.CENTER, spacing:{after:260}, children:[run(m.title, {bold:true, size:34})]}), ...m.paras.map(x => para(x)), ...R(m.rows)];
   if(m.minor){ kids.push(new D.Paragraph({spacing:{before:360}, children:[run(m.minor.note, {italics:true})]}), ...R(m.minor.rows)); }
-  return new D.Document({creator:'Prepared Pro', sections:[{properties:{page:{margin:{top:1000, bottom:1000, left:1100, right:1100}}}, children:kids}]});
+  return new D.Document({creator:'Prepared Pro', sections:[{properties:{page:{margin:{top:1000, bottom:1000, left:1100, right:1100}}}, footers:docFoot(D, m.title), children:kids}]});
 }
 const reldlg = document.getElementById('reldlg'), relform = document.getElementById('relform');
 function openRelease(project){
@@ -5426,7 +5660,7 @@ function relExport(how){
   const m = relModel(cfg, project ? project.title : '', person), slug = fileSlug(project ? project.title : 'prepared-pro') + '-release-form';
   if(how === 'copy'){ copyText(relText(m), 'Release form copied. Paste it into a text or email.'); return; }
   if(how === 'print'){
-    const pa = document.getElementById('printarea'); pa.innerHTML = relPrintHtml(m);
+    const pa = document.getElementById('printarea'); pa.innerHTML = wrapPrint(relPrintHtml(m), m.title);
     const done = () => { pa.innerHTML = ''; window.removeEventListener('afterprint', done); };
     window.addEventListener('afterprint', done); try{ window.print(); }catch(e){ done(); toast('Printing is not available here.'); } return;
   }
@@ -5505,7 +5739,7 @@ function serModel(sr){
 }
 function serPrintHtml(m){
   const T = (head, rows) => '<table><thead><tr>' + head.map(x => '<th>' + esc(x) + '</th>').join('') + '</tr></thead><tbody>' + rows.map(r => '<tr>' + r.map(c => '<td>' + esc(c || '').replace(/\n/g, '<br>') + '</td>').join('') + '</tr>').join('') + '</tbody></table>';
-  let h = '<h1>' + esc(m.title) + '</h1><p class="sub">' + esc(m.sub) + '</p>';
+  let h = pHead(m.title, m.sub, {kick:'Series overview'});
   if(m.rows.length) h += T(['About the series', 'Details'], m.rows);
   if(m.parts.length) h += '<h2>The parts</h2>' + T(['No.', 'Title', 'Stage', 'Ready'], m.parts);
   return h;
@@ -5521,17 +5755,17 @@ function buildSerDocx(m){
   const run = (t, o) => new D.TextRun(Object.assign({text:String(t), font}, o || {}));
   const cell = (t, bold) => new D.TableCell({margins:{top:60, bottom:60, left:90, right:90}, children:String(t || '').split('\n').map(x => new D.Paragraph({children:[run(x, {bold:!!bold, size:20})]}))});
   const table = (head, rows) => new D.Table({width:{size:100, type:D.WidthType.PERCENTAGE}, rows:[new D.TableRow({tableHeader:true, children:head.map(x => cell(x, true))}), ...rows.map(r => new D.TableRow({children:r.map(c => cell(c))}))]});
-  const H = t => new D.Paragraph({spacing:{before:260, after:100}, children:[run(t, {bold:true, size:28, color:'17458A'})]});
-  const kids = [new D.Paragraph({spacing:{after:60}, children:[run(m.title, {bold:true, size:48})]}), new D.Paragraph({spacing:{after:200}, children:[run(m.sub, {size:24, color:'555555'})]})];
+  const H = t => new D.Paragraph({alignment:D.AlignmentType.CENTER, spacing:{before:300, after:120}, border:{bottom:{style:D.BorderStyle.SINGLE, size:4, color:'999999', space:3}}, children:[run(String(t), {bold:true, allCaps:true, size:26, color:'17458A', characterSpacing:30})]});
+  const kids = [new D.Paragraph({alignment:D.AlignmentType.CENTER, spacing:{after:60}, children:[run(m.title, {bold:true, size:48})]}), new D.Paragraph({alignment:D.AlignmentType.CENTER, spacing:{after:240}, border:{bottom:{style:D.BorderStyle.DOUBLE, size:6, color:'444444', space:6}}, children:[run(m.sub, {size:24, italics:true, color:'555555'})]})];
   m.rows.forEach(([a, b]) => { kids.push(H(a)); String(b).split('\n').forEach(x => kids.push(new D.Paragraph({spacing:{after:80}, children:[run(x)]}))); });
   if(m.parts.length) kids.push(H('The parts'), table(['No.', 'Title', 'Stage', 'Ready'], m.parts));
-  return new D.Document({creator:'Prepared Pro', sections:[{properties:{page:{margin:{top:800, bottom:800, left:800, right:800}}}, children:kids}]});
+  return new D.Document({creator:'Prepared Pro', sections:[{properties:{page:{margin:{top:1000, bottom:1000, left:1000, right:1000}}}, footers:docFoot(D, m.title), children:kids}]});
 }
 function serExport(sr, how){
   const m = serModel(sr), slug = fileSlug(sr.name);
   if(how === 'copy'){ copyText(serText(m), 'Series overview copied. Paste it into a text or email.'); return; }
   if(how === 'print'){
-    const pa = document.getElementById('printarea'); pa.innerHTML = serPrintHtml(m);
+    const pa = document.getElementById('printarea'); pa.innerHTML = wrapPrint(serPrintHtml(m), m.title);
     const done = () => { pa.innerHTML = ''; window.removeEventListener('afterprint', done); };
     window.addEventListener('afterprint', done); try{ window.print(); }catch(e){ done(); toast('Printing is not available here.'); } return;
   }
@@ -5815,6 +6049,7 @@ odlg.addEventListener('close', () => {
     if(!data.title) return;
     if(data.status === 'empty' && hasContent(data)) data.status = 'started';
     let target = s;
+    if(s && p.tags) delete p.tags['o:' + s.id];
     if(s) Object.assign(s, data); else { target = Object.assign(blankSection(data.title), data); p.outline.push(target); }
     ui.open[target.id] = true;
     save(); render(true);
@@ -6040,7 +6275,7 @@ document.addEventListener('click', e => {
   else if(a === 'new'){ openProject(false, b.dataset.mode); }
   else if(a === 'sample'){ if(!canCreate()){ openLicense(true); return; } createSample(); ui.view = 'detail'; render(); }
   else if(a === 'edit-project'){ ui.menu = false; render(true); openProject(true); }
-  else if(a === 'series-home'){ ui.series = 'list'; ui.contacts = false; ui.notebook = false; ui.meetings = false; ui.view = 'detail'; render(); document.getElementById('main').scrollTop = 0; }
+  else if(a === 'series-home'){ state.listOpen = state.listOpen || {}; state.listOpen._ser = true; ui.series = 'list'; ui.contacts = false; ui.notebook = false; ui.meetings = false; ui.view = 'detail'; render(); document.getElementById('main').scrollTop = 0; }
   else if(a === 'notebook-home'){ if(nbLocked()){ openLicense('notebook'); return; } ui.notebook = true; ui.contacts = false; ui.meetings = false; ui.series = null; ui.view = 'detail'; ui.menu = false; render(); document.getElementById('main').scrollTop = 0; }
   else if(a.slice(0, 3) === 'nb-'){ nbAction(a, b); }
   else if(a === 'meetings-home'){ ui.meetings = true; ui.contacts = false; ui.notebook = false; ui.series = null; ui.view = 'detail'; ui.menu = false; render(); document.getElementById('main').scrollTop = 0; }
@@ -6075,6 +6310,7 @@ document.addEventListener('click', e => {
   else if(a === 'p-from-contacts' && p){ openPickContacts(); }
   else if(a === 'p-to-contacts' && p){ saveToContacts(p); }
   else if(a === 'sfold'){ state.listOpen = state.listOpen || {}; state.listOpen[b.dataset.id] = !state.listOpen[b.dataset.id]; save(); renderList(); const nb2 = document.querySelector('.sfbtn[data-id="' + b.dataset.id + '"]'); if(nb2) nb2.focus({preventScroll:true}); }
+  else if(a === 'sgrp'){ state.listOpen = state.listOpen || {}; const g = b.dataset.g, cur = g === '_proj' ? state.listOpen._proj !== false : state.listOpen._ser === true; state.listOpen[g] = !cur; save(); sideGroups(); }
   else if(a === 'pgrp'){ state.listOpen = state.listOpen || {}; state.listOpen[b.dataset.g] = !state.listOpen[b.dataset.g]; save(); renderList(); const nb3 = document.querySelector('.pgrp[data-g="' + b.dataset.g + '"]'); if(nb3) nb3.focus({preventScroll:true}); }
   else if(a === 'sfopen'){ ui.series = b.dataset.id; ui.contacts = false; ui.notebook = false; ui.meetings = false; ui.view = 'detail'; ui.menu = false; render(); document.getElementById('main').scrollTop = 0; }
   else if(a === 'cal-view'){ calV = b.dataset.v === 'month' ? 'month' : 'list'; try{ localStorage.setItem('pp.calv', calV); }catch(e){} calRender(); }
@@ -6106,7 +6342,7 @@ document.addEventListener('click', e => {
   else if(a === 'cal-day'){ calDay = b.dataset.d; calRender(); }
   else if(a === 'ph-choose'){ photoPrompt(); }
   else if(a === 'ph-remove' && ctx){ ctx.photo = ''; phDraw(); }
-  else if(a === 'series-open'){ ui.series = b.dataset.id; render(); document.getElementById('main').scrollTop = 0; }
+  else if(a === 'series-open'){ state.listOpen = state.listOpen || {}; state.listOpen._ser = true; ui.series = b.dataset.id; render(); document.getElementById('main').scrollTop = 0; }
   else if(a === 'series-new'){ openSeriesName(false); }
   else if(a === 'series-rename'){ openSeriesName(true); }
   else if(a === 'series-cols'){ openCols(); }
@@ -6172,6 +6408,10 @@ document.addEventListener('click', e => {
   else if(a === 'share-proj' && p){ ui.menu = false; openShare('project', p.id); }
   else if(a === 'tpl-share'){ openShare('template', b.dataset.id); }
   else if(a === 'fs-go'){ doShare(b.dataset.v); }
+  else if(a === 'fs-back'){ doSendBack(); }
+  else if(a === 'collab-send'){ ui.menu = false; const pp = sel(); if(pp && pp.collab && pp.collab.role === 'reviewer') openSendBack(pp); }
+  else if(a === 'rv-all' || a === 'rv-none'){ document.querySelectorAll('#rvlist input[type=checkbox]:not(:disabled)').forEach(x => { x.checked = a === 'rv-all'; }); }
+  else if(a === 'rv-apply'){ rvApply(); }
   else if(a === 'fs-code'){ fsdlg.close(); openLicense(false); }
   else if(a === 'td-add'){ tdAdd(); }
   else if(a === 'td-tog'){ const t = tdList().find(x => x.id === b.dataset.id); if(t){ t.done = !t.done; t.doneAt = t.done ? ymd(today()) : ''; save(); render(true); } }
