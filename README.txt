@@ -402,13 +402,17 @@ VERSION 3.29
 - Video Editing and Post moved from the kind list into the template gallery (Video and film group). Existing editing projects are unchanged.
 - Script and Film is now called Script, Film and Video.
 
+VERSION 3.32
+- Indent: In (and Tab) now moves the whole paragraph, every line of it, in talking notes and letters. The letter editor has Out and Indent paragraph buttons, and the indent carries through to print, Word and copy.
+- Notebook sorting: Sort notes (newest, oldest, title A to Z or Z to A, by folder) and Sort folders (order made, A to Z, Z to A, most notes first). Remembered on each device.
+- Letters are kept in folders (Non-profit and ministry, Business and office, Personal, or any folder you type). Samples are grouped the same way and a letter made from a sample goes into its folder.
+
 VERSION 3.31
 - Contacts for ministries and non-profits: starter categories, Last contacted and Contact again every (30 to 365 days), a Contacted today button with Undo, and a Due to contact list. Due people show on My day and in its badge.
 - Giving log per person (date, amount, thank-you sent) with a total, and a mailing-list export of whoever is shown. Import now reads last contacted and last gift columns.
 - Letters: 14 editable samples, your own letters, letterheads (logo, address lines, footer), fill-in words such as {{First name}}, merge to one person, a group, a category or everyone due, with a preview that flags missing information. Print or PDF, Word, copy as text, mailing labels. Option to mark people contacted today. Letters can be attached to a project.
 - Fine-tune with my AI: Polish a letter, fine-tune talking notes (including a fairness check and tighten to length), and draft a follow-up for a due contact. Nothing is sent; the request is copied for your own AI.
 - New templates: Yearly performance review, Staff or teacher evaluation, Donor thank-you and follow-up, Annual appeal, Newsletter issue, Fundraising event, Grant application (group: Non-profit and ministry).
-- Indent: In (and Tab) now moves the whole paragraph, every line of it, in talking notes and letters. The letter editor has Out and Indent paragraph buttons, and the indent carries through to print, Word and copy.
 
 VERSION 3.30
 - Plan a week: make a run of projects at once (for example five podcast episodes) from a template, with the first date, how many, and which days. They go into one series with their dates set.

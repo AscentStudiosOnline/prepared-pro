@@ -654,7 +654,7 @@ dialog{border-radius:12px;box-shadow:0 26px 60px -22px rgba(40,26,6,.55)}
 .seg{border-radius:4px}
 .pct{font-weight:700}
 .stage{border-radius:8px}
-.ltrow{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:8px 0;border-bottom:1px solid var(--line,#ddd)}.ltrow .cat{display:block}.ltsamples{display:flex;flex-wrap:wrap;gap:8px}.ltpv{border:1px solid var(--line,#ccc);border-radius:8px;padding:8px;margin:6px 0}.ltpv.warn{border-color:#b45309;background:rgba(180,83,9,.08)}.ltsnip{font-size:14px;opacity:.85;white-space:pre-line}.ltfs{border:1px solid var(--line,#ccc);border-radius:8px;display:grid;gap:6px;margin:6px 0}.ltf{min-height:40px;padding:4px 10px}
+.ltrow{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:8px 0;border-bottom:1px solid var(--line,#ddd)}.ltrow .cat{display:block}.ltfold{margin:6px 0}.ltfold>summary{min-height:44px;display:flex;align-items:center;cursor:pointer}.ltsamples{display:flex;flex-wrap:wrap;gap:8px}.ltpv{border:1px solid var(--line,#ccc);border-radius:8px;padding:8px;margin:6px 0}.ltpv.warn{border-color:#b45309;background:rgba(180,83,9,.08)}.ltsnip{font-size:14px;opacity:.85;white-space:pre-line}.ltfs{border:1px solid var(--line,#ccc);border-radius:8px;display:grid;gap:6px;margin:6px 0}.ltf{min-height:40px;padding:4px 10px}
 </style>
 </head>
 <body>
@@ -1196,6 +1196,7 @@ dialog{border-radius:12px;box-shadow:0 26px 60px -22px rgba(40,26,6,.55)}
     <p class="hint" style="margin:0">Tap a word to put it in the letter. It fills in by itself for each person:</p>
     <div id="ltfields" class="btnrow" style="margin:0"></div>
     <div id="ltfills"></div>
+    <label class="f">Folder<input name="folder" maxlength="60" list="ltfolders" autocomplete="off" placeholder="Pick a folder or type a new one"><datalist id="ltfolders"></datalist></label>
     <label class="f">Attach to a project<select name="pid"></select></label>
     <label class="f">Letterhead<select name="head"></select></label>
     <label class="f">Who is it going to?<select name="to"></select></label>
@@ -3942,7 +3943,7 @@ async function verifyStoredLicense(){
 const splash = document.getElementById('splash'), helpdlg = document.getElementById('helpdlg');
 
 /* Version, install hint, backup nudge, support */
-const APP_VERSION = '3.31';
+const APP_VERSION = '3.32';
 const SUPPORT_EMAIL = 'AscentStudiosOnline@gmail.com';
 const instDlg = document.getElementById('insthint');
 function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
@@ -5457,7 +5458,15 @@ function nbMatch(n){
   const hay = [n.title, n.text, (n.tags || []).join(' '), nbLocName(n)].join(' ').toLowerCase();
   return q.split(/\s+/).every(w => hay.includes(w));
 }
-const nbSorted = () => nbEnsure(state).notes.slice().sort((a, b) => String(b.updated).localeCompare(String(a.updated)) || a.title.localeCompare(b.title));
+const NB_SORTS = [['new','Newest first'],['old','Oldest first'],['az','Title A to Z'],['za','Title Z to A'],['fold','By folder, then title']];
+const NBF_SORTS = [['made','The order I made them'],['az','A to Z'],['za','Z to A'],['most','Most notes first']];
+const sortPref = (k, ok, def) => { let v = ''; try{ v = localStorage.getItem('pp.' + k) || ''; }catch(e){} return ok.some(x => x[0] === v) ? v : def; };
+const sortSave = (k, v) => { try{ localStorage.setItem('pp.' + k, v); }catch(e){} };
+const nbSorted = () => { const m = sortPref('nbsort', NB_SORTS, 'new'), byT = (a, b) => a.title.localeCompare(b.title, undefined, {sensitivity:'base', numeric:true}), byU = (a, b) => String(b.updated).localeCompare(String(a.updated));
+  const f = m === 'old' ? (a, b) => -byU(a, b) || byT(a, b) : m === 'az' ? byT : m === 'za' ? (a, b) => -byT(a, b) : m === 'fold' ? (a, b) => (nbLocName(a) || '\uffff').localeCompare(nbLocName(b) || '\uffff', undefined, {sensitivity:'base'}) || byT(a, b) : (a, b) => byU(a, b) || byT(a, b);
+  return nbEnsure(state).notes.slice().sort(f); };
+const nbfOrder = (list, cntOf) => { const m = sortPref('nbfsort', NBF_SORTS, 'made'), nm = x => String(x.name || x.title || '');
+  return m === 'az' ? list.slice().sort((a, b) => nm(a).localeCompare(nm(b), undefined, {sensitivity:'base', numeric:true})) : m === 'za' ? list.slice().sort((a, b) => nm(b).localeCompare(nm(a), undefined, {sensitivity:'base', numeric:true})) : m === 'most' ? list.slice().sort((a, b) => cntOf(b) - cntOf(a) || nm(a).localeCompare(nm(b))) : list; };
 function nbSnippet(t){ const s = notePlain(t).replace(/\s+/g, ' ').trim(); return s.length > 140 ? s.slice(0, 140).replace(/\s+\S*$/, '') + '…' : s; }
 /* picture thumbnails are read from the device only when they scroll into view */
 const nbUrls = new Map(); let nbIO = null;
@@ -5514,8 +5523,9 @@ function nbRailHtml(){
   const pics = notes.reduce((a, n) => a + (n.imgs ? n.imgs.length : 0), 0);
   let out = row('', 'All notes', notes.length) + row('_none', 'Unfiled', cnt('_none')) + row('_recent', 'Recent', cnt('_recent')) + row('_photos', 'Photos', pics);
   out += '<div class="nbsec"><span>My folders</span><button type="button" class="link" data-a="nb-fnew">+ New</button></div>';
-  out += nb.folders.length ? nb.folders.map(f => row(f.id, f.name, cnt(f.id))).join('') : '<p class="hint nbhint">Make a folder for ideas you will use again, such as Illustrations or Quotes.</p>';
-  const pf = state.projects.filter(p => notes.some(n => n.proj === p.id) || cur === 'p:' + p.id);
+  out += '<label class="f nbfs" style="font-weight:400">Sort folders<select id="nbfsort">' + NBF_SORTS.map(x => '<option value="' + x[0] + '"' + (x[0] === sortPref('nbfsort', NBF_SORTS, 'made') ? ' selected' : '') + '>' + x[1] + '</option>').join('') + '</select></label>';
+  out += nb.folders.length ? nbfOrder(nb.folders, f => cnt(f.id)).map(f => row(f.id, f.name, cnt(f.id))).join('') : '<p class="hint nbhint">Make a folder for ideas you will use again, such as Illustrations or Quotes.</p>';
+  const pf = nbfOrder(state.projects.filter(p => notes.some(n => n.proj === p.id) || cur === 'p:' + p.id), p => cnt('p:' + p.id));
   if(pf.length){
     out += '<div class="nbsec"><span>Project folders</span></div>';
     const bySr = new Map(), plain = [];
@@ -5536,6 +5546,7 @@ function nbHtml(){
       <section class="nbmain"><button type="button" class="btn ghost nbfoldbtn" data-a="nb-rail" aria-expanded="${!!ui.nbrail}"><span>Folders</span><b>${esc(info.name)}</b></button>
         <h3 style="margin:0">${esc(info.name)}</h3><p class="hint" style="margin:2px 0 8px">${esc(info.sub)}</p>
         ${info.proj || info.folder ? `<div class="btnrow" style="margin:0 0 10px">${info.proj ? `<button class="btn ghost" data-a="nb-openproj" data-id="${info.proj.id}">Open this project</button>` : '<button class="btn ghost" data-a="nb-fedit">Rename or delete this folder</button>'}</div>` : ''}
+        <label class="f" style="font-weight:400">Sort notes<select id="nbsort">${NB_SORTS.map(x => '<option value="' + x[0] + '"' + (x[0] === sortPref('nbsort', NB_SORTS, 'new') ? ' selected' : '') + '>' + x[1] + '</option>').join('')}</select></label>
         <label class="f" style="font-weight:400">Search all notes<input id="nbq" type="search" value="${esc(ui.nbq || '')}" placeholder="Title, words or tag" autocomplete="off"></label>
         ${ui.nbt ? `<p class="hint" style="margin:0 0 8px">Showing the tag <b>${esc(ui.nbt)}</b>. <button class="link" data-a="nb-tagclear">Show all</button></p>` : ''}
         <p class="hint" id="nbcount" style="margin:0 0 8px">${nbCountText()}</p>
@@ -5555,7 +5566,7 @@ function nbBackupInfo(){
   el.textContent = c ? '(' + c + (c === 1 ? ' picture' : ' pictures') + ', makes the file larger)' : '(none yet)'; document.getElementById('bkimgs').disabled = !c;
 }
 document.addEventListener('input', e => { const t = e.target; if(t && t.id === 'nbq'){ ui.nbq = t.value; nbRefresh(); } else if(t && t.id === 'nbpq') nbPickDraw(); });
-document.addEventListener('change', e => { const t = e.target; if(t && t.id === 'oown'){ ui.oown = t.value; render(true); } });
+document.addEventListener('change', e => { const t = e.target; if(t && t.id === 'nbsort'){ sortSave('nbsort', t.value); nbRefresh(); } else if(t && t.id === 'nbfsort'){ sortSave('nbfsort', t.value); render(true); } else if(t && t.id === 'oown'){ ui.oown = t.value; render(true); } });
 const nbdlg = document.getElementById('nbdlg'), nbform = document.getElementById('nbform'), nbfdlg = document.getElementById('nbfdlg'), nbfform = document.getElementById('nbfform');
 const nbadd = document.getElementById('nbadd'), nbaform = document.getElementById('nbaform'), nbpick = document.getElementById('nbpick'), nbimgdlg = document.getElementById('nbimgdlg');
 let nbView = null;
@@ -6364,10 +6375,13 @@ const LT_SAMPLES = [
  ['s-complaint','Complaint response',"Dear {{First name}},\n\nThank you for letting us know about [the concern]. I am sorry for the trouble this caused.\n\nHere is what we have looked into and what we will do: [steps]. You can expect [result] by [date].\n\nIf you would like to talk, please contact me directly.\n\nSincerely,\n{{My name}}"],
  ['s-policy','Policy announcement',"Dear {{First name}},\n\nWe are writing to let you know about a change: [describe the policy] takes effect on [date].\n\nWhat this means for you: [short explanation].\n\nIf you have questions, please contact [person] at [contact details].\n\nThank you,\n{{My name}}"]
 ];
+const LT_FOLDERS = ['Non-profit and ministry', 'Business and office', 'Personal'];
+const ltSampleFolder = id => ['s-ref', 's-meet', 's-complaint', 's-policy'].includes(id) ? 'Business and office' : 'Non-profit and ministry';
+const ltFolderList = () => [...new Set(LT_FOLDERS.concat((state.letters || []).map(l => l.folder).filter(Boolean)))];
 const LT_FIELDS = ['First name','Last name','Full name','Last gift amount','Last gift date','Date','My name','Organization','Address'];
 const LT_MAX_HEAD = 120000;
 function ltNorm(a){ return (Array.isArray(a) ? a : []).slice(0, 300).map(x => { x = x && typeof x === 'object' ? x : {}; const name = String(x.name || '').trim().slice(0, 120); if(!name) return null;
-  return {id:String(x.id || uid()).slice(0, 40), name, body:String(x.body || '').slice(0, 20000), pid:String(x.pid || '').slice(0, 40), head:String(x.head || '').slice(0, 40), gift:String(x.gift || '').slice(0, 40)}; }).filter(Boolean); }
+  return {id:String(x.id || uid()).slice(0, 40), name, body:String(x.body || '').slice(0, 20000), pid:String(x.pid || '').slice(0, 40), folder:String(x.folder || '').trim().slice(0, 60), head:String(x.head || '').slice(0, 40), gift:String(x.gift || '').slice(0, 40)}; }).filter(Boolean); }
 function ltHeadNorm(a){ return (Array.isArray(a) ? a : []).slice(0, 12).map(x => { x = x && typeof x === 'object' ? x : {}; const name = String(x.name || '').trim().slice(0, 80); if(!name) return null;
   const img = (typeof x.img === 'string' && x.img.length <= LT_MAX_HEAD && /^data:image\/(png|jpeg|jpg);base64,[A-Za-z0-9+\/=]+$/.test(x.img)) ? x.img : '';
   return {id:String(x.id || uid()).slice(0, 40), name, img, lines:String(x.lines || '').slice(0, 600), foot:String(x.foot || '').slice(0, 300)}; }).filter(Boolean); }
@@ -6436,10 +6450,11 @@ function lettersHtml(){
   return back + `<div class="proj"><header class="phead"><h2>Letters</h2><p class="sub">Write a letter once, then print it for one person or for a whole group, each one personalized.</p></header><div class="body">
   <div class="panel"><h3>My letters</h3>
    <label class="f" style="font-weight:400">Show<select id="ltpf"><option value="">All my letters (${L.length})</option>${state.projects.map(p => '<option value="' + esc(p.id) + '"' + (p.id === pf ? ' selected' : '') + '>For project: ' + esc(p.title) + '</option>').join('')}</select></label>
-   ${shown.length ? shown.map(l => { const pr = state.projects.find(p => p.id === l.pid); return '<div class="ltrow"><div style="min-width:0"><b>' + esc(l.name) + '</b>' + (pr ? '<span class="cat">Project: ' + esc(pr.title) + '</span>' : '') + '</div><div class="cact"><button class="btn" data-a="lt-edit" data-id="' + l.id + '">Open</button><button class="btn ghost" data-a="lt-dup" data-id="' + l.id + '">Copy</button><button class="btn ghost" data-a="lt-del" data-id="' + l.id + '">Delete</button></div></div>'; }).join('') : '<p class="hint">No letters yet. Start from a sample below, or write your own.</p>'}
+   ${shown.length ? ltFolderList().concat(['']).map(fo => { const grp = shown.filter(l => (l.folder || '') === fo).sort((x, y) => x.name.localeCompare(y.name, undefined, {sensitivity:'base'})); if(!grp.length) return '';
+      return '<details class="ltfold" open><summary><b>' + esc(fo || 'No folder') + '</b> (' + grp.length + ')</summary>' + grp.map(l => { const pr = state.projects.find(p => p.id === l.pid); return '<div class="ltrow"><div style="min-width:0"><b>' + esc(l.name) + '</b>' + (pr ? '<span class="cat">Project: ' + esc(pr.title) + '</span>' : '') + '</div><div class="cact"><button class="btn" data-a="lt-edit" data-id="' + l.id + '">Open</button><button class="btn ghost" data-a="lt-dup" data-id="' + l.id + '">Copy</button><button class="btn ghost" data-a="lt-del" data-id="' + l.id + '">Delete</button></div></div>'; }).join('') + '</details>'; }).join('') : '<p class="hint">No letters yet. Start from a sample below, or write your own.</p>'}
    <div class="btnrow"><button class="btn" data-a="lt-new">Write a new letter</button></div></div>
   <div class="panel"><h3>Start from a sample</h3><p class="hint">Each sample is yours to change. Words in [square brackets] are for you to replace. Words in {{double braces}} fill in by themselves for each person.</p>
-   <div class="ltsamples">${LT_SAMPLES.map(s => '<button type="button" class="btn ghost" data-a="lt-sample" data-id="' + s[0] + '">' + esc(s[1]) + '</button>').join('')}</div></div>
+   ${LT_FOLDERS.slice(0, 2).map(fo => '<details class="ltfold" open><summary><b>' + esc(fo) + '</b></summary><div class="ltsamples">' + LT_SAMPLES.filter(x => ltSampleFolder(x[0]) === fo).map(x => '<button type="button" class="btn ghost" data-a="lt-sample" data-id="' + x[0] + '">' + esc(x[1]) + '</button>').join('') + '</div></details>').join('')}</div>
   <div class="panel"><h3>Letterheads</h3><p class="hint">Your logo or header picture, address lines and a footer. Make one for each ministry or office.</p>
    ${H.length ? H.map(h => '<div class="ltrow"><div><b>' + esc(h.name) + '</b></div><div class="cact"><button class="btn" data-a="lh-edit" data-id="' + h.id + '">Edit</button></div></div>').join('') : ''}
    <div class="btnrow"><button class="btn ghost" data-a="lh-new">Add a letterhead</button></div></div>
@@ -6459,6 +6474,8 @@ function openLetter(id, preset){
   ctx = {kind:'letter', id:l ? l.id : null, fills:{}};
   ltform.name.value = l ? l.name : (preset ? preset.name : '');
   ltform.body.value = l ? l.body : (preset ? preset.body : 'Dear {{First name}},\n\n\n\nSincerely,\n{{My name}}');
+  document.getElementById('ltfolders').innerHTML = ltFolderList().map(x => '<option value="' + esc(x) + '">').join('');
+  ltform.folder.value = l ? l.folder || '' : (preset && preset.folder) || '';
   ltform.pid.innerHTML = '<option value="">Not attached to a project</option>' + state.projects.map(p => '<option value="' + esc(p.id) + '">' + esc(p.title) + '</option>').join('');
   ltform.pid.value = l ? l.pid : (preset && preset.pid) || '';
   ltform.head.innerHTML = '<option value="">No letterhead</option>' + (state.heads || []).map(h => '<option value="' + esc(h.id) + '">' + esc(h.name) + '</option>').join('');
@@ -6486,7 +6503,7 @@ function ltSave(){
   const cur = ltCurrent(); if(!Array.isArray(state.letters)) state.letters = [];
   let l = ctx.id ? state.letters.find(x => x.id === ctx.id) : null;
   if(!l){ if(state.letters.length >= 300) return null; l = {id:uid()}; state.letters.push(l); ctx.id = l.id; }
-  l.name = cur.name.slice(0, 120); l.body = cur.body.slice(0, 20000); l.pid = ltform.pid.value; l.head = cur.head; save(); return l;
+  l.name = cur.name.slice(0, 120); l.body = cur.body.slice(0, 20000); l.pid = ltform.pid.value; l.folder = ltform.folder.value.trim().slice(0, 60); l.head = cur.head; save(); return l;
 }
 function ltMarkSent(mod){
   if(!ltform.sent.checked || ltform.to.value === 'none') return;
@@ -6534,8 +6551,8 @@ function openLabels(){ lbform.to.innerHTML = ltToOptions().replace(/<option valu
 function lbHtml(list){ return '<div class="lbgrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;font:11pt Helvetica,Arial,sans-serif">' + list.map(c => '<div style="padding:14px 12px;height:1.0in;box-sizing:border-box;overflow:hidden;white-space:pre-line;page-break-inside:avoid">' + esc(c.name + '\n' + String(c.address || '').replace(/,\s*/g, '\n')) + '</div>').join('') + '</div>'; }
 document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('[data-a]'); if(!b) return; const a = b.dataset.a; if(!a.startsWith('lt-') && !a.startsWith('lh-')) return;
   if(a === 'lt-open'){ ui.ltp = b.dataset.pid || ''; ui.meetings = 'letters'; ui.contacts = false; ui.notebook = false; ui.series = null; ui.view = 'detail'; ui.menu = false; render(); document.getElementById('main').scrollTop = 0; }
-  else if(a === 'lt-new'){ openLetter(null, {pid:ui.ltp || ''}); }
-  else if(a === 'lt-sample'){ const s = LT_SAMPLES.find(x => x[0] === b.dataset.id); if(s) openLetter(null, {name:s[1], body:s[2], pid:ui.ltp || ''}); }
+  else if(a === 'lt-new'){ openLetter(null, {pid:ui.ltp || '', folder:''}); }
+  else if(a === 'lt-sample'){ const s = LT_SAMPLES.find(x => x[0] === b.dataset.id); if(s) openLetter(null, {name:s[1], body:s[2], pid:ui.ltp || '', folder:ltSampleFolder(s[0])}); }
   else if(a === 'lt-edit'){ openLetter(b.dataset.id); }
   else if(a === 'lt-dup'){ const l = (state.letters || []).find(x => x.id === b.dataset.id); if(l && state.letters.length < 300){ state.letters.push(Object.assign({}, l, {id:uid(), name:(l.name + ' copy').slice(0, 120)})); save(); render(true); } }
   else if(a === 'lt-del'){ const old = (state.letters || []).slice(); state.letters = old.filter(x => x.id !== b.dataset.id); save(); render(true); toast('Letter deleted.', true, () => { state.letters = old; save(); render(true); }); }
