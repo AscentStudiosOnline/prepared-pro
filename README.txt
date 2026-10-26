@@ -392,3 +392,6 @@ VERSION 3.27
 - Shared projects are labelled in the project list and on the overview ("Shared by Rik", "Shared with Bob"). A project you received shows how many of your changes are not sent back yet. The printed status sheet shows it too.
 - Calendar moved up in the left column, next to Meetings, and is now just called Calendar.
 - New Help section: Updating Prepared Pro (how updates arrive, getting one right away, moving to a new web address).
+
+VERSION 3.28
+- New template group, Content creators: Podcast episode, Podcast guest interview, Podcast season or show launch, Social media campaign, and Short-form video (Reels, Shorts, TikTok). Use a Series for a show and a project for each episode.
