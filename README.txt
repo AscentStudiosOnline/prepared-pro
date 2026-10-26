@@ -401,3 +401,12 @@ VERSION 3.29
 - When you pick a template, the kind list and the two checklist boxes are replaced by one line, for example "Kind: Podcast episode, from the template you chose."
 - Video Editing and Post moved from the kind list into the template gallery (Video and film group). Existing editing projects are unchanged.
 - Script and Film is now called Script, Film and Video.
+
+VERSION 3.30
+- Plan a week: make a run of projects at once (for example five podcast episodes) from a template, with the first date, how many, and which days. They go into one series with their dates set.
+- Series page: a Schedule and rehearsal list shows every project by date with how ready it is, and a Speaker view button on each row.
+- Cues: text in [square brackets] in talking notes shows as a cue in Speaker view (can be hidden in Look) and is left off print and Word copies.
+- Next episode button in Speaker view moves to the next project in the same series by date.
+- Saved lines: sponsor reads, thank-yous, subscribe requests and more, inserted into talking notes in one tap. Edit them, add your own, or bring back the starter lines. They are included in backups.
+- Prompt maker (tile on every project's Overview): ready-made requests written for each template (for example roll-in, roll-out, hooks, titles and show notes for a podcast; toolbox talk and findings wording for inspections; practice interview for interviews). The basics (name, audience, tone, format, always and never include) are filled in once and shared by every project in a series. Options for a prompt for an AI video maker, and for having your AI improve the request first. The answer can be pasted back into the project with a cue label.
+- The app now opens on My day when you have projects. (A first-time visitor with no projects still sees the welcome screen.)
