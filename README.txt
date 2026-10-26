@@ -402,6 +402,14 @@ VERSION 3.29
 - Video Editing and Post moved from the kind list into the template gallery (Video and film group). Existing editing projects are unchanged.
 - Script and Film is now called Script, Film and Video.
 
+VERSION 3.31
+- Contacts for ministries and non-profits: starter categories, Last contacted and Contact again every (30 to 365 days), a Contacted today button with Undo, and a Due to contact list. Due people show on My day and in its badge.
+- Giving log per person (date, amount, thank-you sent) with a total, and a mailing-list export of whoever is shown. Import now reads last contacted and last gift columns.
+- Letters: 14 editable samples, your own letters, letterheads (logo, address lines, footer), fill-in words such as {{First name}}, merge to one person, a group, a category or everyone due, with a preview that flags missing information. Print or PDF, Word, copy as text, mailing labels. Option to mark people contacted today. Letters can be attached to a project.
+- Fine-tune with my AI: Polish a letter, fine-tune talking notes (including a fairness check and tighten to length), and draft a follow-up for a due contact. Nothing is sent; the request is copied for your own AI.
+- New templates: Yearly performance review, Staff or teacher evaluation, Donor thank-you and follow-up, Annual appeal, Newsletter issue, Fundraising event, Grant application (group: Non-profit and ministry).
+- Indent: In (and Tab) now moves the whole paragraph, every line of it, in talking notes and letters. The letter editor has Out and Indent paragraph buttons, and the indent carries through to print, Word and copy.
+
 VERSION 3.30
 - Plan a week: make a run of projects at once (for example five podcast episodes) from a template, with the first date, how many, and which days. They go into one series with their dates set.
 - Series page: a Schedule and rehearsal list shows every project by date with how ready it is, and a Speaker view button on each row.
@@ -410,3 +418,4 @@ VERSION 3.30
 - Saved lines: sponsor reads, thank-yous, subscribe requests and more, inserted into talking notes in one tap. Edit them, add your own, or bring back the starter lines. They are included in backups.
 - Prompt maker (tile on every project's Overview): ready-made requests written for each template (for example roll-in, roll-out, hooks, titles and show notes for a podcast; toolbox talk and findings wording for inspections; practice interview for interviews). The basics (name, audience, tone, format, always and never include) are filled in once and shared by every project in a series. Options for a prompt for an AI video maker, and for having your AI improve the request first. The answer can be pasted back into the project with a cue label.
 - The app now opens on My day when you have projects. (A first-time visitor with no projects still sees the welcome screen.)
+- My day: finished to-dos now show an Undo button right away and a "Mark not done" link under the item in Done recently. The tick box is larger with a firm dark outline in every appearance.
