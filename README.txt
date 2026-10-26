@@ -395,3 +395,9 @@ VERSION 3.27
 
 VERSION 3.28
 - New template group, Content creators: Podcast episode, Podcast guest interview, Podcast season or show launch, Social media campaign, and Short-form video (Reels, Shorts, TikTok). Use a Series for a show and a project for each episode.
+
+VERSION 3.29
+- New project screen: a row of quick-start buttons (Podcast, Social media, Office, Assistant, Construction, IT, Video) opens the template gallery at the right place. Browse templates is the first thing you see.
+- When you pick a template, the kind list and the two checklist boxes are replaced by one line, for example "Kind: Podcast episode, from the template you chose."
+- Video Editing and Post moved from the kind list into the template gallery (Video and film group). Existing editing projects are unchanged.
+- Script and Film is now called Script, Film and Video.
