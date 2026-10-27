@@ -7,7 +7,7 @@ COPYRIGHT
 Copyright © 2026 Ascent Studios LLC. All rights reserved. The Program, its design, its text, its icons and its artwork, including the Ascent Studios name and emblem, belong to Ascent Studios LLC and are protected by copyright and other laws. This agreement gives you a license to use the Program. It does not sell you the Program or any right in it beyond what is stated here.
 
 WHAT YOU MAY DO
-- Use the Program for your own preparation work, for yourself, on devices that you own or control.
+- Use the Program for your own preparation work, for yourself, on every device that you own or control. One license covers all of your own devices, but not other people's devices.
 - Use the free version with up to two projects. Use the full version without a project limit after you enter a valid license code.
 - Make backup files of your own work and keep copies for your own use.
 - Use what you create with the Program, including your outlines, checklists, notes and exports, for any purpose you wish. Your work is yours.
@@ -23,7 +23,7 @@ Prepared Pro stores your projects on the device you use it on. Ascent Studios do
 If you use the Ask my AI buttons, you decide what to copy and where to paste it. What you give to another service is covered by that service's own terms, not this agreement.
 
 UPDATES
-We may release updated versions. The Program may update itself when you open it with an internet connection. We are not required to provide any particular update or support.
+We may release updated versions. The Program may update itself when you open it with an internet connection. Your license covers the version you bought and its minor updates (for example, every update from 1.0 up to, but not including, 2.0). A new major version (for example, 2.0) is a separate release. People with a current license will be offered a discounted upgrade price. We decide the price and terms of each major version. We are not required to provide any particular update or support.
 
 NO WARRANTY
 The Program is provided "as is" and "as available", without any promise that it will be error-free, uninterrupted, or suited to your purpose. The readiness meter and checklists are planning aids. They do not guarantee that your talk, book, event or film will be ready or successful. To the fullest extent the law allows, Ascent Studios disclaims all warranties, express or implied.

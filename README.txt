@@ -402,6 +402,24 @@ VERSION 3.29
 - Video Editing and Post moved from the kind list into the template gallery (Video and film group). Existing editing projects are unchanged.
 - Script and Film is now called Script, Film and Video.
 
+VERSION 3.35
+- Everything new since 3.33 is in this release (3.34 was never uploaded): Giving page, Costs per project, Letters shelf with letterheads, labels and folders, Backup names and passwords, Notebook subfolders and sorting. See the 3.34 notes just below.
+- Business templates: Product launch, Website store setup, Inventory count and reorder, Craft fair or trade show, Seasonal sale or promotion, and Supplier or wholesale onboarding. Software templates: App ideas and roadmap, and Software version (what changed, features added, user complaints). Each has Prompt maker kits.
+- Contact history: every contact keeps a log of phone calls, visits, video calls, meetings, letters, emails and texts. Press Log a call in My day or on a contact. Letters you send mark the person contacted, and a Held meeting that names a person or group logs itself. New filter: Not contacted in 30, 60, 90, 180 or 365 days. People who are due show in My day.
+- Catalog (in the side list): products, books, films, decorations, courses and anything else you make or sell. Tap each step as it is finished (for a book: Written, Edited, Cover done, Published; for a film: Scripted, Filmed, Edited, Approved; for a product: Designed, Made, Photographed, Priced), then On the website, On sale and Promoted. Keep the page address and other links for each item. See what is ready but not on the website yet, and what is on the website but not promoted. My day reminds you of items finished two weeks ago that are still not listed. Print, copy or save as a spreadsheet. Prepared Pro keeps addresses but never visits them.
+- Podcast: choose Podcast when you make a new series. It adds weekly episode steps, starter sponsor lines, an Episodes list with planned and aired dates, a link and a download count for each episode (typed by you), warnings for gaps or late episodes, and a Copy episode list for show notes button. Ticking Published asks for the air date.
+- Letters: Save as my template puts a letter on a My templates shelf. Use makes a fresh copy.
+- Contact categories: Customer, Wholesale, VIP and Lead were added to the list.
+- License: one license covers every device you own. It covers the version you bought and its minor updates. A major release (such as 2.0) is offered to current customers at a discount.
+
+VERSION 3.34
+- Giving page (in the side list): every gift in one place, grouped by person, fund or each gift, filtered by year, fund, not yet thanked, or name. Record or change a gift from here, with an optional fund (General, Building, Missions or your own). Spreadsheet export.
+- Letters get new fill-in words: {{Total given this year}}, {{Total given}} and {{Year}}, and a Year-end giving statement sample (have your accountant confirm the wording).
+- Costs tile on every project: track what a project costs by area (such as Building A, then Framing), by kind of cost (lumber, labor) and by who was paid. Optional hours times rate, money in as well as costs, budget and left to spend for the project and each area, suggested areas for the kind of project. Print or PDF, Word, copy as text, and spreadsheet.
+
+- Backups: name this computer and the backup file is named with the computer, date and time (and shows it again when you restore, before you unlock it). Optional password: the backup is locked with strong encryption and asked for when you restore. A forgotten password cannot be recovered.
+- Fix: backups and restores now include your Letters, Letterheads and Saved lines (they were left out before).
+
 VERSION 3.33
 - Notebook subfolders: folders can sit inside other folders, up to three levels. Make one with New subfolder in here, or use Put it inside when you rename or move a folder. A folder shows the notes in its subfolders too. Deleting a folder moves its notes and subfolders up one level. Works with Sort folders and backups.
 - See how it will look: under the notes box (and in Notebook notes), a preview shows indents and lists as they will print. An indented paragraph no longer gets an extra first-line indent in print, Speaker view and Word.
