@@ -20,7 +20,7 @@ window.cleanPrefs = function(p){
   p = p && typeof p === 'object' ? p : {};
   const pick = (v, list, d) => list.indexOf(v) > -1 ? v : d;
   return {theme:pick(p.theme, ['auto','light','dark'], 'auto'), size:pick(p.size, ['100','115','130','150'], '100'),
-    font:pick(p.font, ['classic','modern','book','easy'], 'classic'), accent:pick(p.accent, ['teal','blue','plum'], 'teal')};
+    font:pick(p.font, ['classic','modern','book','easy'], 'classic'), accent:pick(p.accent, ['teal','blue','plum','coffee','cream','banana','peach','sunset','red','rose','bronze','grey','ocean'], 'teal')};
 };
 window.applyPrefs = function(pr){
   pr = window.cleanPrefs(pr); const r = document.documentElement;
@@ -65,6 +65,26 @@ window.applyPrefs = function(pr){
 :root[data-accent="blue"][data-scheme="dark"]{--ready:#6FADE3;--focus:#6FADE3}
 :root[data-accent="plum"][data-scheme="light"]{--ready:#7A4A8A;--focus:#7A4A8A}
 :root[data-accent="plum"][data-scheme="dark"]{--ready:#C694D8;--focus:#C694D8}
+:root[data-accent="coffee"][data-scheme="light"]{--ready:#6F4E37;--focus:#6F4E37;--btn:#5A3E2B;--bg:#EFE6DC;--surface:#FAF5EF;--line:#D8C7B5}
+:root[data-accent="coffee"][data-scheme="dark"]{--ready:#D2A98A;--focus:#D2A98A;--bg:#1A130E;--surface:#241B15;--line:#3F3126}
+:root[data-accent="cream"][data-scheme="light"]{--ready:#8B6B47;--focus:#8B6B47;--btn:#6E5236;--bg:#F7F0E1;--surface:#FFFCF4;--line:#E3D8BE}
+:root[data-accent="cream"][data-scheme="dark"]{--ready:#E6CFA8;--focus:#E6CFA8;--bg:#1A1712;--surface:#242019;--line:#403A2D}
+:root[data-accent="banana"][data-scheme="light"]{--ready:#8A6D00;--focus:#8A6D00;--btn:#7D6508;--bg:#FAF1C8;--surface:#FFFBE6;--line:#E8DB9F}
+:root[data-accent="banana"][data-scheme="dark"]{--ready:#F2D45C;--focus:#F2D45C;--bg:#1A160A;--surface:#241F0F;--line:#403818}
+:root[data-accent="peach"][data-scheme="light"]{--ready:#AD4F38;--focus:#AD4F38;--btn:#9E4631;--bg:#F9E9E0;--surface:#FFF7F2;--line:#EBCFC2}
+:root[data-accent="peach"][data-scheme="dark"]{--ready:#F4A58F;--focus:#F4A58F;--bg:#1B120F;--surface:#261A16;--line:#433028}
+:root[data-accent="sunset"][data-scheme="light"]{--ready:#B34A13;--focus:#B34A13;--btn:#A8460F;--bg:#F6E8D8;--surface:#FDF6EC;--line:#E5CBAA}
+:root[data-accent="sunset"][data-scheme="dark"]{--ready:#F29A62;--focus:#F29A62;--bg:#1B120B;--surface:#261A11;--line:#43301F}
+:root[data-accent="red"][data-scheme="light"]{--ready:#A8322D;--focus:#A8322D;--btn:#8F2723;--bg:#F4E7E4;--surface:#FCF6F4;--line:#E0C6C1}
+:root[data-accent="red"][data-scheme="dark"]{--ready:#F08A82;--focus:#F08A82;--bg:#1A1010;--surface:#241717;--line:#402A2A}
+:root[data-accent="rose"][data-scheme="light"]{--ready:#B04A6A;--focus:#B04A6A;--btn:#9A3B58;--bg:#F5E6EA;--surface:#FDF6F8;--line:#E3C7CF}
+:root[data-accent="rose"][data-scheme="dark"]{--ready:#E798B3;--focus:#E798B3;--bg:#1A1014;--surface:#24171C;--line:#402A33}
+:root[data-accent="bronze"][data-scheme="light"]{--ready:#8C5A1E;--focus:#8C5A1E;--btn:#7A4F1B;--bg:#F2E9D6;--surface:#FBF6E8;--line:#DCC9A0}
+:root[data-accent="bronze"][data-scheme="dark"]{--ready:#D9A257;--focus:#D9A257;--bg:#1A150C;--surface:#241D12;--line:#403420}
+:root[data-accent="grey"][data-scheme="light"]{--ready:#55606B;--focus:#55606B;--btn:#3F4A55;--bg:#ECEDEE;--surface:#F8F8F9;--line:#CDD1D5}
+:root[data-accent="grey"][data-scheme="dark"]{--ready:#AEB8C2;--focus:#AEB8C2;--bg:#121416;--surface:#1B1E21;--line:#32373C}
+:root[data-accent="ocean"][data-scheme="light"]{--ready:#1F6F7A;--focus:#1F6F7A;--btn:#1B5C66;--bg:#E4EEEF;--surface:#F5FAFA;--line:#BFD5D8}
+:root[data-accent="ocean"][data-scheme="dark"]{--ready:#6CC0CB;--focus:#6CC0CB;--bg:#0F1718;--surface:#172123;--line:#2A3B3E}
 :root{--z:1}
 .side,.main,.toast,dialog form{zoom:var(--z)}
 dialog{width:min(calc(520px * var(--z)),92vw)}
@@ -659,6 +679,13 @@ dialog{border-radius:12px;box-shadow:0 26px 60px -22px rgba(40,26,6,.55)}
 .ltrow{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:8px 0;border-bottom:1px solid var(--line,#ddd)}.ltrow .cat{display:block}.ltfold{margin:6px 0}.ltfold>summary{min-height:44px;display:flex;align-items:center;cursor:pointer}.ltsamples{display:flex;flex-wrap:wrap;gap:8px}.ltpv{border:1px solid var(--line,#ccc);border-radius:8px;padding:8px;margin:6px 0}.ltpv.warn{border-color:#b45309;background:rgba(180,83,9,.08)}.ltsnip{font-size:14px;opacity:.85;white-space:pre-line}.ltfs{border:1px solid var(--line,#ccc);border-radius:8px;display:grid;gap:6px;margin:6px 0}.ltf{min-height:40px;padding:4px 10px}
 .catrow{border:1px solid var(--line,#ccc);border-radius:10px;padding:10px;margin:8px 0}.cathead{display:flex;gap:8px;justify-content:space-between;align-items:flex-start}.catchips,.catlinks{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.catchip{border:1px solid var(--line,#999);background:transparent;color:inherit;border-radius:999px;padding:6px 12px;min-height:36px;cursor:pointer;font:inherit}.catchip.on{background:var(--accent,#2b6cb0);color:#fff;border-color:transparent}.cfind{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}.cfind .f{flex:1 1 160px}.catlrow{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;margin-bottom:8px}.catlrow .f{flex:1 1 140px}
 .podrow{display:flex;gap:8px;justify-content:space-between;align-items:flex-start;padding:8px 0;border-top:1px solid var(--line,#ddd)}
+.ppclock{position:fixed;right:10px;bottom:6px;z-index:5;font:600 13px/1 system-ui,sans-serif;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 10px;opacity:.85;pointer-events:none}
+@media print{.ppclock{display:none!important}}
+.tgbar{display:flex;flex-wrap:wrap;gap:10px}.tgbar .f{flex:1 1 180px}
+.addline{margin:12px 0 0}
+.moretools{margin-top:12px}.moretools summary{cursor:pointer;font-weight:600;padding:6px 0}.tpluse{margin:0 0 10px}.tpluse summary{cursor:pointer;font-weight:600}.tpluse p{margin:4px 0}.tgeg{font-style:italic;opacity:.85}
+.sercost{margin:8px 0 0;font-size:15px}.sercost ul{margin:6px 0 0 18px;padding:0}
+.rllist{margin:8px 0;padding-left:18px}.rllist li{margin:6px 0}
 </style>
 </head>
 <body>
@@ -690,6 +717,7 @@ dialog{border-radius:12px;box-shadow:0 26px 60px -22px rgba(40,26,6,.55)}
 <button class="link" data-a="license" id="licbtn" style="text-align:center;min-height:40px"></button></div>
   </aside>
   <main class="main" id="main" tabindex="-1"></main>
+  <div class="ppclock" id="ppclock" role="timer" aria-label="Current time" hidden></div>
 </div>
 <button type="button" class="sideshow" data-a="side-toggle" aria-label="Show the project list" title="Show the project list">&raquo; Projects</button>
 
@@ -830,10 +858,24 @@ dialog{border-radius:12px;box-shadow:0 26px 60px -22px rgba(40,26,6,.55)}
       <label><input type="radio" name="font" value="modern"> Modern</label>
       <label><input type="radio" name="font" value="book"> Book</label>
       <label><input type="radio" name="font" value="easy"> Easy to read</label></div></fieldset>
-    <fieldset><legend>Accent color</legend><div class="optgrid">
-      <label><input type="radio" name="accent" value="teal"> <span class="swatch" style="background:#2E5E45"></span> Green</label>
-      <label><input type="radio" name="accent" value="blue"> <span class="swatch" style="background:#2A6798"></span> Blue</label>
-      <label><input type="radio" name="accent" value="plum"> <span class="swatch" style="background:#7A4A8A"></span> Plum</label></div></fieldset>
+    <fieldset><legend>Color theme</legend><div class="optgrid">
+      <label><input type="radio" name="accent" value="teal"> <span class="swatch" style="background:#2E5E45"></span> Green tea</label>
+      <label><input type="radio" name="accent" value="blue"> <span class="swatch" style="background:#2A6798"></span> Blueberry</label>
+      <label><input type="radio" name="accent" value="plum"> <span class="swatch" style="background:#7A4A8A"></span> Grape juice</label>
+      <label><input type="radio" name="accent" value="coffee"> <span class="swatch" style="background:#6F4E37"></span> Coffee</label>
+      <label><input type="radio" name="accent" value="cream"> <span class="swatch" style="background:#C9AE82"></span> Cream</label>
+      <label><input type="radio" name="accent" value="banana"> <span class="swatch" style="background:#E6C84A"></span> Banana smoothie</label>
+      <label><input type="radio" name="accent" value="peach"> <span class="swatch" style="background:#E9876C"></span> Peach tea</label>
+      <label><input type="radio" name="accent" value="sunset"> <span class="swatch" style="background:#D9601F"></span> Orange soda</label>
+      <label><input type="radio" name="accent" value="red"> <span class="swatch" style="background:#A8322D"></span> Cherry cola</label>
+      <label><input type="radio" name="accent" value="rose"> <span class="swatch" style="background:#C45A7A"></span> Strawberry milk</label>
+      <label><input type="radio" name="accent" value="bronze"> <span class="swatch" style="background:#8C5A1E"></span> Whiskey</label>
+      <label><input type="radio" name="accent" value="grey"> <span class="swatch" style="background:#55606B"></span> Seltzer</label>
+      <label><input type="radio" name="accent" value="ocean"> <span class="swatch" style="background:#1F6F7A"></span> Blue lagoon</label></div></fieldset>
+    <fieldset><legend>Clock</legend><div class="optgrid">
+      <label><input type="radio" name="clock" value="12"> 12-hour</label>
+      <label><input type="radio" name="clock" value="24"> 24-hour</label>
+      <label><input type="radio" name="clock" value="off"> Hidden</label></div><p class="hint" style="margin:6px 0 0">A small clock in the corner shows the time from this device. Each device keeps its own choice.</p></fieldset>
     <div class="sample"><h3>Sample heading</h3><p>This is how your notes and checklists will look. Changes save as you pick them.</p></div>
     <div class="row"><span class="spacer"></span><button class="btn" value="close" formnovalidate type="submit">Done</button></div>
   </form>
@@ -892,7 +934,8 @@ dialog{border-radius:12px;box-shadow:0 26px 60px -22px rgba(40,26,6,.55)}
   <form method="dialog" id="tgform">
     <h2>Start from a template</h2>
     <p class="hint" style="margin:0">Pick a ready-made start. Everything in it can be changed, and you can save your own version afterward with Save as template.</p>
-    <label class="f" style="font-weight:400">Find a template<input id="tgq" type="search" placeholder="For example: event, onboarding, inspection" autocomplete="off"></label>
+    <div class="tgbar"><label class="f" style="font-weight:400">Find a template<input id="tgq" type="search" placeholder="For example: event, onboarding, inspection" autocomplete="off"></label>
+    <label class="f" style="font-weight:400">Show them<select id="tgsort"><option value="cat">By folder</option><option value="name">By name, A to Z</option></select></label></div>
     <div id="tglist"></div>
     <div class="row"><span class="spacer"></span><button class="btn ghost" value="close" formnovalidate type="submit">Close</button></div>
   </form>
@@ -1333,7 +1376,7 @@ dialog{border-radius:12px;box-shadow:0 26px 60px -22px rgba(40,26,6,.55)}
     <h2 id="cttitle">Add a contact</h2>
     <div id="ctfields" style="display:grid;gap:14px"></div>
     <datalist id="ctroles"><option value="Director"><option value="Producer"><option value="Camera operator"><option value="Audio"><option value="Editor"><option value="Talent"><option value="Host"><option value="Guest"><option value="Pastor"><option value="Speaker"><option value="Event coordinator"><option value="Location contact"><option value="Publisher"><option value="Designer"></datalist>
-    <datalist id="ctgroups"><option value="Donor"><option value="Customer"><option value="Wholesale"><option value="VIP"><option value="Lead"><option value="Monthly partner"><option value="Prospect"><option value="Volunteer"><option value="Prayer partner"><option value="Board"><option value="Church or partner organization"><option value="Cast"><option value="Crew"><option value="Speakers"><option value="Guests"><option value="Venues"><option value="Churches and ministries"><option value="Media"><option value="Vendors"><option value="Family"><option value="Other"></datalist>
+    <datalist id="ctgroups"><option value="Donor"><option value="Customer"><option value="Wholesale"><option value="VIP"><option value="Lead"><option value="Monthly partner"><option value="Prospect"><option value="Volunteer"><option value="Prayer partner"><option value="Board"><option value="Church or partner organization"><option value="Cast"><option value="Crew"><option value="Speakers"><option value="Guests"><option value="Venues"><option value="Churches and ministries"><option value="Media"><option value="Vendors"><option value="Family"><option value="Contractor"><option value="Subcontractor"><option value="Guest"><option value="Other"></datalist>
     <div class="row"><button class="btn danger" id="ctdel" value="delete" formnovalidate type="submit" hidden>Delete</button><span class="spacer"></span><button class="btn ghost" value="cancel" formnovalidate type="submit">Cancel</button><button class="btn" value="save" type="submit">Save</button></div>
   </form>
 </dialog>
@@ -1399,7 +1442,7 @@ dialog{border-radius:12px;box-shadow:0 26px 60px -22px rgba(40,26,6,.55)}
   <form method="dialog" id="seform">
     <h2 id="setitle">New series</h2>
     <label class="f">Series name<input name="name" required maxlength="120" placeholder="For example: Dead Men Talking"></label>
-    <label class="f">What are the parts of this series?<select name="noun"><option value="book">Books</option><option value="episode">Episodes</option><option value="podcast">Podcast (weekly episodes)</option><option value="film">Films or videos</option><option value="lesson">Lessons</option><option value="talk">Talks</option><option value="week">Weeks</option><option value="project">Projects (something else)</option></select></label>
+    <label class="f">What are the parts of this series?<select name="noun"><option value="book">Books</option><option value="episode">Episodes</option><option value="podcast">Podcast (weekly episodes)</option><option value="film">Films or videos</option><option value="lesson">Lessons</option><option value="talk">Talks</option><option value="week">Weeks</option><option value="building">Buildings or phases (construction)</option><option value="release">Software releases</option><option value="project">Projects (something else)</option></select></label>
     <p class="hint" id="sehint"></p>
     <div class="row"><button class="btn danger" id="sedel" value="delete" formnovalidate type="submit" hidden>Delete series</button><span class="spacer"></span><button class="btn ghost" value="cancel" formnovalidate type="submit">Cancel</button><button class="btn" value="save" type="submit">Save</button></div>
   </form>
@@ -2099,10 +2142,19 @@ function meetKind(u){
   if(/^tel:/.test(x)) return 'Phone call';
   return '';
 }
+function zoomAppUrl(u){
+  try{ const x = new URL(u); if(!/(^|\.)zoom\.(us|com)$/i.test(x.hostname)) return '';
+    const m = x.pathname.match(/^\/(?:j|wc\/join|s)\/(\d{9,11})\/?$/); if(!m) return '';
+    const pw = x.searchParams.get('pwd');
+    return 'zoommtg://' + x.hostname + '/join?action=join&confno=' + m[1] + (pw ? '&pwd=' + encodeURIComponent(pw) : '');
+  }catch(e){ return ''; }
+}
 function meetJoin(u, label){
   u = meetUrl(u); if(!u) return '';
-  const web = /^https?:/i.test(u);
-  return '<a class="iedit joinbtn" href="' + esc(u) + '"' + (web ? ' target="_blank" rel="noopener noreferrer"' : '') + ' aria-label="' + esc((label || 'Join') + ' meeting') + '">' + esc(label || 'Join') + '</a>';
+  const web = /^https?:/i.test(u), app = web ? zoomAppUrl(u) : '';
+  return '<a class="iedit joinbtn" href="' + esc(u) + '"' + (web ? ' target="_blank" rel="noopener noreferrer"' : '') + ' aria-label="' + esc((label || 'Join') + ' meeting') + '">' + esc(label || 'Join') + '</a>'
+    + (app ? '<a class="iedit" href="' + esc(app) + '" aria-label="Open this meeting in the Zoom app">Open in Zoom app</a>' : '')
+    + '<button type="button" class="iedit" data-a="copy-link" data-url="' + esc(u) + '" aria-label="Copy the meeting link">Copy link</button>';
 }
 function normTodo(a){
   const out = [], seen = new Set(), clean = (v, n) => String(v == null ? '' : v).replace(/[\u0000-\u0009\u000b-\u001f\u007f]+/g, ' ').trim().slice(0, n), dd = v => (typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v)) ? v : '';
@@ -2163,7 +2215,7 @@ function normGroups(a, cs, rs){
     out.push({id, name, members:ms, room:(typeof x.room === 'string' && rs && rs.has(x.room)) ? x.room : ''});
   }); return out;
 }
-const TPL_GROUPS = ['Business and office', 'Executive assistant', 'Construction, audit and inspection', 'Technology', 'School and personal', 'Content creators', 'Video and film', 'Non-profit and ministry'];
+const TPL_GROUPS = ['Business and office', 'Selling and small business', 'Construction, audit and inspection', 'Technology', 'Teaching and studies', 'School and personal', 'Home, car and family', 'Content creators', 'Video and film', 'Non-profit and ministry'];
 function bt(id, name, group, blurb, ex, cats, outline){
   const items = []; cats.forEach(([cat, rows]) => rows.forEach(([text, req, w]) => items.push({cat, text, req:!!req, w, m:0})));
   const e = {sources:false, tools:false, event:false, bring:false, shoot:false, edit:false, goal:false, people:false, meetings:false};
@@ -2396,6 +2448,105 @@ BUILTIN_TPLS.push(
     ['Release', [['Release notes written',1,3],['What is new message sent to users',1,2],['Known issues carried to the next version',1,2]]]],
     ['Goal of this version','What changed','Tester and user feedback','Testing','Release notes','Known issues'])
 );
+/* 3.36 NEW TEMPLATES */
+/* ---------- 3.36: groups, descriptions, sample uses, tile sets and checklist edits for the premade templates ---------- */
+const GROUP_OFFER = {
+  'Business and office':['people','meetings','sources'], 'Selling and small business':['people','meetings','sources','tools'],
+  'Construction, audit and inspection':['people','meetings','bring','event','sources'], 'Technology':['people','meetings','sources','tools'],
+  'Teaching and studies':['people','meetings','sources','tools','event'], 'School and personal':['sources','tools','event'],
+  'Home, car and family':['bring','event','people'], 'Content creators':['people','meetings','sources','tools','edit'],
+  'Video and film':['people','meetings','shoot','edit','bring','sources'], 'Non-profit and ministry':['people','meetings','sources','event','tools']
+};
+const TPL_EDITS = {
+  'b-meeting':{g:0, what:'Use this to run any meeting from the purpose to the follow-up, so decisions and actions are never lost.', sample:'Monday staff meeting: you send the agenda on Friday, someone takes notes, and the minutes with each action and owner go out the same day.',
+    add:[['Before the meeting','Video or call link tested ahead of time, if people join remotely',0,2],['During the meeting','Agenda items timed so the meeting stays on schedule',0,2]]},
+  'b-event':{g:0, name:'Event or conference (you organize or speak)', what:'Use this when you are organizing an event or conference, or speaking at one: venue, people, promotion, travel and the day itself.', sample:'A two-day regional conference: you book the venue, confirm speakers and sponsors, print signs, and thank everyone afterward.',
+    add:[['Planning','Sponsor and vendor payments entered in Costs',0,2],['Planning','Registration or ticket count tracked',0,2]]},
+  'b-leadership':{g:0, what:'Use this to get a board or leadership meeting ready: the packet, a quorum, the decisions and the minutes.', sample:'The quarterly board meeting: packet out a week ahead, quorum confirmed, motions and votes recorded, minutes approved at the next meeting.',
+    add:[['Before','Conflict-of-interest reminder ready to read at the start',1,2],['Before','Packet marked confidential and sent only to members',0,2],['During','Resolutions listed with who proposed and seconded',1,2]]},
+  'b-newhire':{g:0, what:'Use this from a signed offer through the new person\'s first month, so nothing is forgotten on day one.', sample:'A new office manager starts on the 1st: you have the laptop ready, a welcome lunch planned, and 30-day and 90-day check-ins on the calendar.',
+    add:[['Before day one','Added to Contacts or the staff list',0,2],['Before day one','Policy acknowledgments ready to sign',1,2],['First week','Mentor or buddy named',0,2]]},
+  'b-customer':{g:0, what:'Use this when a new customer or client signs, to get them set up, trained and checked in on during their first month.', sample:'A new bookkeeping client signs: you confirm payment, hold a kickoff call, collect their records and check in at 30 days. (For a big production or software job, use the template made for it.)',
+    add:[['Before kickoff','Customer added to Contacts with the category Customer',0,2]]},
+  'b-move':{g:0, what:'Use this to plan an office move from the date and budget to the first week in the new space.', sample:'Moving a six-person office across town: you book movers, change the address, label every box, and check that phones and internet work on day one.',
+    add:[['Packing','Asset tags or an inventory list made for furniture and equipment',0,2],['After','Photos of the old space taken at the final walk-through',0,1]]},
+  'b-trip':{g:0, what:'Use this to plan a business trip for yourself or for someone you work for: flights, hotel, meetings, packing and the expense report.', sample:'A two-day trip to a client meeting: flights and hotel booked, the itinerary sent to the client, and receipts collected for the expense report.',
+    add:[['Booking','Expense limits or per-diem confirmed',0,2],['Booking','Visa or entry-document processing time allowed for',0,2]]},
+  'b-weekly':{g:0, name:'Weekly rhythm', what:'Use this for a repeating week: Monday review, daily follow-ups and a Friday wrap-up. To start next week, use Copy as new.', sample:'An assistant to a director: every Monday the calendar and priorities are reviewed, and every Friday open items carry over to next week.', add:[]},
+  'b-review':{g:0, what:'Use this to prepare, write, hold and file a yearly review for someone you manage. It stays private to you.', sample:'Reviewing a team member: you gather last year\'s goals, write the review with examples, hold the meeting and set next year\'s goals.', add:[]},
+  'b-staffeval':{g:0, what:'Use this for managers, principals and directors who review staff or teachers: standards, observations, evidence and a growth plan.', sample:'A principal observes a teacher twice, writes the evaluation from what was seen, and sets a growth plan with a follow-up date.',
+    add:[['Plan','Union, HR or contract requirements checked, if they apply',0,2]]},
+  'b-prodlaunch':{g:1, what:'Use this to launch a product: make it, photograph it, price it, list it and tell your customers.', sample:'A handmade candle line: you finish the candles, take photos, set prices, list them on your site and email your best customers first.',
+    add:[['Make it','Sales tax and shipping set up',1,2],['Make it','Inventory counted for the launch',0,2],['Sell it','Product added to the Catalog',0,2]]},
+  'b-storesetup':{g:1, what:'Use this to set up a store on your website, with policies, payments, a test order and going live.', sample:'A new online shop: you write the pages and policies, connect payments, place a test order from your phone, then open to the public.',
+    add:[['Build','Sales tax registration done',1,2],['Test','Accessibility check of the pages: readable text, pictures described, works on a phone',0,2],['Go live','Products added to the Catalog so you can track what is on the website',0,2]]},
+  'b-inventory':{g:1, what:'Use this for a stock count: count, compare with your records, then reorder.', sample:'The quarterly count at a small shop: every shelf counted, differences explained, and a reorder list sent to suppliers.',
+    add:[['Count','Second count done for fast-moving items',0,2],['Count','Items checked against the Catalog',0,1],['Compare','Supplier invoices checked against what arrived',0,2],['Compare','Slow sellers marked for a sale or markdown',0,1],['Reorder','Reorder level set for each item',0,2],['Reorder','Stock records updated after the count',1,2]]},
+  'b-tradeshow':{g:1, name:'Trade show or craft fair booth (you exhibit and sell)', what:'Use this when you are an exhibitor with a booth: stock, signs, cash box and follow-up. To organize an event, use Event or conference.', sample:'A weekend craft fair: you pay the booth fee, pack stock, test the card reader, collect email sign-ups and count the money after.',
+    add:[['Before','Sales tax permit or vendor license in hand',1,2],['Before','Insurance checked',0,2],['Before','Weather or tent plan ready for outdoor events',0,1]]},
+  'b-promo':{g:1, what:'Use this for a sale or seasonal promotion: the offer, dates, messages, stock and results.', sample:'A holiday sale: you choose the offer, check your margins, email your best customers first, and compare results with your goal.',
+    add:[['Plan','Items on sale marked in the Catalog',0,2],['Plan','Discount codes tested',1,2],['Tell','Sale prices set on the website',1,2],['After','Sale ended and prices returned to normal',1,2]]},
+  'b-supplier':{g:1, what:'Use this to take on a new supplier or wholesaler: terms, samples, pricing, contract and the first order.', sample:'A new packaging supplier: you compare three, order samples, agree prices and minimums in writing, and place a small first order.',
+    add:[['Agree','Tax forms collected from the supplier',1,2],['Start','Supplier added to Contacts with the category Wholesale',0,2]]},
+  'b-jobstart':{g:2, name:'Construction job', what:'Use this to run a construction job from permits and plans to the daily work. It is written for the person running the job: a general contractor, an owner-builder or a project manager.', sample:'A small office remodel: permits posted, crews and subcontractors scheduled, materials ordered, daily log kept, and every change written down before the work.',
+    add:[['Before work','Estimate or bid approved in writing',1,3],['Before work','Payment schedule or draws agreed',1,2],
+      ['Subcontractors','Subcontractor agreements signed, with scope, price and schedule for each trade',1,3],['Subcontractors','Certificates of insurance collected and licenses checked',1,3],['Subcontractors','Safety orientation done for each crew',1,2],['Subcontractors','Each trade\'s start and finish dates set so trades do not collide',1,2],['Subcontractors','Inspections coordinated with the right trade',0,2],['Subcontractors','Progress checked before each payment',1,2],['Subcontractors','Lien waivers collected with each payment',1,3],['Subcontractors','Warranty and punch-list work agreed before the final payment',0,2],
+      ['During the job','Change orders logged with who approved and the cost',1,3]]},
+  'b-inspection':{g:2, what:'Use this to be ready on the day an inspector arrives and to handle what they find.', sample:'The framing inspection: approved plans on site, work uncovered and reachable, someone on hand to answer questions, corrections listed before the inspector leaves.',
+    add:[['Before','Special-inspector or third-party reports collected, if the job needs them',0,2],['After','Re-inspection fee paid, if one is due',0,1]]},
+  'b-closeout':{g:2, what:'Use this to finish a job: the punch list, handover papers, final payment and certificates.', sample:'Handing over a finished building: a walkthrough with the owner, a punch list closed out, warranties and keys handed over, and the final payment received.',
+    add:[['Closeout','Final cost report prepared: budget compared with what was spent',1,2],['Closeout','Lien releases collected from every subcontractor',1,3]]},
+  'b-audit':{g:2, what:'Use this to get ready for an audit, an inspection or a compliance review: records, site, people and corrections. It works for safety, finance, schools and nonprofits as well as building work.', sample:'A yearly safety audit: records gathered, a walkthrough done, staff told what to expect, and every finding assigned with a date.',
+    add:[['Documents','Evidence index made: where each required record is kept',0,2],['People','Mock audit or practice run done by someone not involved in the area',0,2]]},
+  'b-itupgrade':{g:3, what:'Use this to plan a system upgrade or move: backups, the change window, testing and a way back. It fits a server, a church computer or a small office.', sample:'Upgrading the office file server on a Saturday: backups tested, users told, steps logged, and the old system kept until the new one is proven.',
+    add:[['Before','Maintenance-window notice sent to users: the date, how long it will take and what to do',1,2],['Change day','A person named for vendor or license support during the change, with their phone number',0,2]]},
+  'b-itrollout':{g:3, what:'Use this to roll out a set of computers or devices: inventory, setup, moving data and records.', sample:'Replacing ten office laptops: each set up, labeled and handed over, with the old ones wiped and the records updated.',
+    add:[['Inventory','Asset tags or labels applied and recorded',0,2],['Inventory','Warranty dates recorded for each device',0,2],['Handover','Data-wipe confirmation kept for each old device',0,2],['Handover','Loaner devices arranged for anyone whose device is in the shop',0,1]]},
+  'b-appideas':{g:3, what:'Use this as a living list for an app or a program: ideas, requests and complaints, and what is next and what you decided against.', sample:'Keeping every tester\'s request in one place, marking each Next, Later or Not doing, and picking the contents of the next version.',
+    add:[['Collect','Source noted for each idea: user request, complaint, tester or your own',0,2],['Collect','Duplicates counted so the most-asked-for ideas rise to the top',0,2],['Decide','Rough effort guessed for each Next item: small, medium or large',0,1],['Look after','Ideas older than six months reviewed',0,1],['Look after','Past release notes read to spot repeating complaints',0,1]]},
+  'b-softver':{g:3, what:'Use this to plan and release one version of a program: the goal, what changed, testing, release notes and known issues.', sample:'Version 1.2 of an app: five fixes and two new features, tested on every platform, with release notes sent to users.',
+    add:[['User complaints addressed','Each complaint that went into this version listed',0,2],['User complaints addressed','Each marked fixed, partly fixed or not fixed',0,2],['User complaints addressed','People who complained told what changed',0,1]]},
+  'b-interview':{g:5, what:'Use this to prepare to be interviewed, for a job, a scholarship, a program or a media interview.', sample:'A job interview on Thursday: the role researched, answers practiced aloud, clothes and copies ready, and a thank-you note sent the same day.',
+    add:[['Research','Questions about pay, start date and benefits prepared',0,2],['Logistics','References ready and told they may be called',0,2],['Logistics','Portfolio or work samples ready, if the job calls for them',0,1]]},
+  'b-exam':{g:5, what:'Use this to get ready for an exam, a test or a thesis defense: a study plan, practice runs and the day itself.', sample:'A thesis defense in three weeks: the committee listed, slides finished, a practice run done for a friend, and rest planned for the night before.',
+    add:[['Plan','Committee or examiners listed, with what each one cares about',0,2],['Practice','Practice run done in front of a friend or classmate',0,2],['Practice','The questions you dread most answered out loud',0,2],['Day before','Slides or notes for a defense finished, with a copy on paper and on a drive',0,2],['Day before','Sleep, food and rest planned for the week before',0,1]]},
+  'b-podep':{g:7, what:'Use this for one podcast episode from the topic to the promotion: guest, outline, recording, editing, show notes and publishing.', sample:'Episode 12 of a weekly show: topic chosen, recorded on Tuesday, edited and published on Friday, then promoted with a short clip.',
+    add:[['Plan','Episode number and season set',0,2],['Guest and research','Guest interview done (see Podcast guest interview for the guest paperwork)',0,2],['Outline and script','Sponsor read recorded or placed',0,2],['Publishing','Transcript or captions made',0,2]],
+    rm:['Permission to record and publish agreed in writing'], offer:['people','meetings','sources','tools','edit']},
+  'b-podguest':{g:7, what:'Use this to invite and interview a guest: the invitation, a prep sheet, questions, recording day and thank-you.', sample:'A guest author on your show: invited with the topic and length, sent a prep sheet, recorded on a set day, and thanked the same day.', add:[], offer:['meetings','sources','tools','edit']},
+  'b-podseason':{g:7, what:'Use this to launch a podcast or a new season: concept, name, artwork, trailer, hosting, first episodes and the launch plan.', sample:'Launching a new weekly show: the name chosen, artwork made, three episodes recorded in advance, and the launch posts scheduled.', add:[], offer:['meetings','sources','edit']},
+  'b-socialcamp':{g:7, what:'Use this to plan a campaign on social media: goal, audience, a post calendar, graphics, scheduling and results.', sample:'A four-week campaign for a new book: posts planned by day, graphics made, replies answered within a day, and results noted at the end.',
+    add:[['Plan','Items or products being promoted listed (see the Catalog)',0,2],['Plan','Budget set in Costs for paid posts, graphics and tools',0,2],['Content','Approval noted for each post: who and when',0,1]]},
+  'b-shortvid':{g:7, what:'Use this for a short video for Reels, Shorts or TikTok: hook, script, shoot, edit, captions and posting.', sample:'A 30-second tip video: the hook written first, three takes, captions added, and posted on three platforms.', add:[], offer:['people','meetings','sources']},
+  'b-videoedit':{g:8, what:'Use this to take a video from the footage to the delivered file: cuts, review rounds, sound, color and deliverables.', sample:'Editing a teaching series: footage backed up, assembly and rough cuts, review rounds with the client, and finished files delivered.',
+    add:[['Rights and licenses','Every music track, clip, photo and font logged with where it came from, the license type and the cost',1,3],['Rights and licenses','License terms checked against where the video will be shown',1,3],['Rights and licenses','Receipts or license files saved',0,2],['Rights and licenses','Credit lines collected and added to the end of the video',0,2],['Rights and licenses','License expiration dates noted',0,2]]},
+  'b-donorthanks':{g:9, what:'Use this to record a gift, thank the giver, send the acknowledgment and set the next contact.', sample:'A gift arrives by mail: you record it, send a thank-you within two days, and set a reminder for an update in three months.',
+    add:[['Gift','Gift recorded on the Giving page',1,3],['Thank','Thank-you letter written from a Letters sample',0,2],['Follow up','Contact logged in the donor\'s history',0,2]]},
+  'b-appeal':{g:9, what:'Use this for a yearly appeal or campaign: goal, story, list, letters, mailing, thank-yous and results.', sample:'The year-end appeal: the goal set, the letter written, mailed to your Donor list, gifts recorded and thanked, results shared in the new year.',
+    add:[['Plan','Mailing list chosen from Contacts: a category or group',1,2],['After','Year-end giving statements sent',1,2]]},
+  'b-newsletter':{g:9, what:'Use this for one issue of a newsletter: theme, stories, dates, the ask, proofreading and sending.', sample:'The spring newsletter: the main story and photo chosen, one clear way to help, proofread by a second person and sent on a set day.',
+    add:[['Send','Send-to list chosen from Contacts: a group or category',1,2]]},
+  'b-fundevent':{g:9, what:'Use this for a fundraising event: goal, sponsors, program, volunteers, the ask and the thank-yous.', sample:'An annual dinner: sponsors confirmed, the ask rehearsed, gifts recorded the same night, and thank-yous sent within a week.', add:[]},
+  'b-grant':{g:9, what:'Use this to apply for a grant: eligibility, documents, narrative, budget, outcomes and reporting.', sample:'A foundation grant due in six weeks: documents gathered, narrative and budget written, a second reader, and reporting dates set.',
+    add:[['Finish','Application copy saved with the funder\'s confirmation',1,2]]}
+};
+function tplApplyEdits(){
+  BUILTIN_TPLS.forEach(t => {
+    const e = TPL_EDITS[t.id]; if(!e) return;
+    if(e.name) t.name = e.name; if(typeof e.g === 'number') t.group = TPL_GROUPS[e.g];
+    if(e.what) t.what = e.what; if(e.sample) t.sample = e.sample;
+    if(Array.isArray(e.rm) && e.rm.length) t.items = t.items.filter(i => !e.rm.includes(i.text));
+    (e.add || []).forEach(([cat, text, req, w]) => {
+      const row = {cat, text, req:!!req, w:w || 2, m:0}; let at = -1;
+      t.items.forEach((i, k) => { if(i.cat === cat) at = k; });
+      if(at < 0) t.items.push(row); else t.items.splice(at + 1, 0, row);
+    });
+    t.offer = Array.isArray(e.offer) ? e.offer.slice() : (GROUP_OFFER[t.group] || null);
+  });
+}
+
+tplApplyEdits();
+
 function findTpl(id){ return BUILTIN_TPLS.find(t => t.id === id) || (state.templates || []).find(t => t.id === id) || null; }
 const HIDEABLE = ['checkins','risks','rounds','deliver','outline','checklist','event','people','meetings','places','bring','shots','callsheet','prod','sched','sources','tools'];
 function normHidden(a){
@@ -2419,7 +2570,7 @@ function outlineFromTemplate(t){
   return o.length ? o : null;
 }
 function createProject({title, mode, due, marketing, rights, seriesId, tpl, outlineCounts}){
-  const p = {id:uid(), title, mode, kind:(tpl && tpl.name) ? String(tpl.name).slice(0, 80) : '', due:due||'', stage:'Idea', created:ymd(today()), outlineCounts:outlineCounts !== false, marketing:tpl ? !!tpl.marketing : !!marketing, rights:tpl ? !!tpl.rights : !!rights, items:tpl ? itemsFromTemplate(tpl) : makeItems(mode, marketing, rights), sources:[], outline:(tpl && outlineFromTemplate(tpl)) || makeOutline(mode), brief:{}, extras:extrasFromTemplate(tpl, mode), hidden:tpl ? normHidden(tpl.hidden) : [], shoot:shootDefaults(), links:[], checks:{}, seriesId:seriesId || '', event:{}, travel:[], bring:[]};
+  const p = {id:uid(), title, mode, kind:(tpl && tpl.name) ? String(tpl.name).slice(0, 80) : '', tplId:(tpl && tpl.builtin) ? String(tpl.id).slice(0, 40) : '', offer:(tpl && Array.isArray(tpl.offer)) ? tpl.offer.slice() : null, due:due||'', stage:'Idea', created:ymd(today()), outlineCounts:outlineCounts !== false, marketing:tpl ? !!tpl.marketing : !!marketing, rights:tpl ? !!tpl.rights : !!rights, items:tpl ? itemsFromTemplate(tpl) : makeItems(mode, marketing, rights), sources:[], outline:(tpl && outlineFromTemplate(tpl)) || makeOutline(mode), brief:{}, extras:extrasFromTemplate(tpl, mode), hidden:tpl ? normHidden(tpl.hidden) : [], shoot:shootDefaults(), links:[], checks:{}, seriesId:seriesId || '', event:{}, travel:[], bring:[]};
   if(tpl && Array.isArray(tpl.people) && tpl.people.length){
     p.shoot.people = tpl.people.slice(0, 100).map(x => ({id:uid(), status:'empty', name:String(x.name || '').slice(0, 120), role:String(x.role || '').slice(0, 80), phone:String(x.phone || '').slice(0, 40), email:String(x.email || '').slice(0, 120), call:'', release:'', notes:'', photo:''})).filter(x => x.name);
     if(p.shoot.people.length) p.extras.people = true;
@@ -2587,6 +2738,30 @@ function linkFor(p, i){
   if(t === 'brief' || t === 'outline') return {kind:t};
   const sec = p.outline.find(x => x.title === t); return sec ? {kind:'sec', id:sec.id} : {kind:'outline'};
 }
+function offHtml(off, p, T){
+  if(!off.length) return '';
+  const offer = Array.isArray(p.offer) ? p.offer : null, shown = offer ? off.filter(x => offer.includes(x[1])) : off, more = offer ? off.filter(x => !offer.includes(x[1])) : [];
+  const tile = ([l, k]) => T(l, 'Add', 'data-a="x-add" data-x="' + k + '"', ' off');
+  return (shown.length ? '<p class="hint" style="margin:14px 0 8px">Also available. Tap one to switch it on.</p><div class="tiles">' + shown.map(tile).join('') + '</div>' : '')
+    + (more.length ? '<details class="moretools"><summary>More tools for this project</summary><div class="tiles">' + more.map(tile).join('') + '</div></details>' : '');
+}
+function tplUseHtml(p){
+  const t = p.tplId ? findTpl(p.tplId) : null; if(!t || !(t.what || t.sample)) return '';
+  return '<details class="tpluse"><summary>How this is used</summary>' + (t.what ? '<p>' + esc(t.what) + '</p>' : '') + (t.sample ? '<p><b>For example:</b> ' + esc(t.sample) + '</p>' : '') + '</details>' + tplLinksHtml(p);
+}
+const TPL_LINKS = {
+  'b-donorthanks':[['Open Giving','giving-home'],['Write letters','lt-open']], 'b-appeal':[['Open Giving','giving-home'],['Write letters','lt-open']], 'b-fundevent':[['Open Giving','giving-home'],['Write letters','lt-open']],
+  't-booklaunch':[['Open the Catalog','catalog-home']], 't-softsale':[['Open the Catalog','catalog-home'],['Open Contacts','contacts-home']], 't-clientprod':[['Open Contacts','contacts-home'],['Open Series','series-home']],
+  't-salescall':[['Open Contacts','contacts-home']], 't-complaint':[['Open Contacts','contacts-home'],['Write a letter','lt-open']], 't-volunteer':[['Open Contacts','contacts-home'],['Write letters','lt-open']],
+  't-hire':[['Write letters','lt-open']], 't-offboard':[['Write letters','lt-open']], 't-mission':[['Write letters','lt-open'],['Open Giving','giving-home']],
+  't-biblelesson':[['Open Series','series-home']], 't-bibleseries':[['Open Series','series-home']], 't-studyseries':[['Open Series','series-home']], 't-tvepisode':[['Open Series','series-home']],
+  'b-podseason':[['Make the podcast series now','ps-make']], 'b-podguest':[['Attach to an episode','pg-attach']], 'b-appideas':[['Start the next version','sv-start']], 'b-softver':[['Copy the changelog','sv-log']],
+  't-bid':[['Open Contacts','contacts-home']], 't-changeorder':[['Write a letter','lt-open']]
+};
+function tplLinksHtml(p){
+  const l = TPL_LINKS[p.tplId]; if(!l) return '';
+  return '<div class="btnrow" style="margin:8px 0 0">' + l.map(x => '<button class="btn ghost sm" data-a="' + x[1] + '" data-pid="' + p.id + '">' + esc(x[0]) + '</button>').join('') + '</div>';
+}
 function startPanel(p, counts){
   const ex = p.extras || {};
   const T = (label, c, attrs, cls) => `<button class="tile${cls || ''}" ${attrs}><b>${esc(label)}</b><span>${esc(c || '')}</span></button>`;
@@ -2602,9 +2777,9 @@ function startPanel(p, counts){
   if(!ex.sources) off.push(['Sources', 'sources']);
   if(!ex.tools) off.push(['Research tools', 'tools']);
   return `<div class="panel"><h3>Start anywhere</h3>
-      <p class="hint" style="margin:0 0 10px">Everything is open. Fill in what you already know, in any order, and come back to the rest later.</p>
-      <div class="tiles">${T('The big picture', String((p.brief || {}).message || '').trim() ? 'Written' : 'Not yet', 'data-a="edit-brief"')}${T('Costs', (p.money && p.money.entries.length) ? mnFmt(p.money.entries.filter(e => e.kind !== 'in').reduce((a, e) => a + e.amount, 0)) + ' spent' : 'Track what it costs', 'data-a="mn-open" data-pid="' + p.id + '"')}${T('Letters', (state.letters || []).filter(l => l.pid === p.id).length ? (state.letters || []).filter(l => l.pid === p.id).length + ' for this project' : 'Write or merge letters', 'data-a="lt-open" data-pid="' + p.id + '"')}${T('Prompt maker', pmKit(p).p.length + ' ready-made requests for your AI', 'data-a="pmk-open"')}${on.join('')}</div>
-      ${off.length ? '<p class="hint" style="margin:14px 0 8px">Also available. Tap one to switch it on.</p><div class="tiles">' + off.map(([l, k]) => T(l, 'Add', 'data-a="x-add" data-x="' + k + '"', ' off')).join('') + '</div>' : ''}${(() => { const hn = (p.hidden || []).filter(k => allPagesFor(p).includes(k)).length; return hn ? '<p class="hint" style="margin:14px 0 0">' + hn + (hn === 1 ? ' page is' : ' pages are') + ' hidden. <button class="link" data-a="edit-extras">Show them</button></p>' : ''; })()}</div>`;
+      <p class="hint" style="margin:0 0 10px">Everything is open. Fill in what you already know, in any order, and come back to the rest later.</p>${tplUseHtml(p)}
+      <div class="tiles">${T('The big picture', String((p.brief || {}).message || '').trim() ? 'Written' : 'Not yet', 'data-a="edit-brief"')}${T('Costs', (p.money && p.money.entries.length) ? mnFmt(p.money.entries.filter(e => e.kind !== 'in').reduce((a, e) => a + e.amount, 0)) + ' spent' : 'Track what it costs', 'data-a="mn-open" data-pid="' + p.id + '"')}${T('Letters', (state.letters || []).filter(l => l.pid === p.id).length ? (state.letters || []).filter(l => l.pid === p.id).length + ' for this project' : 'Write or merge letters', 'data-a="lt-open" data-pid="' + p.id + '"')}${T('Prompt maker', pmKit(p).p.length + ' ready-made requests for your AI', 'data-a="pmk-open"')}${epTile(p, T)}${rlTile(p, T)}${on.join('')}</div>
+      ${offHtml(off, p, T)}${(() => { const hn = (p.hidden || []).filter(k => allPagesFor(p).includes(k)).length; return hn ? '<p class="hint" style="margin:14px 0 0">' + hn + (hn === 1 ? ' page is' : ' pages are') + ' hidden. <button class="link" data-a="edit-extras">Show them</button></p>' : ''; })()}</div>`;
 }
 function projNotesPanel(p){
   if(nbLocked()) return '';
@@ -2758,7 +2933,7 @@ function renderMain(){
         ${vis.map(i => itemRow(i,false,p)).join('')}
         <button class="link add" data-a="add-item" data-cat="${esc(g.name)}">Add an item to ${esc(g.name)}</button></section>`;
       }).join('')}
-      <button class="btn ghost" data-a="add-item" data-cat="" style="margin-bottom:30px">Add an item in a new category</button>`;
+      <p class="hint" style="margin:10px 0 6px">Need something else? You can add your own items to any list above, or start a new category.</p><button class="btn ghost" data-a="add-item" data-cat="" style="margin-bottom:30px">Add your own item here</button>`;
   const ns = nextStep(p);
   const outDone = p.outline.filter(s => s.status === 'done').length;
   const overview = `<div class="panel">
@@ -2784,7 +2959,7 @@ function renderMain(){
       ${linksPanel(p)}
       <p class="hint">Need more? Use the Go to menu above. You can switch on sources, research tools and other extras when you want them. <button class="link" data-a="edit-extras">Choose extras</button></p>`;
   const counts = {overview:'', outline:outDone+' of '+p.outline.length, checklist:miss.length+' left', event:p.travel.length ? p.travel.filter(t => t.status==='done').length+' of '+p.travel.length : '', bring:p.bring.length ? p.bring.filter(i => i.status==='done').length+' of '+p.bring.length : '', people:shootCount(p, 'people'), meetings:shootCount(p, 'meetings'), places:shootCount(p, 'places'), shots:shootCount(p, 'shots'), callsheet:'', prod:'', sched:shootCount(p, 'sched'), rounds:shootCount(p, 'rounds'), checkins:shootCount(p, 'checkins'), risks:shootCount(p, 'risks'), deliver:shootCount(p, 'deliver'), sources:String(srcs.length), tools:''};
-  const content = page === 'overview' ? overview.replace('@@WEEK@@', weekPanel()).replace('@@START@@', startPanel(p, counts)).replace('@@NOTES@@', teamPanel(p) + projNotesPanel(p)) : page === 'outline' ? outlineHtml(p) : page === 'checklist' ? checklistPage : page === 'event' ? eventHtml(p) : page === 'bring' ? bringHtml(p) : page === 'people' || page === 'meetings' || page === 'places' || page === 'shots' || page === 'sched' || page === 'rounds' || page === 'deliver' || page === 'checkins' || page === 'risks' ? shootListHtml(p, page) : page === 'callsheet' ? callsheetHtml(p) : page === 'prod' ? prodHtml(p) : page === 'sources' ? sourcesHtml : toolsPanel;
+  const content = page === 'overview' ? overview.replace('@@WEEK@@', weekPanel(p)).replace('@@START@@', startPanel(p, counts)).replace('@@NOTES@@', teamPanel(p) + projNotesPanel(p)) : page === 'outline' ? outlineHtml(p) : page === 'checklist' ? checklistPage : page === 'event' ? eventHtml(p) : page === 'bring' ? bringHtml(p) : page === 'people' || page === 'meetings' || page === 'places' || page === 'shots' || page === 'sched' || page === 'rounds' || page === 'deliver' || page === 'checkins' || page === 'risks' ? shootListHtml(p, page) : page === 'callsheet' ? callsheetHtml(p) : page === 'prod' ? prodHtml(p) : page === 'sources' ? sourcesHtml : toolsPanel;
   const menu = ui.menu ? `<div class="menu" role="menu" aria-label="Go to">${pagesFor(p).map(k =>
       `<button class="mi" role="menuitem" data-a="go" data-page="${k}" aria-current="${k===page}">${pn(p, k)}<span class="c">${counts[k]}</span></button>`).join('')}
       <hr><button class="mi" role="menuitem" data-a="speak">Speaker view</button><button class="mi" role="menuitem" data-a="timer">Timer</button><button class="mi" role="menuitem" data-a="tpl-save">Save as template</button><button class="mi" role="menuitem" data-a="export">Export or print</button>${p.collab && p.collab.role === 'reviewer' ? '<button class="mi" role="menuitem" data-a="collab-send">Send back to ' + esc(p.collab.who || 'sender') + '</button>' : '<button class="mi" role="menuitem" data-a="share-proj">Share this project</button>'}<button class="mi" role="menuitem" data-a="status-print">Print status sheet</button><button class="mi" role="menuitem" data-a="edit-extras">Add or remove extras</button><button class="mi" role="menuitem" data-a="edit-project">Edit project</button></div>` : '';
@@ -2870,7 +3045,7 @@ function dayHtml(){
   let wk = ''; try{ const L = upcoming().filter(x => daysAway(x.date) <= 7).slice(0, 8); if(L.length) wk = '<div class="panel"><h3>From your projects this week</h3>' + L.map(x => `<button type="button" class="calrow" data-a="cal-go" data-id="${x.pid}"${x.rid ? ' data-rid="' + esc(x.rid) + '"' : ''}><b>${esc(x.title)}</b><span${daysAway(x.date) < 0 ? ' style="color:var(--behind);font-weight:600"' : ''}>${esc(weekWhen(x))}</span>${x.project ? `<span>${esc(x.project)}</span>` : ''}</button>`).join('') + '</div>'; }catch(e){}
   const chip = (v, l) => `<button type="button" class="btn ${f === v ? '' : 'ghost'}" data-a="td-filter" data-v="${v}" aria-pressed="${f === v}">${l}</button>`;
   return back + `<div class="proj"><header class="phead"><h2>My day</h2><p class="sub">To-dos and follow-ups that do not belong to one project. What is due today and overdue comes first.</p></header>
-    <div class="body">${dueContactsHtml()}${catReadyHtml()}<div class="panel"><h3>Add something</h3>
+    <div class="body">${dueContactsHtml()}${catReadyHtml()}${rlExpHtml()}<div class="panel"><h3>Add something</h3>
       <div class="tdadd"><input id="tdtext" maxlength="200" placeholder="For example: Call the printer about the proofs" aria-label="What needs doing" autocomplete="off"><input type="date" id="tddue" value="${t0}" aria-label="Due date"><select id="tdkind" aria-label="Kind"><option value="todo">To-do</option><option value="follow">Follow-up</option></select><button class="btn" data-a="td-add">Add</button></div></div>
       <div class="panel"><div class="btnrow" style="margin:0 0 6px">${chip('', 'All')}${chip('todo', 'To-dos')}${chip('follow', 'Follow-ups')}</div>
       ${over.length || today_.length || soon.length || none.length ? sec('Overdue', over) + sec('Today', today_) + sec('Coming up', soon) + sec('No date', none) : '<p class="hint">Nothing here. Add a to-do or a follow-up above, and it will show up on its due date.</p>'}
@@ -3273,9 +3448,9 @@ function openProject(editing, presetMode, presetSeries){
 function tplPickShow(){
   const t = findTpl(pform.tpl.value), n = document.getElementById('tplname'), d = document.getElementById('tpldesc'); if(!n || !d) return;
   n.textContent = t ? t.name : 'Blank checklist';
-  d.textContent = t ? (t.blurb || ((state.templates || []).some(x => x.id === t.id) ? 'One of your own templates.' : '')) + (t.items ? ' ' + t.items.length + ' checklist items.' : '') : 'The standard checklist for the kind of project you choose below.';
+  d.textContent = t ? (t.what || t.blurb || ((state.templates || []).some(x => x.id === t.id) ? 'One of your own templates.' : '')) + (t.sample ? ' For example: ' + t.sample : '') + (t.items ? ' ' + t.items.length + ' checklist items.' : '') : 'The standard checklist for the kind of project you choose below.';
 }
-function tgCards(list, cur){ return list.map(t => `<button type="button" class="tgcard${cur === t.id ? ' on' : ''}" data-a="tg-pick" data-id="${esc(t.id)}"><b>${esc(t.name)}</b><span>${esc(t.blurb || 'Your own template')}</span><span>${t.items ? t.items.length : 0} checklist items</span></button>`).join(''); }
+function tgCards(list, cur){ return list.map(t => `<button type="button" class="tgcard${cur === t.id ? ' on' : ''}" data-a="tg-pick" data-id="${esc(t.id)}"><b>${esc(t.name)}</b><span>${esc(t.blurb || 'Your own template')}</span>${t.sample ? '<span class="tgeg">For example: ' + esc(t.sample) + '</span>' : ''}<span>${t.items ? t.items.length : 0} checklist items</span></button>`).join(''); }
 function tgRender(){
   const q = (document.getElementById('tgq').value || '').trim().toLowerCase(), cur = pform.tpl.value, words = q.split(/\s+/).filter(Boolean);
   const hit = t => !words.length || words.every(w => [t.name, t.blurb || '', t.group || ''].join(' ').toLowerCase().includes(w));
@@ -3283,11 +3458,13 @@ function tgRender(){
   if(hit(blank)) h += '<div class="tgwrap" style="margin-top:12px">' + tgCards([blank], cur).replace(/<span>0 checklist items<\/span>/, '') + '</div>';
   const mine = (state.templates || []).filter(hit);
   if(mine.length) h += '<h3 class="tgh">My templates</h3><div class="tgwrap">' + tgCards(mine, cur) + '</div>';
-  TPL_GROUPS.forEach(g => { const L = BUILTIN_TPLS.filter(t => t.group === g && hit(t)); if(L.length) h += '<h3 class="tgh">' + esc(g) + '</h3><div class="tgwrap">' + tgCards(L, cur) + '</div>'; });
+  if(sortPref('tgsort', [['cat'], ['name']], 'cat') === 'name'){ const L = BUILTIN_TPLS.filter(hit).sort((a, b) => a.name.localeCompare(b.name, undefined, {sensitivity:'base', numeric:true})); if(L.length) h += '<h3 class="tgh">All templates, A to Z</h3><div class="tgwrap">' + tgCards(L, cur) + '</div>'; }
+  else TPL_GROUPS.forEach(g => { const L = BUILTIN_TPLS.filter(t => t.group === g && hit(t)); if(L.length) h += '<h3 class="tgh">' + esc(g) + '</h3><div class="tgwrap">' + tgCards(L, cur) + '</div>'; });
   document.getElementById('tglist').innerHTML = h || '<p class="hint">Nothing matches. Clear the search to see them all.</p>';
 }
-function tgOpen(q){ document.getElementById('tgq').value = typeof q === 'string' ? q : ''; tgRender(); document.getElementById('tgdlg').showModal(); }
+function tgOpen(q){ document.getElementById('tgq').value = typeof q === 'string' ? q : ''; document.getElementById('tgsort').value = sortPref('tgsort', [['cat'], ['name']], 'cat'); tgRender(); document.getElementById('tgdlg').showModal(); }
 document.addEventListener('input', e => { if(e.target && e.target.id === 'tgq') tgRender(); });
+document.addEventListener('change', e => { if(e.target && e.target.id === 'tgsort'){ try{ localStorage.setItem('pp.tgsort', e.target.value); }catch(x){} tgRender(); } });
 document.addEventListener('keydown', e => { if(e.key === 'Enter' && e.target && e.target.id === 'tgq') e.preventDefault(); });
 function applyTplChoice(){
   const t = findTpl(pform.tpl.value), radios = [...pform.querySelectorAll('input[name=mode]')];
@@ -3691,8 +3868,8 @@ function meetRrule(i){
 }
 const SH = {
   people:{title:'People', one:'person', add:'Add a person', stat:{empty:'Not asked', started:'Asked', done:'Confirmed'}, tally:'confirmed',
-    fields:[{k:'name',l:'Name',t:'text',r:1,n:120},{k:'role',l:'Role',t:'text',n:80,list:'shroles',h:'For example: Camera operator'},{k:'phone',l:'Phone',t:'tel',n:40},{k:'email',l:'Email',t:'email',n:120},{k:'call',l:'Call time',t:'time'},{k:'release',l:'Release form',t:'select',o:['','Not needed','Needs one','Sent','Signed']},{k:'notes',l:'Notes',t:'area',n:600,h:'Wardrobe, food needs, release signed, how they are getting there'}],
-    head:i => i.name, sub:i => [i.role, i.call ? 'Call ' + fmtTime(i.call) : '', i.phone, i.release ? 'Release: ' + i.release.toLowerCase() : ''].filter(Boolean).join('. '),
+    fields:[{k:'name',l:'Name',t:'text',r:1,n:120,h:'If you do not know yet, type Not known yet'},{k:'role',l:'Role',t:'text',n:80,list:'shroles',h:'For example: Camera operator'},{k:'org',l:'Organization',t:'text',n:120,h:'Company, church or group (optional)'},{k:'phone',l:'Phone',t:'tel',n:40},{k:'email',l:'Email',t:'email',n:120},{k:'call',l:'Call time',t:'time'},{k:'release',l:'Release form',t:'select',o:['','Not needed','Needs one','Sent','Signed']},{k:'notes',l:'Notes',t:'area',n:600,h:'Wardrobe, food needs, release signed, how they are getting there'}],
+    head:i => i.name, sub:i => [i.role, i.org, i.call ? 'Call ' + fmtTime(i.call) : '', i.phone, i.release ? 'Release: ' + i.release.toLowerCase() : ''].filter(Boolean).join('. '),
     empty:'Add your cast and crew: who you need, their role, phone and call time. Tap the circle to move a person from Not asked to Asked to Confirmed.'},
   places:{title:'Places', one:'place', add:'Add a place', stat:{empty:'Not secured', started:'Pending', done:'Confirmed'}, tally:'confirmed',
     fields:[{k:'name',l:'Place name',t:'text',r:1,n:120},{k:'address',l:'Address',t:'text',n:200},{k:'contact',l:'Contact person',t:'text',n:120},{k:'phone',l:'Contact phone',t:'tel',n:40},{k:'parking',l:'Parking and load-in',t:'area',n:400},{k:'power',l:'Power, permits and access',t:'area',n:400,h:'Outlets, permit number, gate code, who unlocks'},{k:'sun',l:'Light and weather plan',t:'area',n:400,h:'Sunrise and sunset, best light, rain plan, noise'},{k:'notes',l:'Other notes',t:'area',n:600}],
@@ -3869,7 +4046,7 @@ function shootListHtml(p, key){
       ${conflicts && conflicts.size ? '<p class="hint" style="margin:8px 0 0;color:var(--behind);font-weight:600">' + conflicts.size + (conflicts.size === 1 ? ' booking overlaps' : ' bookings overlap') + ' another use of the same studio at the same time.</p>' : ''}
       ${key === 'people' && items.some(i => i.release && i.release !== 'Not needed') ? '<p class="hint" style="margin:8px 0 0">Release forms signed: ' + items.filter(i => i.release === 'Signed').length + ' of ' + items.filter(i => i.release && i.release !== 'Not needed').length + '</p>' : ''}
       <div class="btnrow"><button class="btn" data-a="sh-add" data-list="${key}">${d.add}</button>${key === 'people' ? '<button class="btn ghost" data-a="rel-open">Release form</button><button class="btn ghost" data-a="p-from-contacts">Add from Contacts</button>' + (items.length ? '<button class="btn ghost" data-a="p-to-contacts">Save to Contacts</button>' : '') : ''}${key === 'sched' && items.length ? '<button class="btn ghost" data-a="sched-print">Print or save as PDF</button><button class="btn ghost" data-a="sched-docx">Word document</button><button class="btn ghost" data-a="sched-copy">Copy as text</button>' : ''}${key === 'shots' ? '<button class="btn ghost" data-a="timer">Timer</button>' + (SHOOT_CHECKS.some(c => !p.items.some(i => i.text === c[1])) ? '<button class="btn ghost" data-a="sh-checks">Add camera, sound and light checks</button>' : '') : ''}</div></div>
-    ${rows ? '<section class="sec">' + rows + '</section>' : '<p class="hint">' + d.empty + '</p>'}${key === 'meetings' && rows ? '<p class="hint" style="margin:10px 0 0">Tip: drag a meeting link onto this page to add it.</p>' : ''}`;
+    ${rows ? '<section class="sec">' + rows + '</section>' : '<p class="hint">' + d.empty + '</p>'}${key === 'meetings' && rows ? '<p class="hint" style="margin:10px 0 0">Tip: drag a meeting link onto this page to add it.</p>' : ''}<p class="addline"><button type="button" class="link add" data-a="sh-add" data-list="${key}">Need something else? ${esc(d.add)} here.</button></p>`;
 }
 /* the call sheet */
 function callModel(p){
@@ -4083,7 +4260,7 @@ async function verifyStoredLicense(){
 const splash = document.getElementById('splash'), helpdlg = document.getElementById('helpdlg');
 
 /* Version, install hint, backup nudge, support */
-const APP_VERSION = '3.35';
+const APP_VERSION = '3.36';
 const SUPPORT_EMAIL = 'AscentStudiosOnline@gmail.com';
 const instDlg = document.getElementById('insthint');
 function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
@@ -4147,6 +4324,7 @@ const setdlg = document.getElementById('setdlg'), setform = document.getElementB
 function openAppearance(){
   const pr = cleanPrefs(state.prefs);
   for(const k of ['theme','size','font','accent']){ const el = setform.querySelector('input[name='+k+'][value="'+pr[k]+'"]'); if(el) el.checked = true; }
+  { const ck = clockMode(), el = setform.querySelector('input[name=clock][value="' + ck + '"]'); if(el) el.checked = true; }
   setdlg.showModal();
 }
 setform.addEventListener('change', () => {
@@ -4605,11 +4783,11 @@ function openCalendar(){
   caldlg.showModal();
 }
 function weekWhen(x){ const d = daysAway(x.date); return fmtDate(x.date) + (x.time ? ', ' + fmtTime(x.time) : '') + (d === 0 ? ' (today)' : d === 1 ? ' (tomorrow)' : d < 0 ? ' (' + (-d) + (d === -1 ? ' day' : ' days') + ' overdue)' : ' (in ' + d + ' days)'); }
-function weekPanel(){
-  let L; try{ L = upcoming().filter(x => daysAway(x.date) <= 7); }catch(e){ return ''; }
+function weekPanel(p){
+  let L; try{ L = upcoming().filter(x => daysAway(x.date) <= 7 && (!p || x.pid === p.id)); }catch(e){ return ''; }
   if(!L.length) return '';
   const more = L.length > 6 ? L.length - 6 : 0;
-  return '<div class="panel" id="weekbox"><h3>This week and overdue</h3><p class="hint" style="margin-top:0">From all your projects.</p>' + L.slice(0, 6).map(x =>
+  return '<div class="panel" id="weekbox"><h3>This week and overdue</h3><p class="hint" style="margin-top:0">' + (p ? 'For this project only. My day shows all of your projects.' : 'From all your projects.') + '</p>' + L.slice(0, 6).map(x =>
     `<button type="button" class="calrow" data-a="cal-go" data-id="${x.pid}"${x.rid ? ' data-rid="' + esc(x.rid) + '"' : ''}><b>${esc(x.title)}</b><span${daysAway(x.date) < 0 ? ' style="color:var(--behind);font-weight:600"' : ''}>${esc(weekWhen(x))}</span>${x.project ? `<span>${esc(x.project)}</span>` : ''}${x.detail ? `<span>${esc(x.detail)}</span>` : ''}</button>`).join('') +
     (more ? '<p class="hint">and ' + more + ' more. Open Calendar in the left column to see them all.</p>' : '') + '</div>';
 }
@@ -5442,7 +5620,7 @@ function normProject(r){
     const o = {id:idOf(i.id), cat, text, status:stat3(i.status), req:!!i.req, w:[1,2,3].includes(Number(i.w)) ? Number(i.w) : 2, m:[1,2].includes(Number(i.m)) ? Number(i.m) : 0};
     if(i.note) o.note = tstr(i.note, 2000); if(dstr(i.doneAt)) o.doneAt = dstr(i.doneAt); return o; }).filter(Boolean);
   const p = {id:idOf(r.id), title:tstr(r.title, 120) || 'Untitled', mode:r.mode, due:dstr(r.due), stage:STAGES.includes(r.stage) ? r.stage : 'Idea',
-    created:dstr(r.created) || ymd(today()), outlineCounts:r.outlineCounts === true, sample:r.sample === true, kind:tstr(r.kind, 80), marketing:!!r.marketing, rights:!!r.rights, items,
+    created:dstr(r.created) || ymd(today()), outlineCounts:r.outlineCounts === true, sample:r.sample === true, kind:tstr(r.kind, 80), tplId:/^[A-Za-z0-9_-]{1,40}$/.test(String(r.tplId || '')) ? String(r.tplId) : '', offer:Array.isArray(r.offer) ? r.offer.filter((k, n, a) => ['people','meetings','event','edit','goal','shoot','bring','sources','tools'].includes(k) && a.indexOf(k) === n) : null, marketing:!!r.marketing, rights:!!r.rights, items,
     sources:arr(r.sources, 500).map(x => { x = obj(x); const title = tstr(x.title, 200); if(!title) return null;
       return {id:idOf(x.id), type:SRC_TYPES[x.type] ? x.type : 'other', title, author:tstr(x.author, 120), where:tstr(x.where, 600), accessed:dstr(x.accessed), note:tstr(x.note, 2000), cat:tstr(x.cat, 60)}; }).filter(Boolean),
     outline:arr(r.outline, 500).map(x => { x = obj(x); const title = tstr(x.title, 120); if(!title) return null;
@@ -5455,6 +5633,7 @@ function normProject(r){
     shoot:cleanShoot(r.shoot),
     links:arr(r.links, 50).map(x => { x = obj(x); const name = tstr(x.name, 60), url = cleanUrl(tstr(x.url, 500)); return name && url ? {id:idOf(x.id), name, url} : null; }).filter(Boolean),
     checks:{}, seriesId:tstr(r.seriesId, 40).replace(/[^A-Za-z0-9_-]/g, ''), event:{}, travel:[], bring:[]};
+  p.rlog = arr(r.rlog, 300).map(x => { x = obj(x); const what = tstr(x.what, 200); if(!what) return null; return {id:tstr(x.id, 40) || uid(), what, source:tstr(x.source, 200), type:tstr(x.type, 40), cost:Math.max(0, Math.min(1e9, Number(x.cost) || 0)), expires:dstr(x.expires) || '', receipt:tstr(x.receipt, 300), credit:tstr(x.credit, 300), used:tstr(x.used, 300)}; }).filter(Boolean);
   { const ad = dstr(r.aired); if(ad) p.aired = ad; const eu = cleanUrl(tstr(r.epUrl, 600)); if(eu) p.epUrl = eu; const dl = Math.max(0, Math.min(1e9, parseInt(r.epDl, 10) || 0)); if(dl) p.epDl = dl; }
   { const mm = mnClean(r.money); if(mm) p.money = mm; }
   { const bb = pmCleanBasics(r.basics); if(bb) p.basics = bb; const pn = tstr(r.pmNote, 1500).trim(); if(pn) p.pmNote = pn; }
@@ -5560,6 +5739,533 @@ document.getElementById('bkfile').addEventListener('change', e => {
     bkHandleRaw(raw);
   }, () => { msg.textContent = 'That file could not be read.'; });
 });
+/* ---------- 3.36: new templates ---------- */
+Object.assign(PM_B, {
+  home:{thing:'ME AND MY HOME OR FAMILY', who:['Who this is for','For example: my family of four, our house in Rockledge'], for:['Who is affected','For example: my wife, two kids and our dog'], tone:['Voice and style','For example: calm, plain, short steps'], shape:['Format and length','For example: a one-page checklist, large print'], always:['Always include','For example: dates, phone numbers and what to do first'], never:['Never include','For example: medical advice, costs I did not give you']},
+  study:{thing:'MY GROUP AND THE TEXT', who:['Group and what you are studying','For example: Tuesday evening study group, the book of Ruth'], for:['Who comes','For example: eight adults, mixed backgrounds, some new'], tone:['Voice and style','For example: warm, curious, plain words, no jargon'], shape:['Usual length and format','For example: 45 minutes, a reading, three questions, a closing thought'], always:['Always include','For example: a question to take home'], never:['Never include','For example: guesses stated as facts, long quotes from books']}
+});
+const NT_ = (s, c) => { const m = /^(!!|!|~)?(.*)$/.exec(s); return [m[2], m[1] ? 1 : 0, m[1] === '!!' ? 3 : m[1] === '~' ? 1 : 2]; };
+const NTPL = [];
+function nt(id, name, g, blurb, ex, what, sample, b, cats, outline, prompts, offer){
+  NTPL.push({id, name, g, blurb, ex, what, sample, b, cats:cats.map(([c, xs]) => [c, xs.map(NT_)]), outline, prompts, offer});
+}
+nt('t-commercial','Commercial shoot',8,'Brief, script, locations, talent, shoot day, edit and delivery','shoot,edit,people,meetings',
+  'Use this to make a commercial for yourself or a client, from the brief and approvals to the finished spots.',
+  'A 30-second commercial for a local business: the brief approved, a one-day shoot, two review rounds and three versions delivered.','video',[
+  ['Brief and approvals',['!!Goal, audience and the one message written down','!!Length, versions and where it will run','!Budget and who approves each step agreed','!!Script or storyboard approved in writing','Contract or agreement signed']],
+  ['Plan the shoot',['!Locations chosen and permission given','!Talent booked and releases signed','!Props, wardrobe and music chosen','!Shot list and schedule made','Weather or backup plan ready']],
+  ['Shoot day',['!!Gear checked and backed up','!Call sheet sent to everyone','!Sound tested before the first take','!!Every card copied twice before leaving','Thank-yous said and location left clean']],
+  ['Edit and deliver',['!Rough cut sent for review','!Changes made from one set of notes','!Music, graphics and captions added','!!Final approval in writing','!Files exported for each place it will run','Rights and licenses logged with costs']]],
+  ['Brief','Plan','Shoot','Edit and delivery'],[
+  ['brief','Creative brief','Turn my notes into a one-page creative brief: goal, audience, the one message, tone, length, where it will run and what success looks like. Mark anything I did not tell you as "to confirm".','',true],
+  ['script','Script for the spot','Write a script for the commercial in two columns, what we see and what we hear, to fit the length I gave. Use only the facts in my notes and leave blanks for anything I did not give.','',true],
+  ['shotlist','Shot list','Turn my script into a shot list: shot, angle, location, what happens and the line spoken. Keep it to what can be shot in one day.'],
+  ['approval','Client approval email','Write a short, polite email asking the client to approve the script by a date, saying what happens next if they do and what changes cost after approval.']]);
+nt('t-livestream','Livestream or broadcast day',8,'Run of show, gear, test, going live and the replay','event,people,meetings,bring',
+  'Use this for a live show or broadcast: the run of show, gear and internet tests, going live and what happens after.',
+  'A Sunday morning broadcast: the run of show sent on Friday, audio and internet tested an hour before, going live on time and the replay posted by noon.','video',[
+  ['Plan',['!!Run of show written with times and who does what','!Title, description and thumbnail ready','!Platforms and stream keys set up','Guests invited and given the link','!Backup plan if the internet fails']],
+  ['Gear and test',['!!Cameras, microphones and lights set up','!!Sound check done with real levels','!Internet speed tested on the day','!Graphics, lower thirds and music loaded','!Test stream watched on a second device']],
+  ['Going live',['!Everyone in place five minutes early','!!Recording running as well as the live stream','!Chat watched by a second person','!!Live on time']],
+  ['After',['!Stream ended cleanly and the recording saved','!Replay posted with title and description','Questions and comments answered','Notes on what went wrong written down','Recording backed up']]],
+  ['Plan','Test','Live','After'],[
+  ['ros','Run of show','Turn my notes into a run of show with times, who is on screen, what is shown and the cue for each part. Keep every item and time I gave.','',true],
+  ['title','Title and description','Write three title options and a short description for the replay, using only what I told you.'],
+  ['open','Opening and welcome','Write a 30-second welcome that says who we are, what today is about and how to take part in the chat.'],
+  ['recap','Replay message','Write a short message to send with the replay link: what happened, where to watch and the next live date.']]);
+nt('t-documentary','Documentary or interview series',8,'Story, interviews, b-roll, edit, rights and release','shoot,edit,people,meetings,sources',
+  'Use this for a documentary or a series of interviews, from the story idea to the finished film.',
+  'A teaching series with a book writer: a week of filming with lots of b-roll, then six months of post-production, one episode at a time.','video',[
+  ['Story and plan',['!!The question or story and who it is for written','!!Outline or treatment written','!People to interview chosen and invited','!Sources and facts gathered with where they came from','!Budget and schedule set']],
+  ['Interviews and b-roll',['!!Releases signed by everyone on camera','!Interview questions written','!Locations and b-roll list planned','!Every card copied twice each day','~Notes made while filming on what to use']],
+  ['Edit',['!Footage logged and transcripts made','!Assembly edit done','!Rough cut then fine cut','!Review rounds with notes in one place','!Music, graphics and captions added']],
+  ['Rights and release',['!!Music, clips and photos licensed and logged with costs','!Credits and thanks written','!!Final approval received','!Files delivered and project archived']]],
+  ['Story','Filming','Edit','Release'],[
+  ['treat','Treatment','Turn my notes into a one-page treatment: the question, who it is for, the structure in acts and the people we will hear from. Do not invent facts or quotes.','',true],
+  ['questions','Interview questions','Write open interview questions for the person I describe, from easy to deep, with a follow-up for each. Do not put words in their mouth.'],
+  ['broll','B-roll ideas','Suggest b-roll shots for each part of my outline that show rather than tell, with a note on which are easy to get.'],
+  ['credits','Credits and thanks','Write the end credits and a thank-you list from the names and roles I give. Leave blanks for anything missing.']]);
+nt('t-tvepisode','TV episode',8,'Script, shoot, edit, approvals, rights and delivery for one episode','shoot,edit,people,meetings',
+  'Use this for one episode of a TV or video series, from the script to the delivered file. Put the episodes in a Series to see them all together.',
+  'Episode 5 of a weekly show: script approved, a studio day, an edit with two review rounds and delivery to the broadcaster.','video',[
+  ['Script and plan',['!!Topic and the one point of the episode written','!Script or outline approved','!Guests confirmed and releases ready','!Studio or location booked','~Graphics and music chosen']],
+  ['Shoot',['!Call sheet sent','!Gear, lights and sound tested','!!Episode recorded and backed up twice','Notes made on fixes or pickups']],
+  ['Edit and finish',['!Rough cut and fine cut','!Titles, lower thirds and music added','!Sound mixed and color matched','!Review notes handled','!!Final approval received']],
+  ['Deliver',['!Exported to the required format','!Played all the way through on the final file','!Delivered or uploaded','!Rights and licenses logged','Episode added to the Series list with its air date']]],
+  ['Script','Shoot','Edit','Delivery'],[
+  ['script','Script or outline','Turn my notes into an episode script for the length I gave: the open, three segments and the close, with a line for each graphic. Use only facts in my notes.','',true],
+  ['guest','Guest introduction','Write a 20-second introduction for the guest I describe that says who they are and why they matter to this audience, with no hype.'],
+  ['teaser','Teaser and description','Write a 15-second teaser and a short episode description from my notes.'],
+  ['notes','Notes for the editor','Turn my rough comments into clear numbered notes for the editor: what to keep, cut or fix, with times if I gave them.']]);
+nt('t-websitebuild','Website build or redesign',3,'Goals, pages, content, build, testing and launch','sources,people,meetings',
+  'Use this to build a new website or redo an old one, from what it must do to going live.',
+  'A new site for a small ministry: pages planned, text and photos gathered, the site built, tested on phones and launched with a backup saved.','it',[
+  ['Plan',['!!What the site must do and for whom written','!Pages and menu planned','!Domain, hosting and email checked','!Budget and who approves set','~Sites you like noted']],
+  ['Content',['!Text written for every page','!Photos and logos gathered with permission','!Contact forms and links planned','~Search words chosen']],
+  ['Build and test',['!Pages built','!!Tested on phone, tablet and computer','!Links, forms and payments tested','!Accessibility checked: readable text, pictures described','!Page speed checked']],
+  ['Launch',['!!Backup of the old site saved','!Domain pointed to the new site','!Redirects from old pages set','!Analytics or a visitor count added','!Passwords and logins saved safely','Announcement sent']]],
+  ['Plan','Content','Build','Launch'],[
+  ['sitemap','Page plan','Turn my notes into a page plan: each page, what it says, what the visitor should do and what links to what. Keep the pages I listed.','',true],
+  ['copy','Plain page text','Rewrite my rough notes for one page into short, clear text a visitor will understand. Use only my facts.'],
+  ['testlist','Testing checklist','Write a checklist for testing this site on a phone, tablet and computer, including forms, links and page speed.'],
+  ['launch','Launch announcement','Write a short announcement of the new site for email and social media using only the facts I gave.']]);
+nt('t-helpdesk','Support or help-desk setup',3,'How people ask for help, who answers, tools and how you measure it','people,meetings,tools',
+  'Use this to set up a way for people to ask for help and get answers, for a small office, a ministry or customers of a product.',
+  'Support for a program you sell: one email address, a list of common questions, who answers within a day, and a monthly review.','it',[
+  ['Plan',['!!Who needs help and with what written down','!How people ask for help chosen: email, phone or a form','!Who answers and when agreed','!Hours and how fast you reply written down']],
+  ['Set up',['!Support email or form made and tested','!Common questions and answers written','!Replies saved as templates','!A place to log every request','~Remote help tool chosen']],
+  ['Run',['!Staff or volunteers shown how to answer','!Test request made and answered','!Customers told how to get help','!!Private information handled safely']],
+  ['Review',['!Requests counted by type each month','!Repeat problems found and fixed at the source','!Answers updated','Thanks sent to people who report problems']]],
+  ['Plan','Set up','Run','Review'],[
+  ['faq','Common questions','Turn my list of problems into a short list of questions and plain answers a non-technical person can follow.','',true],
+  ['replies','Reply templates','Write friendly reply templates for the most common requests I list, each ending with what happens next.'],
+  ['policy','Support policy page','Write a short support page: how to get help, hours, how fast we reply and what we cannot help with, using only what I gave.'],
+  ['review','Monthly review','Turn my list of requests into a short monthly review: the top problems, what we fixed and what we will do next.']]);
+nt('t-bid','Estimate or bid',2,'Scope, quantities, costs, markup, terms and sending it','people,meetings,bring',
+  'Use this to prepare an estimate or bid for a construction job.',
+  'A bid for a small office remodel: plans reviewed, quantities counted, subcontractor prices collected, terms written and the bid sent before the deadline.','build',[
+  ['Understand the job',['!!Plans, scope and specifications read closely','!Site visited and photographed','!Questions to the owner written and answered','!Bid deadline and how to deliver noted']],
+  ['Price it',['!!Quantities counted for each item','!Subcontractor prices collected in writing','!Materials priced with delivery','!Labor hours and rates set','!Permits, insurance and overhead added','!Markup and contingency set']],
+  ['Terms',['!Inclusions and exclusions written','!Payment schedule written','!Schedule and start date written','!Validity date of the price stated']],
+  ['Send',['!!Bid checked by a second person','!Sent before the deadline and receipt confirmed','!Follow-up call scheduled','Copy saved with all backup']]],
+  ['Review','Price','Terms','Send'],[
+  ['scope','Scope of work','Turn my notes into a clear scope of work: what is included, what is not, and what the owner must provide. Use only facts I gave.','',true],
+  ['cover','Cover letter','Write a short, professional cover letter for the bid. Say what is included, the price and how long it is valid, using only the facts I gave.'],
+  ['exclusions','Inclusions and exclusions','Write inclusions and exclusions in plain words from my notes so nothing is assumed.'],
+  ['followup','Follow-up note','Write a polite follow-up note to the owner a few days after sending the bid.']]);
+nt('t-changeorder','Change order',2,'Describe, price, approve in writing and update the schedule','people',
+  'Use this whenever the owner or the job asks for a change to the work: describe it, price it and get it approved in writing before the work starts.',
+  'The owner wants a window added: you describe it, price labor and materials, adjust the schedule, get a signature and then build it.','build',[
+  ['Describe',['!!What is changing and why written plainly','!Who asked for the change noted','!Drawings or photos attached','!Work affected by the change listed']],
+  ['Price and schedule',['!!Added or removed cost worked out for labor, materials and subcontractors','!Effect on the schedule worked out','!Effect on permits or inspections checked']],
+  ['Approve',['!!Change order signed by the owner before the work starts','!Subcontractors told in writing','!Copy filed with the contract']],
+  ['Record',['!Cost entered in the job costs','!Schedule updated','!Change order number logged']]],
+  ['Describe','Price','Approve','Record'],[
+  ['describe','Plain description','Rewrite my notes as a clear change order description: what changes, why, and which parts of the work it touches. Use only facts I gave.','',true],
+  ['letter','Letter to the owner','Write a short letter explaining the change, the cost, the schedule effect and asking for a signature before work starts.'],
+  ['sub','Note to a subcontractor','Write a short note telling a subcontractor about the change, the new scope and when to start.'],
+  ['log','Change order log entry','Turn my notes into a one-paragraph log entry: number, date, what, who approved, cost and schedule effect.']]);
+nt('t-safety','Safety meeting',2,'Topic, handout, attendance and follow-up','people,meetings',
+  'Use this for a regular safety meeting or toolbox talk: pick a topic, give it, record who attended and follow up on what comes up.',
+  'A ten-minute Monday toolbox talk on ladder safety: a handout, a sign-in sheet and one hazard fixed before the end of the week.','build',[
+  ['Plan',['!Topic chosen from recent incidents or the work ahead','!Short handout ready','!Time and place set']],
+  ['Meeting',['!!Attendance recorded with names and date','!Topic explained in plain words with an example','!Questions and concerns written down','!Near misses or hazards asked about']],
+  ['After',['!!Hazards assigned with a person and a date','!Record filed','!Follow-up checked at the next meeting']]],
+  ['Plan','Meeting','After'],[
+  ['talk','Ten-minute talk','Write a ten-minute safety talk on the topic I give in plain words, with one real example, three key points and two questions to ask the crew.','',true],
+  ['handout','One-page handout','Write a one-page handout for the topic with large type, short sentences and a short list of dos and don\'ts.'],
+  ['quiz','Quick quiz','Write five short questions to check that the crew understood the topic.'],
+  ['record','Meeting record','Turn my notes into a short record: date, topic, who attended, issues raised and actions with owners.']]);
+nt('t-punch','Punch list',2,'Walk, list, assign, fix and sign off','people,meetings',
+  'Use this on its own to walk a job, list what is left to fix, and sign off each item. It is the same list used at closeout.',
+  'A walkthrough with the owner: 42 items listed by room, each given a person and a date, and checked off with photos as they are finished.','build',[
+  ['Walk and list',['!!Every area walked with the owner or inspector','!Each item written with the room and what is wrong','!Photos taken of each item']],
+  ['Assign and fix',['!!Each item assigned to a person with a date','!Materials or parts ordered','!Subcontractors told in writing']],
+  ['Check and sign off',['!!Each item checked and photographed when done','!Owner signs off each room','!Items not done listed with a plan','!Final punch list copy filed']]],
+  ['Walk','Fix','Sign off'],[
+  ['list','Clean punch list','Turn my rough notes into a clear punch list grouped by room, one line per item with what is wrong and what to do. Do not add items.','',true],
+  ['note','Note to the crews','Write a short note to crews with their items and dates, polite and clear.'],
+  ['owner','Update to the owner','Write a short progress update for the owner on how many items are done, what is left and when it will be finished.'],
+  ['signoff','Sign-off sheet','Write a simple sign-off sheet with a line for each room, the date and a signature.']]);
+nt('t-thesis','Thesis or paper',5,'Question, sources, outline, drafts, citations and submission','sources,tools,meetings',
+  'Use this to write a thesis, a research paper or a long assignment, from the question to the final submission.',
+  'A twenty-page paper due in six weeks: the question chosen, sources gathered, an outline, two drafts, citations checked and handed in a day early.','school',[
+  ['Question and plan',['!!The question or thesis in one sentence','!Requirements and length read closely','!Deadlines for each stage set','!Adviser or teacher met']],
+  ['Sources',['!!Sources gathered and saved with where they came from','!Notes made on each source','!Facts and quotes checked']],
+  ['Write',['!!Outline made','!First draft finished','!Second draft for flow and gaps','!Read aloud once','!Reviewed by a second reader']],
+  ['Finish',['!!Citations and bibliography checked against the required style','!Proofread','!Formatting checked','!!Submitted before the deadline']]],
+  ['Plan','Sources','Draft','Finish'],[
+  ['question','Sharpen my question','Help me sharpen my research question from my rough idea. Suggest three clearer versions and say what each would need to prove.','',true],
+  ['outline','Outline','Turn my notes into an outline with a point for each section and the source that supports it. Do not invent sources.','',true],
+  ['feedback','Read my draft','Read the draft I paste and tell me where the argument is unclear, thin or repeated. Do not rewrite it.'],
+  ['abstract','Abstract','Write a 150-word abstract from my paper using only what is in it.']]);
+nt('t-mission','Mission trip',9,'Team, travel, supplies, the work and the report back','event,bring,people,meetings',
+  'Use this to prepare a mission or service trip: the team, travel, supplies, the work itself and the report to supporters.',
+  'A two-week trip with eight people: passports and shots checked, supplies shipped, daily plans written and a report sent to every supporter.','np',[
+  ['Plan',['!!Purpose, partners and dates agreed','!Budget and how it will be raised set','!Team chosen and applications received','!Host or partner contacts confirmed']],
+  ['Team and travel',['!!Passports, visas and required shots checked','!Flights and lodging booked','!Insurance and emergency contacts for everyone','!Team meetings held']],
+  ['Supplies and work',['!Supplies listed, bought and packed','!Daily plan written','!Safety and local customs briefed']],
+  ['After',['!Thank-yous sent to supporters','!Report and photos shared','!Costs counted against the budget','!What to change next time written down']]],
+  ['Plan','Team','Trip','Report'],[
+  ['letter','Support letter','Write a warm support letter for the trip using only the facts I gave: the purpose, the dates, the cost and how to give.','',true],
+  ['daily','Daily plan','Turn my notes into a day-by-day plan with times, who leads and what to bring. Leave blanks for anything I did not give.'],
+  ['brief','Team briefing','Write a short briefing for the team covering safety, customs and what to expect, using only what I told you.'],
+  ['report','Report to supporters','Write a short report to supporters from my notes: what happened, what it cost, and thanks.']]);
+nt('t-volunteer','Volunteer drive',9,'Roles, recruiting, training, scheduling and thanks','people,meetings,event',
+  'Use this to find, train and thank volunteers for a ministry, a school or a nonprofit.',
+  'Finding twenty volunteers for a fall festival: roles written, a sign-up sent, a short training and a thank-you after.','np',[
+  ['Plan',['!!Roles and how many people each needs written','!Dates and times set','!Who leads each team named']],
+  ['Recruit',['!Sign-up form or sheet made','!Asked through email, announcements and personal asks','!Replies answered within two days','!Background checks or forms done where needed']],
+  ['Train and schedule',['!Short training held','!Schedule sent and confirmed','!Contact numbers shared']],
+  ['Thank',['!!Thank-you sent after the event','!Hours or help counted','!Names added to Contacts with the category Volunteer','~Invited to the next time']]],
+  ['Plan','Recruit','Train','Thank'],[
+  ['ask','Volunteer ask','Write a warm short message asking people to volunteer, with the roles, the dates and how to sign up. Use only the facts I gave.','',true],
+  ['roles','Role descriptions','Write short role descriptions from my notes: what the person does, how long, and what training they get.'],
+  ['welcome','Welcome and training script','Write a five-minute welcome for new volunteers covering what to do, who to ask and what to do if something goes wrong.'],
+  ['thanks','Thank-you note','Write a thank-you note to volunteers that names what they did and its result, from my notes.']]);
+nt('t-biblelesson','Bible study lesson',9,'Passage, context, study, lesson, discussion and application','sources,people,meetings,tools',
+  'Use this to prepare one Bible study lesson: the passage and its context, your study, the lesson, discussion questions and how it applies.',
+  'A Tuesday evening study on Ruth chapter 1: the passage read several times, background and cross-references gathered, three questions written and a closing prayer.','study',[
+  ['Passage and context',['!!Passage read several times and the main idea in one sentence','!Book, author, date and setting noted','!Surrounding chapters read','~Parallel passages noted']],
+  ['Study',['!!Key words and original-language notes','!Cross-references gathered','!Commentaries and reference works read','!Hard questions listed with where you found answers','!Sources recorded']],
+  ['Lesson',['!!Opening question or hook written','!Observations: what the text says','!Interpretation: what it meant then','!Illustration or story chosen','!!Application: what we do with this','!Discussion questions written']],
+  ['Materials and delivery',['!Handout ready','~Slides ready','!Rehearsed and timed','!Prayer and closing written','Follow-up for next week planned']]],
+  ['Passage','Study','Lesson','Application'],[
+  ['observe','Observation questions','Write observation questions for the passage that help people see what the text actually says, before any interpretation. Use only the text I give.','',true],
+  ['discuss','Discussion questions','Write five discussion questions for the group that move from what the text says, to what it meant, to how it applies today.','',true],
+  ['illustrate','Illustrations','Suggest two or three everyday illustrations for the main idea. Say clearly when something is a suggestion rather than a fact.'],
+  ['handout','One-page handout','Turn my lesson notes into a one-page handout with the passage, three questions and a thought for the week.']]);
+nt('t-bibleseries','Bible study series',9,'Several lessons in order, with a plan, materials and follow-up','sources,people,meetings,tools',
+  'Use this to plan a Bible study that runs for several weeks, then make each lesson with Bible study lesson. Put the lessons in a Series to see them all.',
+  'An eight-week study of Ruth: a plan for each week, a handout each week, and a short review at the end.','study',[
+  ['Plan the series',['!!Goal and who it is for written','!Passage or topic for each week chosen','!Dates, place and length set','!Study materials chosen','~Recommended reading listed']],
+  ['Each week',['!!Lesson prepared for each week','!Handouts printed or shared','!Weekly reminder sent','!Prayer requests recorded']],
+  ['Close and follow up',['!Review of the series held','!Feedback asked for','!Notes saved for next time','~Next series chosen']]],
+  ['Plan','Weekly lessons','Close'],[
+  ['plan','Week-by-week plan','Turn my passage list into a week-by-week plan with a main idea, a key question and one application for each week. Use only the passages I give.','',true],
+  ['promo','Announcement','Write a short announcement inviting people to the study with the dates, place and what to bring.'],
+  ['reminder','Weekly reminder','Write a short weekly reminder email with the passage to read and one question to think about.'],
+  ['review','End-of-series review','Write a few questions for the last week that help the group look back over what we studied.']]);
+nt('t-youtube','YouTube video',7,'Idea, script, film, edit, title, thumbnail and posting','tools,edit,people',
+  'Use this for a YouTube video from the idea to posting and the first few days of results.',
+  'A ten-minute teaching video: the hook written first, filmed in one session, edited with captions, and posted with a thumbnail that matches the title.','social',[
+  ['Idea and script',['!!One point of the video and who it is for written','!Hook for the first ten seconds written','!Script or bullet points written','!Length chosen']],
+  ['Film and edit',['!Light, sound and background checked','!Recorded and backed up','!Edited tight with captions','!Music licensed or free to use']],
+  ['Post',['!!Title written to match what the video delivers','!Thumbnail made','!Description with links and chapters','!Captions checked','!Posted or scheduled']],
+  ['After',['!Comments answered in the first day','!Views and watch time noted after a week','!Idea for a follow-up saved']]],
+  ['Idea','Film','Edit','Post'],[
+  ['hook','Hook options','Suggest five hooks for the first ten seconds of this video that promise one thing the viewer will get. No hype.','',true],
+  ['script','Script from my bullets','Turn my bullet points into a spoken script for the length I gave, in plain words.','',true],
+  ['titles','Title and description','Write five title options and a short description with chapters, using only what the video covers.'],
+  ['thumb','Thumbnail ideas','Suggest three simple thumbnail ideas with the words on them kept under four words.']]);
+nt('t-blog','Blog post',7,'Idea, draft, edit, images, posting and sharing','tools',
+  'Use this for a blog post or an article, from the idea to sharing it.',
+  'A 900-word post for your site: the one point chosen, a draft, edits, a picture, and shared in your newsletter.','write',[
+  ['Plan',['!!The one point and who it is for written','!Working title chosen','!Facts and sources gathered','!Outline made']],
+  ['Write',['!!First draft finished','!Read aloud once','!Edited for length and clarity','!Facts and names checked']],
+  ['Publish',['!Title and short description final','!Picture chosen with permission','!Links added','!Posted or scheduled','!Shared by email and social']]],
+  ['Idea','Draft','Edit','Publish'],[
+  ['outline','Outline','Turn my idea into an outline with a hook, three points and a closing, for the length I gave.','',true],
+  ['edit','Tighten my draft','Tighten the draft I paste: remove repeats and filler, keep my voice and every fact. Show what you cut.'],
+  ['titles','Titles and summary','Write five title options and a two-sentence summary for the post using only what is in it.'],
+  ['share','Social posts','Write three short social posts that share this blog post without hype.']]);
+nt('t-booklaunch','Book launch',7,'Ready, listed, announced, events and follow-up','people,meetings,tools',
+  'Use this for the weeks around a book coming out: the final files, where it is sold, the announcement, events and follow-up. Add the book to the Catalog to track it.',
+  'A book out in six weeks: the cover and files final, listed on your site and on a retailer, an announcement sent and three events held.','write',[
+  ['Ready',['!!Final files and cover approved','!ISBN and barcode ready','!Price and formats set','!Copies ordered for events and giveaways','!Added to the Catalog']],
+  ['Listed',['!!Product page written with a short and a long description','!Listed on your website','!Listed on retailers','!Author bio and photo ready','!Review copies sent']],
+  ['Announce',['!!Announcement email written and scheduled','!Posts scheduled','!Friends and partners asked to share','!Press or podcast pitches sent']],
+  ['Events and after',['!Launch event planned','!Sales and reviews checked each week','!Thank-yous sent','!Lessons for the next book written down']]],
+  ['Ready','Listed','Announce','After'],[
+  ['desc','Book description','Write a 100-word and a 250-word book description from my notes, starting with what the reader gets. No hype, and do not invent claims.','',true],
+  ['announce','Announcement email','Write a short launch announcement email using only the facts I gave, with one clear way to buy.'],
+  ['pitch','Pitch to a host or reviewer','Write a short pitch to a podcast host or reviewer that says why the book fits their audience, using only my facts.'],
+  ['thanks','Thank-you note','Write a short thank-you note to people who helped launch the book.']]);
+nt('t-clientprod','Client production project',1,'Proposal, contract, brief, shoot, post-production, review rounds and delivery','shoot,edit,people,meetings,sources',
+  'Use this when a client hires you to make a video, a series or a commercial. It covers the contract, the shoot and the months of post-production through to delivery and payment.',
+  'A book writer wants a teaching series filmed with lots of b-roll: a week of filming, six months of editing, with payment at each milestone.','biz',[
+  ['Proposal and contract',['!!Scope, deliverables and schedule written in a proposal','!!Contract or agreement in place (have your attorney review your wording)','!Payment milestones agreed','!Deposit received','~Rights and ownership of the finished work stated']],
+  ['Brief and plan',['!!Goals, audience and the message agreed with the client','!Style references gathered','!Shoot schedule, locations and people planned','!Series made for the episodes or pieces']],
+  ['Shoot',['!!Releases signed','!Gear and sound checked','!Every card backed up twice each day','!Client notes taken on the day']],
+  ['Post-production',['!Footage logged and backed up','!Rough cuts delivered for review','!Review rounds tracked with notes in one place','!Music and rights logged with costs','!!Final approval in writing']],
+  ['Delivery and payment',['!Final files delivered in the agreed formats','!Final invoice sent','!Project archived and backed up','!Thank-you sent and a testimonial asked for','Costs compared with the budget']]],
+  ['Proposal','Shoot','Post-production','Delivery'],[
+  ['proposal','Proposal','Turn my notes into a clear proposal: what we will make, the schedule, the deliverables, the price by milestone and what the client provides. Do not invent terms. Mark anything for my attorney to review.','',true],
+  ['brief','Creative brief','Write a one-page creative brief from my notes with the goal, audience, message, tone and where it will be used.','',true],
+  ['update','Progress update','Write a short update for the client on what is done, what is next and what we need from them by when.'],
+  ['invoice','Invoice email','Write a polite email sending the invoice for a milestone, saying what it covers and when payment is due.']],
+  ['people','meetings','shoot','edit','sources','bring']);
+nt('t-softsale','Software sale: setup, training and support',1,'Contract, needs, install, training, support plan and sign-off','people,meetings,sources',
+  'Use this when someone buys your software and you also set it up, train their people and support it. It keeps what you promised in the contract next to what you have delivered.',
+  'Another ministry buys your broadcasting software: a contract for setup, install, training and tech support, with a sign-off at the end.','biz',[
+  ['Contract and scope',['!!Contract or agreement in place for the software and the services (have your attorney review your wording)','!!What is included written down: setup, install, training and support','!Price, payment schedule and support length agreed','!Their main contact and decision maker named']],
+  ['Needs and preparation',['!Their needs and equipment surveyed','!Requirements checked against what the software needs','!Install date and access agreed','!Backups and a way back planned']],
+  ['Install and test',['!!Software installed and tested with their equipment','!Settings saved and documented','!Logins and licenses given to the right person','!Test run with their team']],
+  ['Training',['!Training sessions scheduled','!Guides and help links sent','!Questions logged and answered','!Recording or notes of the training shared']],
+  ['Support and sign-off',['!!Support plan explained: how to reach you and how fast you reply','!Check-in at 30 days','!!Sign-off received that the work is complete','!Final invoice sent','Feedback asked for']]],
+  ['Contract','Install','Training','Support'],[
+  ['scope','Services scope','Turn my notes into a plain list of what is included in setup, installation, training and support, and what is not. Mark anything for my attorney to review.','',true],
+  ['agenda','Training agenda','Write a training agenda for the sessions I describe, each with a goal, the steps to show and a short exercise.'],
+  ['guide','Quick-start guide','Write a one-page quick-start guide for the steps I list, in plain words for a non-technical person.'],
+  ['followup','Check-in email','Write a friendly 30-day check-in email asking what is working, what is not and whether they need more training.']]);
+nt('t-salescall','Sales call or proposal',1,'Prepare, call, follow up and send the proposal','people,meetings',
+  'Use this to get ready for a sales call or to write and send a proposal, then follow up.',
+  'A call with a church that might buy your software: their needs researched, three questions ready, a proposal sent within a day, and a follow-up set.','biz',[
+  ['Prepare',['!!Who they are and what they need researched','!Goal of the call written','!Questions to ask prepared','!Your price and what is included ready','~Likely objections thought through']],
+  ['The call',['!Needs and decision process listened for','!Next step agreed before hanging up','!Notes taken and logged in their contact']],
+  ['Proposal and follow-up',['!!Proposal written and sent within two days','!Follow-up set on the calendar','!Answers to their questions sent','!Added to Contacts with the category Lead']]],
+  ['Prepare','Call','Proposal','Follow-up'],[
+  ['prep','Call preparation','Prepare me for a call with the person I describe: what to find out, five questions to ask and how to say what we offer in two sentences.','',true],
+  ['proposal','Proposal','Turn my notes into a short proposal: their need, what we offer, the price and the next step. Do not invent terms.','',true],
+  ['followup','Follow-up email','Write a short follow-up email after the call that thanks them, restates what we agreed and gives one next step.'],
+  ['objection','Handle an objection','Write a calm, honest reply to the objection I paste, without pressure.']]);
+nt('t-clientpres','Client presentation',1,'Goal, content, slides, rehearsal and follow-up','people,meetings,sources',
+  'Use this to prepare a presentation to a client or a prospect.',
+  'A presentation of your proposal to a board: the one decision wanted, ten slides, a rehearsal and a written follow-up the next day.','biz',[
+  ['Plan',['!!The decision or result you want written','!Who will be there and what they care about','!Time slot and format confirmed']],
+  ['Build',['!Story in three parts: the need, your answer, the next step','!Slides or handout built','!Numbers and claims checked','!Questions they might ask answered']],
+  ['Rehearse and deliver',['!!Rehearsed aloud and timed','!Equipment and a backup copy ready','!Presented','!Next steps agreed before leaving']],
+  ['After',['!Follow-up sent within a day','!Questions answered','!Meeting logged in their contact']]],
+  ['Plan','Build','Present','After'],[
+  ['outline','Presentation outline','Turn my notes into an outline for a presentation of the length I gave: the need, our answer, proof and the ask.','',true],
+  ['qa','Likely questions','List the hardest questions this audience might ask and a short honest answer for each, using only my facts.','',true],
+  ['open','Opening and closing','Write a 30-second opening and a 30-second closing that ends with one clear next step.'],
+  ['follow','Follow-up email','Write a short follow-up email after the presentation with a summary and the next step.']]);
+nt('t-complaint','Handling a customer complaint',1,'Listen, fix, reply and learn','people',
+  'Use this when a customer is unhappy: listen, find out what happened, fix it, reply and learn from it.',
+  'A customer received the wrong item: you apologize, send the right one, refund the shipping and change how orders are checked.','biz',[
+  ['Listen and record',['!!Complaint written down in the customer\'s words','!Order, date and facts checked','!Acknowledged within one day']],
+  ['Fix',['!What went wrong found','!Fix or refund decided and approved','!Customer told what will happen and when']],
+  ['Follow up',['!!Fix done and confirmed with the customer','!Contact logged in their history','!Cause fixed so it does not repeat','~Thanked for telling you']]],
+  ['Listen','Fix','Follow up'],[
+  ['reply','First reply','Write a calm, kind first reply to the complaint I paste: acknowledge it, take responsibility where it is ours, and say what happens next. Do not blame or promise what I did not say.','',true],
+  ['resolve','Resolution email','Write an email telling the customer what we did to fix it and thanking them for telling us.','',true],
+  ['internal','Internal note','Write a short note to my team about what went wrong and what we will change.'],
+  ['apology','Apology that fits','Write a short sincere apology that does not make excuses or over-promise.']]);
+nt('t-hire','Hiring a new employee',0,'Job post, interviews, references and the offer','people,meetings',
+  'Use this to hire someone, from the job post to the signed offer. Then use New hire onboarding.',
+  'Hiring an office assistant: a job post, ten applicants, three interviews, references checked and an offer sent.','hr',[
+  ['Plan the job',['!!What the job does and the skills needed written','!Pay range, hours and start date set','!Approval to hire received','!Where to post chosen']],
+  ['Find and screen',['!Job post written and posted','!Applications saved and answered','!Short list chosen with the same criteria for everyone','!Phone screens done']],
+  ['Interview',['!!Same questions asked of every candidate','!Notes written during the interview, not after','!Practical task or sample asked for if needed','!Candidates told when to expect an answer']],
+  ['Decide and offer',['!!References checked','!Background or credential checks done where the law allows','!Offer written and sent','!Other candidates told kindly','!Next: start New hire onboarding']]],
+  ['Plan','Find','Interview','Offer'],[
+  ['post','Job post','Write a clear job post from my notes: what the person does, the skills needed, the pay and how to apply. Do not use hype or anything that excludes people unfairly.','',true],
+  ['questions','Interview questions','Write fair interview questions tied to the job I describe, the same for every candidate.','',true],
+  ['offer','Offer letter draft','Write a short offer letter with the role, pay, start date and what the offer depends on. Mark it for HR or my attorney to review.'],
+  ['decline','Kind decline','Write a short, kind message to a candidate we did not choose.']]);
+nt('t-offboard','Employee leaving',0,'Handover, accounts, equipment, paperwork and a good goodbye','people,meetings',
+  'Use this when someone leaves, whether they resign, retire or are let go: handover, accounts, equipment and paperwork.',
+  'A team member gives two weeks\' notice: their work handed over, their accounts closed on the last day and a goodbye lunch held.','hr',[
+  ['Notice and plan',['!!Notice or decision recorded in writing','!Last day agreed','!Work to hand over listed','!Who will take each part named']],
+  ['Handover',['!Instructions and files saved','!Contacts and clients told who is next','!Passwords and keys handed in']],
+  ['Last day',['!!Accounts and access closed on the last day','!Equipment returned and checked','!Final pay and benefits paperwork handled','!Exit conversation held']],
+  ['After',['!Records filed privately','!Their name removed from lists and the website','~Thank-you note sent','~Kept in touch if appropriate']]],
+  ['Plan','Handover','Last day','After'],[
+  ['handover','Handover notes','Turn my notes into a handover document: what the job covers, where things are, who to call and what is waiting. Use only facts I gave.','',true],
+  ['announce','Announcement','Write a short, kind announcement to the team that someone is leaving, who takes over and when.'],
+  ['exit','Exit conversation questions','Write open questions for an exit conversation that ask what worked and what should change.'],
+  ['thanks','Thank-you note','Write a short sincere thank-you note to the person leaving, using only what I told you.']]);
+nt('t-monthclose','Monthly close or bookkeeping',0,'Receipts, reconcile, reports and filing','people',
+  'Use this each month to close the books: receipts, reconciling accounts, reports and filing. To repeat it, use Copy as new.',
+  'The month-end close for a small business: receipts sorted, bank and card accounts reconciled, a report made and filed.','office',[
+  ['Collect',['!!Receipts and invoices gathered','!Bank and card statements downloaded','!Mileage and cash expenses recorded']],
+  ['Reconcile and record',['!!Every account reconciled to its statement','!Unpaid bills and invoices listed','!Transactions sorted into categories','!Questions about odd items noted for your accountant']],
+  ['Report and file',['!Profit and loss and balance report made','!Reports reviewed for surprises','!Records filed and backed up','!Next month\'s due dates set']]],
+  ['Collect','Reconcile','Report'],[
+  ['checklist','Close checklist','Write a month-end close checklist for the kind of business I describe, in the order to do it.','',true],
+  ['questions','Questions for my accountant','Turn my list of odd transactions into a short list of clear questions for my accountant.'],
+  ['summary','Plain summary','Turn the numbers I paste into a short plain-words summary of how the month went. Do not guess any figure.','',true],
+  ['reminder','Monthly reminder','Write a short reminder to the team of what is due for the close and by when.']]);
+nt('t-taxprep','Annual tax preparation',0,'Gather documents and questions for your tax preparer','people',
+  'Use this each year to gather what your tax preparer or accountant needs. It does not give tax advice.',
+  'Before tax season: income records, expenses, receipts, last year\'s return and a list of questions, all in one place.','biz',[
+  ['Gather',['!!Income records and tax forms collected','!Expense records and receipts sorted','!Last year\'s return found','!Mileage, home office or equipment records gathered']],
+  ['Questions and review',['!Questions for your preparer written','!Changes this year listed: new business, move, new equipment','!Estimated payments checked']],
+  ['File and keep',['!!Return reviewed before it is filed','!Filed on time or an extension requested','!Copies saved for as long as required','!Next year\'s records folder started']]],
+  ['Gather','Questions','File'],[
+  ['checklist','Document checklist','Write a checklist of documents to gather for my tax preparer for the situation I describe. Say clearly that I should confirm the list with my preparer.','',true],
+  ['questions','Questions for my preparer','Turn my notes into clear questions for my tax preparer about the changes this year.'],
+  ['summary','One-page summary','Turn my figures into a one-page summary sorted by income and expense. Do not guess or total anything I did not give.'],
+  ['reminder','Reminder email','Write a short reminder to the person who keeps my records to send their documents by a date.']]);
+nt('t-contractrenew','Vendor or contract renewal',0,'Review, compare, negotiate and decide before the date','people,meetings',
+  'Use this before a contract or a service comes up for renewal: review what you get, compare, negotiate and decide in time.',
+  'A yearly software subscription: usage checked, two alternatives priced, a better price asked for and a decision before the notice date.','biz',[
+  ['Review',['!!Renewal and notice dates found','!Contract terms and what you pay read again','!Use and results checked','!Complaints and problems listed']],
+  ['Compare and decide',['!Alternatives priced','!Price or terms to ask for decided','!Decision made before the notice date','!Approval received if needed']],
+  ['Act',['!Renewal signed or notice given in writing','!Copy of the new terms filed','!Next renewal date added to the calendar']]],
+  ['Review','Compare','Act'],[
+  ['review','Contract review questions','Write questions to ask about this contract before I renew it: cost, term, notice, price increases and what happens if I leave. I will have my attorney review the contract itself.','',true],
+  ['ask','Negotiation email','Write a polite email asking the vendor for better terms using the reasons I give, without threats.'],
+  ['notice','Notice of non-renewal','Write a short notice that I do not wish to renew, with the contract details I give. Leave blanks for anything missing.'],
+  ['compare','Comparison table','Turn the options I list into a comparison table of cost, terms, strengths and risks. Do not add facts.']]);
+nt('t-weekplan','Weekly planning and review',0,'Look back, choose the few things that matter and plan the days','',
+  'Use this for your own week: look back at last week, choose what matters most and plan each day. To start next week, use Copy as new.',
+  'Friday afternoon: you review what got done, pick three priorities for next week and put them on the calendar.','assist',[
+  ['Look back',['!What got done and what did not noted','!Open items and promises listed','!Lessons from the week noted']],
+  ['Plan',['!!Three things that matter most chosen','!Fixed meetings and deadlines checked','!Time set aside for the priorities','!Days planned with room for surprises']],
+  ['Close the week',['!Messages and loose ends cleared','!Files and receipts put away','~Something good from the week written down']]],
+  ['Look back','Plan','Close'],[
+  ['review','Weekly review questions','Write a short set of weekly review questions that help me see what got done, what did not and why.','',true],
+  ['plan','Plan my week','Turn my list of tasks, meetings and deadlines into a realistic plan for each day, with three clear priorities. Do not add tasks.','',true],
+  ['priorities','Pick three priorities','Help me choose three priorities from my list by asking me the questions that matter, one at a time.'],
+  ['shutdown','Friday wrap-up','Write a five-step Friday wrap-up routine I can follow in ten minutes.']]);
+nt('t-kickoff','Project kickoff',0,'Goals, roles, dates, risks and communication','people,meetings,goal',
+  'Use this at the start of any project to agree the goal, who does what, the dates, the risks and how you will talk to each other.',
+  'The start of a new website project: the goal agreed, roles named, the schedule set and a weekly check-in booked.','office',[
+  ['Agree',['!!Goal and what success looks like written','!Scope: what is in and what is out','!Roles named with one owner for each part','!Budget and who approves set']],
+  ['Plan',['!!Dates and milestones set','!Risks and unknowns listed','!How and how often the team communicates agreed','!Tools and files shared']],
+  ['Start',['!!Kickoff meeting held','!Notes and next steps sent the same day','!First check-in on the calendar']]],
+  ['Goal','Plan','Start'],[
+  ['agenda','Kickoff agenda','Write an agenda for a project kickoff meeting that covers goal, scope, roles, dates, risks and communication, with times.','',true],
+  ['charter','One-page project summary','Turn my notes into a one-page project summary: goal, scope, roles, dates, risks and how we will communicate. Mark anything I did not give as "to confirm".','',true],
+  ['risks','Risks and questions','List the risks and open questions this project is likely to have from my notes, and what could reduce each.'],
+  ['notes','Kickoff notes','Turn my notes into clear kickoff notes with decisions and actions with owners and dates.']]);
+nt('t-meetfollow','Meeting follow-up',0,'Decisions, actions, owners and thank-yous after a meeting','people',
+  'Use this right after a meeting so decisions and actions are not lost: write them up, send them and follow up.',
+  'After the Monday meeting: decisions and five actions with owners sent within a day, and a check on each at the next meeting.','office',[
+  ['Write up',['!!Decisions written down','!!Actions listed with an owner and a date','!Open questions listed']],
+  ['Send and track',['!Notes sent to everyone within a day','!Actions put where the team tracks them','!Contact history logged for outside guests','!Next meeting date set']],
+  ['Follow up',['!Actions checked before the next meeting','!People thanked','~Late items asked about kindly']]],
+  ['Write up','Send','Follow up'],[
+  ['minutes','Meeting notes','Turn my rough notes into clear meeting notes with decisions, actions (owner and date) and open questions. Do not add anything I did not say.','',true],
+  ['email','Follow-up email','Write a short follow-up email to attendees with the decisions and actions and the date of the next meeting.'],
+  ['nudge','Gentle reminder','Write a polite reminder to someone whose action is due, that is kind and specific.'],
+  ['thanks','Thank-you note','Write a short thank-you to a guest or speaker who joined the meeting.']]);
+nt('t-hurricane','Hurricane or storm preparation',6,'Plan, supplies, house, documents, evacuation and after the storm','event,bring,people',
+  'Use this before a hurricane or a big storm: your plan, supplies, house, documents and what to do after. It is a planning aid and does not replace local officials.',
+  'A hurricane is three days out: supplies checked, windows secured, documents in a waterproof bag and a plan to leave if asked to evacuate.','home',[
+  ['Plan',['!!Evacuation zone and route known','!Where to go and who to tell decided','!Contact numbers written on paper','!Plan for pets, elderly and children made']],
+  ['Supplies',['!!Water, food and medicine for several days','!Flashlights, batteries and chargers','!Cash and a full gas tank','!First-aid kit and needed medicines refilled','!Pet supplies']],
+  ['House and documents',['!Outdoor items brought in or tied down','!Windows and doors secured','!!Important papers and photos in a waterproof bag or saved online','!Insurance policy and photos of your belongings saved','!Utilities shut off if told to']],
+  ['After',['!Safety checked before going back','!Photos taken of any damage before cleanup','!Insurance claim started','!Neighbors checked on','!Receipts kept']]],
+  ['Plan','Supplies','House','After'],[
+  ['checklist','My storm checklist','Write a hurricane checklist for my household using the details I gave. Tell me to follow my local officials\' instructions.','',true],
+  ['supplies','Supply list','Write a supply list for the number of people and pets I give, for a stay of several days.'],
+  ['contacts','Family contact sheet','Write a one-page family contact sheet with blanks for numbers, a meeting place and who to call out of state.'],
+  ['claim','Insurance claim notes','Write a short list of what to photograph, save and say when I start an insurance claim.']]);
+nt('t-carservice','Car service and pre-trip check',6,'Maintenance, supplies and a check before a long drive','bring',
+  'Use this for regular car care and before a long drive: the service, tires, fluids, supplies and paperwork.',
+  'Before a family road trip: oil changed, tires checked, an emergency kit packed and insurance cards in the glove box.','home',[
+  ['Service',['!!Oil and filter changed on schedule','!Tires checked for wear and pressure, spare checked','!Brakes, lights and wipers checked','!Fluids and battery checked','~Recalls checked']],
+  ['Supplies and paperwork',['!Emergency kit packed','!Jack, jumper cables and a light','!Registration and insurance in the car','!Roadside help number saved']],
+  ['Before the drive',['!Gas filled','!Route and stops planned','!Phone charger and water packed']]],
+  ['Service','Supplies','Drive'],[
+  ['schedule','Service schedule','Write a simple car maintenance schedule for the mileage and the kind of car I describe. Tell me to check my owner\'s manual.','',true],
+  ['kit','Emergency kit list','Write a list for a car emergency kit for the climate and the people I describe.'],
+  ['questions','Questions for the shop','Write questions to ask the repair shop about the work I list, so I understand what is needed and what it costs.'],
+  ['trip','Pre-trip check','Write a ten-minute check to do before a long drive.']]);
+nt('t-roadtrip','Road trip',6,'Route, stops, bookings, packing and the drive','event,bring',
+  'Use this to plan a road trip: route, places to stay, stops, packing and the drive.',
+  'A week-long drive with the family: stops and lodging booked, snacks and games packed, and a day of rest in the middle.','home',[
+  ['Plan',['!!Dates, route and daily driving time set','!Places to stay booked','!Stops and things to see chosen','!Budget set for gas, food and lodging']],
+  ['Pack and prepare',['!Car checked before leaving','!Packing list made','!Snacks, water and entertainment packed','!Chargers, maps and documents packed']],
+  ['The drive',['!Rest stops planned','!Receipts kept','!A family member knows your route','~Photos taken']]],
+  ['Plan','Pack','Drive'],[
+  ['route','Daily route plan','Turn my route and dates into a day-by-day plan with driving time, stops and where we sleep. Do not invent places.','',true],
+  ['packing','Packing list','Write a packing list for the trip, number of people and season I give.'],
+  ['games','Car games and snacks','Suggest car games and simple snacks for the ages I give.'],
+  ['budget','Trip budget','Turn my costs into a simple trip budget with a line for each type of cost.']]);
+nt('t-homemaint','Seasonal home maintenance',6,'Check the house and yard for each season','bring',
+  'Use this each season to look after your house: gutters, filters, safety devices and the yard. To repeat it, use Copy as new.',
+  'In the fall: smoke alarm batteries changed, gutters cleaned, air conditioning filter replaced and the yard tidied.','home',[
+  ['Safety',['!!Smoke and carbon monoxide alarms tested and batteries changed','!Fire extinguisher checked','!Locks and lights checked']],
+  ['House',['!Air conditioning or heating filter changed','!Gutters and roof checked','!Water heater and plumbing checked for leaks','!Windows and doors sealed']],
+  ['Yard and outside',['!Trees and bushes trimmed','!Drains and sprinklers checked','!Outdoor items stored or secured','~Pest check done']]],
+  ['Safety','House','Yard'],[
+  ['checklist','Seasonal checklist','Write a home maintenance checklist for this season, the kind of house and the place I describe.','',true],
+  ['schedule','Yearly schedule','Turn my list of jobs into a simple yearly schedule by month.'],
+  ['hire','Questions for a contractor','Write questions to ask a contractor before I hire them for the job I describe.'],
+  ['log','Maintenance log','Turn my notes into a simple log: date, what was done, who did it and the cost.']]);
+nt('t-holiday','Holiday gathering',6,'Guests, food, place, shopping and the day','event,bring,people',
+  'Use this for a holiday meal or a family gathering: guests, menu, shopping, the house and the day itself.',
+  'Thanksgiving for twelve: who is bringing what, shopping done two days ahead, the table set the night before.','home',[
+  ['Plan',['!!Date, time and guest list set','!Invitations sent and replies counted','!Menu planned with allergies and needs noted','!Who is bringing what agreed']],
+  ['Prepare',['!Shopping list made and shopping done','!House cleaned, seating and table planned','!Cooking schedule made backward from the meal','~Music, games or activities planned']],
+  ['The day and after',['!Food on time and drinks ready','!Leftovers packed for guests','!Thank-yous sent','~Photos shared']]],
+  ['Plan','Prepare','The day'],[
+  ['menu','Menu and shopping list','Turn my guest count and dishes into a menu and a shopping list with amounts. Note any dietary needs I gave.','',true],
+  ['timeline','Cooking timeline','Turn my menu and meal time into a cooking schedule working backward from the meal.'],
+  ['invite','Invitation','Write a warm invitation with the date, time, place and what to bring.'],
+  ['thanks','Thank-you note','Write a short thank-you to guests who came and helped.']]);
+nt('t-doctor','Doctor or hospital visit preparation',6,'Questions, records, medicines and what to bring','bring',
+  'Use this to get ready for an appointment: your questions, records, a list of medicines and what to bring. It is a personal checklist and not medical advice.',
+  'A visit next Tuesday: symptoms written down, questions listed, medicines and insurance card in a folder, and a family member to come along.','home',[
+  ['Before',['!!What you want to ask and why written down','!List of medicines, doses and allergies ready','!Insurance card, ID and records gathered','!Questions for the office about cost and forms','~A family member or friend asked to come']],
+  ['At the visit',['!Notes taken or the visit recorded with permission','!Next steps, tests and follow-up dates asked about','!Questions asked until you understand']],
+  ['After',['!Notes written up the same day','!Medicines and appointments added to the calendar','!Bills and insurance papers filed']]],
+  ['Before','Visit','After'],[
+  ['questions','Questions to ask','Write clear questions I can ask my doctor from the symptoms and worries I describe. Do not diagnose or give medical advice.','',true],
+  ['summary','One-page summary','Turn my notes into a one-page summary for the doctor: what is wrong, since when, what I have tried and my medicines.'],
+  ['notes','Visit notes','Turn my rough notes from the visit into clear notes: what was said, next steps and dates.'],
+  ['followup','Questions for the office','Write a short list of questions for the billing or insurance office about this visit.']]);
+nt('t-medpaper','Medical or insurance paperwork follow-up',6,'Bills, claims, calls and keeping a record','people',
+  'Use this to chase a medical bill, an insurance claim or paperwork until it is settled, and to keep a record of every call.',
+  'A claim that was denied: the bill and explanation of benefits gathered, calls logged with dates and names, and an appeal sent.','home',[
+  ['Gather',['!!Bills, explanation of benefits and claim numbers gathered','!Dates of the visit and the claim noted','!What you owe and what was paid listed']],
+  ['Call and write',['!!Every call logged with the date, who you spoke to and what was said','!Questions asked in writing when possible','!Appeal or correction sent by the deadline','!Copies of everything kept']],
+  ['Settle',['!Payment arranged or dispute settled','!Receipts and final letters filed','!Records kept for as long as you need them']]],
+  ['Gather','Call and write','Settle'],[
+  ['letter','Appeal letter','Write a polite, clear letter asking an insurer to review a claim, using only the facts I gave. Leave blanks for numbers and dates.','',true],
+  ['script','Phone script','Write a short script for a call to a billing office with what to say and what to write down.'],
+  ['log','Call log','Turn my call notes into a log: date, who, what was said and what to do next.'],
+  ['summary','Summary','Turn my notes into a one-paragraph summary of the problem and what I need.']]);
+nt('t-vacation',"Vacation or family trip",6,'Dates, bookings, packing, the trip and the return','event,bring,people',
+  'Use this to plan a vacation or a family trip: dates, bookings, packing, the days away and coming home.',
+  'A week at the beach with the family: lodging and car booked, packing done two days early, and the mail and pets taken care of.','home',[
+  ['Plan',['!!Dates, place and budget set','!Flights, lodging and car booked','!Passports and IDs checked','!Plans for each day sketched','~Travel insurance considered']],
+  ['Before leaving',['!Packing list made and packing done','!Home, mail and pets looked after','!Bills paid and documents copied','!Someone has your itinerary']],
+  ['On the trip and back',['!Receipts kept','!Photos shared','!Thank-yous sent','!Unpack, laundry and mail sorted']]],
+  ['Plan','Before leaving','Trip','Home'],[
+  ['itinerary','Daily plan','Turn my ideas into a relaxed day-by-day plan for the dates I gave, with time to rest. Do not invent places.','',true],
+  ['packing','Packing list','Write a packing list for the place, season, length and people I describe.'],
+  ['budget','Trip budget','Turn my costs into a simple budget by category.'],
+  ['house','Home while we are away','Write a short list of things to do before I leave home for a trip.']]);
+nt('t-movehome','Move home',6,'Dates, packing, address changes, move day and settling in','bring,people',
+  'Use this to move house, from the date and movers to the address changes and the first week.',
+  'Moving across town in a month: movers booked, boxes labeled by room, the address changed everywhere and the first night\'s box packed.','home',[
+  ['Plan',['!!Move date and budget set','!Movers or a truck booked','!Lease, sale or closing dates checked','!Floor plan of the new place made']],
+  ['Pack and change',['!Boxes and supplies bought','!Packed and labeled by room','!!Address changed: mail, bank, insurance, doctors, schools, work','!Utilities started, moved or stopped','!Valuables and papers kept with you']],
+  ['Move and settle',['!Movers confirmed the day before','!First-night box packed','!Everything checked off on arrival','!Old place cleaned and keys returned','!Deposit and final bills handled']]],
+  ['Plan','Pack','Move','Settle'],[
+  ['timeline','Moving timeline','Turn my move date into a timeline of what to do each week before and after the move.','',true],
+  ['address','Address-change list','Write a list of everyone and everything that needs my new address.','',true],
+  ['notice','Notice to landlord','Write a short notice to a landlord that I am moving out, with the date and a request for the deposit. Leave blanks for details.'],
+  ['box','First-night box','Write a list for a first-night box with what I will need on arrival.']]);
+nt('t-wedding','Wedding or party',6,'Guests, place, food, schedule and the day','event,bring,people,meetings',
+  'Use this for a wedding or a big party: the date and place, guests, food, the schedule and the day itself.',
+  'A family wedding for 80: venue and caterer booked, invitations out, a run of the day written and a helper for each job.','home',[
+  ['Plan',['!!Date, place and budget set','!Guest list made','!Vendors and helpers chosen','!Invitations sent and replies counted']],
+  ['Prepare',['!Food, drinks and cake ordered','!Music and photos arranged','!Decorations and supplies listed and bought','!Schedule of the day written and shared','!Permits or insurance checked']],
+  ['The day and after',['!Helpers know their jobs','!Everything set up early','!Vendors paid','!Thank-yous sent']]],
+  ['Plan','Prepare','The day'],[
+  ['schedule','Schedule of the day','Turn my notes into a time-by-time schedule of the day that I can share with helpers.','',true],
+  ['invite','Invitation wording','Write warm invitation wording with the date, place and reply information I give.'],
+  ['toast','Short toast','Write a short warm toast about the person I describe, using only facts I give.'],
+  ['thanks','Thank-you notes','Write a short, warm thank-you note I can personalize for guests and helpers.']]);
+nt('t-studylesson','Study lesson',4,'Text, context, key terms, lesson, discussion and application','sources,people,meetings,tools',
+  'Use this to prepare one lesson for a study group, a class or a book club on any text: a passage, a book, a policy or a procedure.',
+  'A book club on chapter 3: the main idea, key terms, three discussion questions and one thing to take home.','study',[
+  ['Text and context',['!!Text read all the way through and the main idea in one sentence','!Background: who wrote it, when and why','!Key terms looked up','~Related readings noted']],
+  ['Lesson',['!!Opening question written','!Observations: what the text says','!Meaning: what it means and why it matters','!Illustration or example chosen','!!Application: what to do with it','!Discussion questions written']],
+  ['Materials and delivery',['!Handout ready','~Slides ready','!Rehearsed and timed','!Closing thought written','Follow-up for next time planned']]],
+  ['Text','Lesson','Application'],[
+  ['questions','Discussion questions','Write five discussion questions for the group that move from what the text says to what it means to how it applies.','',true],
+  ['terms','Key terms','List the key terms in the text I give with a plain-word meaning for each. Say clearly when you are unsure.','',true],
+  ['open','Opening question','Suggest three opening questions that get everyone talking without a right answer.'],
+  ['handout','One-page handout','Turn my notes into a one-page handout with the main idea, three questions and a thought for the week.']]);
+nt('t-studyseries','Study series (several weeks)',4,'A plan for each week, materials and a review','sources,people,meetings,tools',
+  'Use this to plan a study that runs for several weeks, then make each lesson with Study lesson. Put the lessons in a Series to see them all.',
+  'A six-week course on a book: a plan for each week, a handout each week and a short review at the end.','study',[
+  ['Plan the series',['!!Goal and who it is for written','!Topic or reading for each week chosen','!Dates, place and length set','!Materials chosen or ordered']],
+  ['Each week',['!!Lesson prepared for each week','!Handouts printed or shared','!Weekly reminder sent']],
+  ['Close and follow up',['!Review of the series held','!Feedback asked for','!Notes saved for next time']]],
+  ['Plan','Weekly lessons','Close'],[
+  ['plan','Week-by-week plan','Turn my reading list into a week-by-week plan with a main idea and a key question for each week. Use only the readings I give.','',true],
+  ['promo','Announcement','Write a short announcement inviting people to the study with the dates, place and what to bring.'],
+  ['reminder','Weekly reminder','Write a short weekly reminder email with the reading and one question to think about.'],
+  ['review','End-of-series review','Write a few questions for the last week that help the group look back over what we studied.']]);
+nt('t-training','Training or workshop session',4,'Goals, content, materials, delivery and follow-up','people,meetings,sources,tools',
+  'Use this to prepare a training or a workshop for staff, customers or a community group.',
+  'A two-hour workshop for new volunteers: the goals written, an agenda, handouts, a hands-on exercise and a follow-up email.','class',[
+  ['Plan',['!!What people should be able to do afterward written','!Who comes and what they already know','!Time, place and equipment confirmed']],
+  ['Build',['!Agenda with times','!Content and examples prepared','!Exercise or practice built','!Handouts and slides made','!Quick check that they learned']],
+  ['Deliver and follow up',['!Dry run done','!Delivered','!Feedback gathered','!Handouts and answers sent afterward','Notes made for next time']]],
+  ['Goals','Build','Deliver'],[
+  ['agenda','Agenda with times','Write an agenda with times for the training I describe, with an opening, practice and a close. Keep to the time I gave.','',true],
+  ['exercise','Practice exercise','Write a short hands-on exercise that lets people practice the main skill I describe, with steps and what good looks like.','',true],
+  ['quiz','Quick check questions','Write five short questions to check what people learned.'],
+  ['follow','Follow-up email','Write a short follow-up email with the main points, a link or handout and who to ask.']]);
+function ntApply(){
+  NTPL.forEach(n => {
+    const items = []; n.cats.forEach(([cat, xs]) => xs.forEach(([text, req, w]) => items.push({cat, text, req:!!req, w, m:0})));
+    const e = {sources:false, tools:false, event:false, bring:false, shoot:false, edit:false, goal:false, people:false, meetings:false};
+    String(n.ex).split(',').forEach(k => { if(k && k in e) e[k] = true; });
+    BUILTIN_TPLS.push({id:n.id, name:n.name, group:TPL_GROUPS[n.g], blurb:n.blurb, mode:'event', marketing:false, rights:false, items, outline:n.outline.map(title => ({title, part:'', purpose:'', target:0})), extras:e, hidden:[], people:[], builtin:true, what:n.what, sample:n.sample, offer:Array.isArray(n.offer) ? n.offer.slice() : (GROUP_OFFER[TPL_GROUPS[n.g]] || null)});
+    PM_KITS[n.id] = {b:n.b, p:n.prompts.map(x => PM_P(x[0], x[1], x[2], x[3] || '', x[4]))};
+  });
+}
+ntApply();
 function bkHandleRaw(raw){
   const msg = document.getElementById('bkmsg'), choice = document.getElementById('bkchoice');
   document.getElementById('bkunlock').hidden = true; pendingEnc = null;
@@ -7267,6 +7973,114 @@ function podHtml(sr){
    ${rows || '<p class="hint">No episodes yet. Use New episode below. Set each one\'s planned date when you create it, and tick Published when it airs.</p>'}
    ${E.length ? '<div class="btnrow" style="margin:8px 0 0"><button class="btn ghost sm" data-a="ep-notes">Copy episode list for show notes</button></div>' : ''}</div>`;
 }
+function epTile(p, T){
+  const sr = seriesOf(p), inPod = sr && sr.noun === 'podcast';
+  if(!(inPod || p.kind === 'Podcast episode')) return '';
+  let t = inPod ? 'Episode ' + (podEps(sr).find(e => e.p.id === p.id) || {n:'?'}).n + ' of ' + sr.name : 'Not in a podcast series yet';
+  t += p.aired ? '. Aired ' + fmtDate(p.aired) : p.due ? '. Planned ' + fmtDate(p.due) : '. Set the dates and link';
+  return T('Episode', t, 'data-a="ep-edit" data-id="' + p.id + '"') + (inPod ? '' : T('Add to a podcast series', 'Put this episode in your podcast list', 'data-a="ep-addser" data-id="' + p.id + '"'));
+}
+document.addEventListener('click', ev => {
+  const b = ev.target.closest('[data-a="ep-addser"]'); if(!b) return;
+  const p = state.projects.find(x => x.id === b.dataset.id); if(!p) return;
+  const ser = state.series.filter(x => x.noun === 'podcast');
+  const put = sr => { p.seriesId = sr.id; save(); render(true); toast('Added to ' + sr.name + '.', true); };
+  if(ser.length === 1) return put(ser[0]);
+  if(ser.length > 1){ ui.series = ser[0].id; return put(ser[0]); }
+  ask('You do not have a podcast series yet. Make one now and put this episode in it?', 'Make the podcast series', () => {
+    const n = {id:uid(), name:'My podcast', noun:'podcast', every:7, notes:POD_SPONSOR, cols:SNOUNS.podcast[3].map(c => ({id:uid(), name:c}))};
+    state.series.push(n); put(n);
+  });
+});
+
+const RL_TYPES = ['Music','Video clip','Photo or image','Font','Sound effect','Software','Other'];
+function rlTile(p, T){
+  const t = p.tplId ? findTpl(p.tplId) : null; const vid = (t && /Video and film/.test(t.group || '')) || p.mode === 'edit' || p.mode === 'film' || (p.rlog || []).length;
+  if(!vid) return '';
+  const L = p.rlog || [], soon = L.filter(x => x.expires && x.expires <= ymd(new Date(today().getTime() + 30 * DAY))).length;
+  return T('Rights and licenses', L.length ? L.length + ' logged' + (soon ? ', ' + soon + ' expiring within 30 days' : '') : 'Log music, clips and photos you license', 'data-a="rl-open" data-pid="' + p.id + '"');
+}
+const rldlg = document.createElement('dialog'); rldlg.id = 'rldlg'; document.body.appendChild(rldlg);
+let rlPid = null;
+function rlRender(){
+  const p = state.projects.find(x => x.id === rlPid); if(!p) return; const L = p.rlog || [];
+  rldlg.innerHTML = '<form method="dialog"><h2>Rights and licenses</h2><p class="hint">Write down everything you did not make yourself: what it is, where it came from, the kind of license, what it cost, when it ends and how to credit it. A cost is added to this project\'s Costs.</p>'
+    + (L.length ? '<ul class="rllist">' + L.map(x => '<li><b>' + esc(x.what) + '</b> <span class="cat">' + esc([x.type, x.source, x.cost ? mnFmt(x.cost) : '', x.expires ? 'ends ' + fmtDate(x.expires) : ''].filter(Boolean).join('. ')) + '</span>' + (x.credit ? '<br><span class="cat">Credit: ' + esc(x.credit) + '</span>' : '') + (x.receipt ? '<br><span class="cat">Receipt: ' + esc(x.receipt) + '</span>' : '') + (x.used ? '<br><span class="cat">Used in: ' + esc(x.used) + '</span>' : '') + ' <button type="button" class="btn ghost sm" data-rl-del="' + x.id + '">Remove</button></li>').join('') + '</ul>' : '<p class="hint">Nothing logged yet.</p>')
+    + '<h3>Add one</h3><label class="f">What is it<input name="what" maxlength="200"></label><label class="f">Kind<select name="type"><option value=""></option>' + RL_TYPES.map(t => '<option>' + t + '</option>').join('') + '</select></label><label class="f">Where it came from<input name="source" maxlength="200"></label><label class="f">License type<input name="lic" maxlength="40" placeholder="For example: royalty-free, one project"></label><label class="f">Cost<input name="cost" inputmode="decimal"></label><label class="f">Ends on<input name="expires" type="date"></label><label class="f">Where the receipt is<input name="receipt" maxlength="300"></label><label class="f">Credit line<input name="credit" maxlength="300"></label><label class="f">Also used in<input name="used" maxlength="300" placeholder="Other projects that use it"></label>'
+    + '<div class="btnrow"><button type="button" class="btn" data-rl-add>Add to the log</button><button type="button" class="btn ghost" data-rl-copy>Copy credits</button><button class="btn ghost" value="close">Close</button></div></form>';
+}
+function rlOpen(pid){ rlPid = pid; rlRender(); rldlg.showModal(); }
+rldlg.addEventListener('click', ev => {
+  const p = state.projects.find(x => x.id === rlPid); if(!p) return; const f = rldlg.querySelector('form');
+  if(ev.target.closest('[data-rl-add]')){
+    const g = n => String(f.elements[n].value || '').trim(), what = g('what'); if(!what){ toast('Type what it is first.'); return; }
+    const cost = mnNum(g('cost')), x = {id:uid(), what, source:g('source'), type:[g('type'), g('lic')].filter(Boolean).join(', '), cost, expires:g('expires'), receipt:g('receipt'), credit:g('credit'), used:g('used')};
+    (p.rlog = p.rlog || []).push(x);
+    if(cost){ const m = mnGet(p); m.entries.push({id:uid(), area:'', date:ymd(today()), payee:x.source.slice(0, 80), type:'License', amount:cost, hours:0, kind:'out', note:'License: ' + what.slice(0, 120)}); p.money = mnClean(m) || m; }
+    save(); rlRender(); render(true); return;
+  }
+  const d = ev.target.closest('[data-rl-del]'); if(d){ p.rlog = (p.rlog || []).filter(x => x.id !== d.dataset.rlDel); save(); rlRender(); render(true); return; }
+  if(ev.target.closest('[data-rl-copy]')){ const t = (p.rlog || []).filter(x => x.credit).map(x => x.credit).join('\n'); copyText(t || 'No credit lines yet.', t ? 'Credits copied.' : 'No credit lines yet.'); }
+});
+document.addEventListener('click', ev => { const b = ev.target.closest('[data-a="rl-open"]'); if(b) rlOpen(b.dataset.pid); });
+
+function rlExpHtml(){
+  const lim = ymd(new Date(today().getTime() + 30 * DAY)), L = [];
+  state.projects.forEach(q => (q.rlog || []).forEach(x => { if(x.expires && x.expires <= lim) L.push({q, x}); }));
+  if(!L.length) return '';
+  L.sort((a, b) => a.x.expires.localeCompare(b.x.expires));
+  const t = ymd(today());
+  return '<div class="panel"><h3>Licenses ending soon (' + L.length + ')</h3>' + L.slice(0, 6).map(r => '<div class="crow2"><div class="cwrap"><div style="min-width:0"><b>' + esc(r.x.what) + '</b><span class="cat">' + (r.x.expires < t ? 'Ended ' : 'Ends ') + fmtDate(r.x.expires) + '. In ' + esc(r.q.title) + '</span></div></div><button class="btn ghost sm" data-a="rl-open" data-pid="' + r.q.id + '">Open log</button></div>').join('') + '</div>';
+}
+const pgdlg = document.createElement('dialog'); pgdlg.id = 'pgdlg'; document.body.appendChild(pgdlg);
+document.addEventListener('click', ev => {
+  const b = ev.target.closest('[data-a="ps-make"],[data-a="pg-attach"]'); if(!b) return;
+  const p = state.projects.find(x => x.id === b.dataset.pid); if(!p) return;
+  if(b.dataset.a === 'ps-make'){
+    if(!canCreate()){ openLicense(true); return; }
+    ask('Make a podcast series called "' + p.title.replace(/\s*(season|launch).*$/i, '').trim() + '" with four weekly episode projects, starting next week? You can add more later with New episode.', 'Make the series', () => {
+      const t = findTpl('b-podep'); if(!t) return;
+      const sr = {id:uid(), name:p.title.replace(/\s*(season|launch).*$/i, '').trim() || 'My podcast', noun:'podcast', every:7, notes:POD_SPONSOR, cols:SNOUNS.podcast[3].map(c => ({id:uid(), name:c}))};
+      state.series.push(sr);
+      for(let i = 1; i <= 4; i++){ const q = createProject({title:sr.name + ' episode ' + i, mode:'event', due:ymd(new Date(today().getTime() + 7 * i * DAY)), marketing:false, outlineCounts:false, seriesId:sr.id, tpl:t}); q.seriesId = sr.id; }
+      state.selected = p.id; save(); ui.series = sr.id; ui.view = 'detail'; render(); toast('Series made with four episodes.', true);
+    });
+    return;
+  }
+  const eps = state.projects.filter(q => q.id !== p.id && (q.kind === 'Podcast episode' || (seriesOf(q) && seriesOf(q).noun === 'podcast')));
+  if(!eps.length){ toast('You have no podcast episode projects yet. Make one first.'); return; }
+  pgdlg.innerHTML = '<form method="dialog"><h2>Attach this interview to an episode</h2><label class="f">Episode<select name="ep">' + eps.map(q => '<option value="' + q.id + '">' + esc(q.title) + '</option>').join('') + '</select></label><p class="hint">This adds the guest to that episode\'s People with a note about this interview.</p><div class="btnrow"><button class="btn" value="ok">Attach</button><button class="btn ghost" value="no">Cancel</button></div></form>';
+  pgdlg.dataset.pid = p.id; pgdlg.returnValue = ''; pgdlg.showModal();
+});
+pgdlg.addEventListener('close', () => {
+  if(pgdlg.returnValue !== 'ok') return;
+  const p = state.projects.find(x => x.id === pgdlg.dataset.pid), q = state.projects.find(x => x.id === pgdlg.querySelector('select').value); if(!p || !q) return;
+  const line = 'Guest interview: ' + p.title + (p.due ? ' (' + fmtDate(p.due) + ')' : '');
+  const gp = (p.shoot && p.shoot.people || []).find(x => /guest/i.test(x.role || '')) || {};
+  q.shoot.people.push({id:uid(), status:'empty', name:gp.name || 'Not known yet', role:'Guest', org:gp.org || '', phone:gp.phone || '', email:gp.email || '', call:'', notes:line}); q.extras.people = true; save(); render(true); toast('Attached to "' + q.title + '".', true);
+});
+const svSec = (p, title) => (p.outline || []).find(o => String(o.title || o.head || '').toLowerCase() === title.toLowerCase());
+const svLines = o => String((o && o.bullets) || '').split('\n').map(x => x.trim()).filter(Boolean);
+document.addEventListener('click', ev => {
+  const b = ev.target.closest('[data-a="sv-start"],[data-a="sv-log"]'); if(!b) return;
+  const p = state.projects.find(x => x.id === (b.dataset.pid || state.selected)); if(!p) return;
+  if(b.dataset.a === 'sv-start'){
+    const nxt = svLines(svSec(p, 'Planned next'));
+    const t = findTpl('b-softver'); if(!t) return;
+    if(!canCreate()){ openLicense(true); return; }
+    const q = createProject({title:'Next version of ' + p.title.replace(/ ?(app ideas|roadmap)/i, '').trim(), mode:'event', due:'', marketing:false, outlineCounts:false, tpl:t});
+    const o = svSec(q, 'What changed'); if(o && nxt.length) o.bullets = nxt.map(x => 'Planned: ' + x).join('\n');
+    save(); gotoProject(q.id, 'overview'); toast(nxt.length ? 'Started with ' + nxt.length + ' planned item' + (nxt.length === 1 ? '' : 's') + ' from your roadmap.' : 'Started. Your roadmap had nothing under Planned next yet.', true);
+  }else{
+    const ch = svLines(svSec(p, 'What changed')), ki = svLines(svSec(p, 'Known issues'));
+    const grp = {New:[], Fixed:[], Changed:[]};
+    ch.forEach(x => { const m = /^(new|fixed|changed|planned)\s*:\s*(.*)$/i.exec(x); const k = m ? (m[1].toLowerCase() === 'planned' ? 'Changed' : m[1][0].toUpperCase() + m[1].slice(1).toLowerCase()) : 'Changed'; grp[k].push(m ? m[2] : x); });
+    let out = p.title + '\n';
+    Object.keys(grp).forEach(k => { if(grp[k].length) out += '\n' + k + '\n' + grp[k].map(x => '- ' + x).join('\n') + '\n'; });
+    if(ki.length) out += '\nKnown issues\n' + ki.map(x => '- ' + x).join('\n') + '\n';
+    copyText(out, 'Changelog copied.');
+  }
+});
 const epdlg = document.getElementById('epdlg'), epform = document.getElementById('epform');
 let epFor = null;
 function epOpen(pid, today1){
@@ -7290,13 +8104,23 @@ document.addEventListener('click', e => { const b = e.target.closest && e.target
 });
 document.addEventListener('change', e => { const t = e.target; if(t && t.id === 'podevery'){ const sr = state.series.find(x => x.id === ui.series); if(sr){ sr.every = parseInt(t.value, 10) || 0; save(); render(true); } } });
 
+document.addEventListener('click', e => { const b = e.target.closest && e.target.closest('[data-a="copy-link"]'); if(b) copyText(b.dataset.url || '', 'Link copied. Paste it into your meeting app or a browser.'); });
+/* ---------- Clock ---------- */
+function clockMode(){ let v = ''; try{ v = localStorage.getItem('pp.clock') || ''; }catch(e){} return v === 'off' || v === '24' ? v : '12'; }
+function clockText(d, m){ const h = d.getHours(), mi = String(d.getMinutes()).padStart(2, '0'); return m === '24' ? String(h).padStart(2, '0') + ':' + mi : ((h % 12) || 12) + ':' + mi + ' ' + (h < 12 ? 'AM' : 'PM'); }
+function clockTick(){ const el = document.getElementById('ppclock'); if(!el) return; const m = clockMode(); el.hidden = m === 'off'; if(m !== 'off') el.textContent = clockText(new Date(), m); }
+setform.addEventListener('change', e => { if(e.target && e.target.name === 'clock'){ try{ localStorage.setItem('pp.clock', e.target.value); }catch(x){} clockTick(); } });
+clockTick(); setInterval(clockTick, 15000);
+
 /* ---------- Series: several books or projects side by side ---------- */
 const DEFAULT_COLS = ['Written','Edited','Published','Commercial made','Social media live','Audiobook'];
 const SNOUNS = {book:['book','books','Book',DEFAULT_COLS], episode:['episode','episodes','Episode',['Scripted','Filmed','Edited','Approved','Published','Promoted']],
   podcast:['episode','episodes','Episode',['Scripted','Recorded','Edited','Show notes','Published','Promoted']],
   film:['film','films','Film',['Scripted','Filmed','Edited','Approved','Published','Promoted']], lesson:['lesson','lessons','Lesson',['Written','Rehearsed','Slides ready','Taught','Recorded','Notes shared']],
   talk:['talk','talks','Talk',['Written','Rehearsed','Slides ready','Delivered','Recorded','Notes shared']], week:['week','weeks','Week',['Planned','Written','Rehearsed','Delivered','Recorded','Notes shared']],
-  project:['project','projects','Project',['Planned','Drafted','Reviewed','Finished','Delivered','Shared']]};
+  project:['project','projects','Project',['Planned','Drafted','Reviewed','Finished','Delivered','Shared']],
+  building:['building','buildings','Building',['Permitted','Framed','Inspected','Finished','Handed over']],
+  release:['release','releases','Release',['Planned','Built','Tested','Released','Announced']]};
 const SNOUN_OF_MODE = {write:'book', film:'episode', edit:'film', talk:'talk', class:'lesson'};
 function seriesNounKey(sr){
   if(sr && SNOUNS[sr.noun]) return sr.noun;
@@ -7391,8 +8215,8 @@ function seriesHtml(){
       const bk = booksOf(sr), avg = bk.length ? Math.round(bk.reduce((a,p) => a + pctOf(p), 0) / bk.length) : 0;
       return `<button class="scard" data-a="series-open" data-id="${sr.id}"><b>${esc(sr.name)}</b><span>${nounCount(sr, bk.length)}${bk.length ? ', ' + avg + '% ready on average' : ''}</span></button>`;
     }).join('');
-    return back + `<div class="proj"><header class="phead"><h2>Series</h2><p class="sub">Keep several books or projects in one view, with a stage, readiness and your own milestones for each.</p></header>
-      <div class="body">${cards || '<div class="panel"><p class="hint">No series yet. A series might be a set of books, a teaching series or a season of shows.</p></div>'}
+    return back + `<div class="proj"><header class="phead"><h2>Series</h2><p class="sub">A series groups related work, such as books, episodes, classes or products, so you can see where each one stands.</p></header>
+      <div class="body">${cards || '<div class="panel"><p class="hint">No series yet. A series groups related work, such as a set of books, a teaching series, a season of shows or a line of products.</p></div>'}
       <div class="btnrow" style="margin:0"><button class="btn" data-a="series-new">New series</button><button class="btn ghost" data-a="plan-open">Plan a week</button></div></div></div>`;
   }
   const sr = state.series.find(x => x.id === ui.series);
@@ -7411,7 +8235,7 @@ function seriesHtml(){
   const table = bk.length ? `<div class="tablewrap" role="region" aria-label="${esc(sr.name)} milestones" tabindex="0"><table class="sgrid"><thead><tr><th scope="col">${esc(seriesNoun(sr).cap)}</th>${head}<th scope="col">Where to find it</th></tr></thead><tbody>${rows}</tbody>${foot}</table></div>`
     : '<div class="panel"><p class="hint">No ' + seriesNoun(sr).many + ' in this series yet. Add projects you already have, or start a new one.</p></div>';
   return back + `<div class="proj"><header class="phead"><button class="link" data-a="series-home" style="min-height:40px">All series</button><h2>${esc(sr.name)}</h2>
-      <p class="sub">${nounCount(sr, bk.length)}. Tick each milestone as it is finished.</p></header>
+      <p class="sub">${nounCount(sr, bk.length)}. Tick each milestone as it is finished.</p>${serCostHtml(sr, bk)}</header>
     <div class="body">${seriesOvHtml(sr, bk)}${isPod(sr) ? podHtml(sr) : ''}${seriesBoardHtml(sr, bk)}${table}
       <div class="btnrow" style="margin:0"><button class="btn" data-a="series-newbook">New ${seriesNoun(sr).one} in this series</button><button class="btn ghost" data-a="plan-open" data-id="${sr.id}">Plan a week</button><button class="btn ghost" data-a="series-add">Add existing projects</button><button class="btn ghost" data-a="series-cols">Edit columns</button><button class="btn ghost" data-a="series-rename">Rename or delete</button></div></div></div>`;
 }
@@ -7523,13 +8347,19 @@ function seriesBoardHtml(sr, bk){
   const first = L.find(p => p.stage !== 'Delivered' && p.due && p.due >= t0) || L.find(p => p.stage !== 'Delivered');
   return `<div class="panel" style="margin-bottom:14px" id="wkboard"><h3>Schedule and rehearsal</h3><p class="hint" style="margin:0 0 6px">Every ${esc(seriesNoun(sr).one)} by date, with how ready it is. Open Speaker view from any row; at the end, the Next ${esc(seriesNoun(sr).one)} button carries on to the following one.</p>${rows}${first ? `<div class="btnrow"><button class="btn" data-a="sr-speak" data-id="${first.id}">Start with ${first.due === t0 ? 'today' : esc(fmtDate(first.due || t0))}</button></div>` : ''}</div>`;
 }
+function serCostHtml(sr, bk){
+  const rows = bk.map(p => [p, ((p.money && p.money.entries) || []).filter(e => e.kind !== 'in').reduce((a, e) => a + (Number(e.amount) || 0), 0)]).filter(r => r[1] > 0);
+  if(!rows.length) return '';
+  const tot = rows.reduce((a, r) => a + r[1], 0);
+  return '<details class="sercost"><summary><b>Costs of its ' + seriesNoun(sr).many + ': ' + mnFmt(tot) + '</b></summary><ul>' + rows.map(r => '<li>' + esc(r[0].name) + ': ' + mnFmt(r[1]) + '</li>').join('') + '</ul></details>';
+}
 function openSeriesName(editing){
   const sr = editing ? state.series.find(x => x.id === ui.series) : null;
   ctx = {kind:'series', series:sr};
   document.getElementById('setitle').textContent = sr ? 'Rename or delete series' : 'New series';
   seform.name.value = sr ? sr.name : '';
-  if(sr){ seform.noun.innerHTML = '<option value="">Work it out from the projects (now: ' + seriesNoun(sr).many + ')</option>' + Object.keys(SNOUNS).map(k => '<option value="' + k + '">' + (k === 'film' ? 'Films or videos' : k === 'podcast' ? 'Podcast episodes' : SNOUNS[k][2] + 's') + '</option>').join(''); seform.noun.value = sr.noun || ''; }
-  else{ seform.noun.innerHTML = '<option value="book">Books</option><option value="episode">Episodes</option><option value="podcast">Podcast (weekly episodes)</option><option value="film">Films or videos</option><option value="lesson">Lessons</option><option value="talk">Talks</option><option value="week">Weeks</option><option value="project">Projects (something else)</option>'; seform.noun.value = 'book'; }
+  if(sr){ seform.noun.innerHTML = '<option value="">Work it out from the projects (now: ' + seriesNoun(sr).many + ')</option>' + Object.keys(SNOUNS).map(k => '<option value="' + k + '">' + (k === 'film' ? 'Films or videos' : k === 'building' ? 'Buildings or phases' : k === 'release' ? 'Software releases' : k === 'podcast' ? 'Podcast episodes' : SNOUNS[k][2] + 's') + '</option>').join(''); seform.noun.value = sr.noun || ''; }
+  else{ seform.noun.innerHTML = '<option value="book">Books</option><option value="episode">Episodes</option><option value="podcast">Podcast (weekly episodes)</option><option value="film">Films or videos</option><option value="lesson">Lessons</option><option value="talk">Talks</option><option value="week">Weeks</option><option value="building">Buildings or phases (construction)</option><option value="release">Software releases</option><option value="project">Projects (something else)</option>'; seform.noun.value = 'book'; }
   seHint();
   document.getElementById('sedel').hidden = !sr;
   sedlg.showModal();
