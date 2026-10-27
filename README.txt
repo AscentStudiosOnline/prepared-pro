@@ -402,6 +402,10 @@ VERSION 3.29
 - Video Editing and Post moved from the kind list into the template gallery (Video and film group). Existing editing projects are unchanged.
 - Script and Film is now called Script, Film and Video.
 
+VERSION 3.33
+- Notebook subfolders: folders can sit inside other folders, up to three levels. Make one with New subfolder in here, or use Put it inside when you rename or move a folder. A folder shows the notes in its subfolders too. Deleting a folder moves its notes and subfolders up one level. Works with Sort folders and backups.
+- See how it will look: under the notes box (and in Notebook notes), a preview shows indents and lists as they will print. An indented paragraph no longer gets an extra first-line indent in print, Speaker view and Word.
+
 VERSION 3.32
 - Indent: In (and Tab) now moves the whole paragraph, every line of it, in talking notes and letters. The letter editor has Out and Indent paragraph buttons, and the indent carries through to print, Word and copy.
 - Notebook sorting: Sort notes (newest, oldest, title A to Z or Z to A, by folder) and Sort folders (order made, A to Z, Z to A, most notes first). Remembered on each device.
