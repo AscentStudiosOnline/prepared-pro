@@ -752,6 +752,7 @@ dialog{border-radius:12px;box-shadow:0 26px 60px -22px rgba(40,26,6,.55)}
 .mcd:hover{background:var(--bg)}.mcd.today{border-color:var(--ready);font-weight:700}.mcd.has::after{content:"";position:absolute;left:50%;bottom:6px;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--ready)}
 .proj:has(.day2){max-width:1320px}
 .dmore{position:relative}.dmore summary{list-style:none;cursor:pointer;min-width:44px;min-height:36px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:8px;font-size:22px;line-height:1;color:var(--ink);background:var(--surface)}.dmore summary::-webkit-details-marker{display:none}.dmore[open] summary{background:color-mix(in srgb,var(--ink) 8%,transparent)}.dmenu{position:absolute;right:0;top:calc(100% + 4px);z-index:60;min-width:210px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:8px;box-shadow:0 10px 30px rgba(0,0,0,.28);padding:6px}.dmenu .pmi{display:block;width:100%;text-align:left;min-height:44px;padding:8px 14px;border:0;border-radius:6px;background:none;font-size:16px;color:var(--ink)}.dmenu .pmi:hover,.dmenu .pmi:focus-visible{background:color-mix(in srgb,var(--ink) 8%,transparent)}
+.phonehint{display:none}@media (max-width:899px){.phonehint{display:block;margin-top:12px}}
 .lquick{display:flex;flex-wrap:wrap;gap:6px;margin:-6px 0 0}
 @media (min-width:1200px){.proj:has(.day2.c3){max-width:2000px}.day2.c3{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr) minmax(0,1fr)!important;grid-template-areas:"alerts main aside"!important;align-items:start}}.dayalerts:empty{display:none}
 @media (min-width:701px){.daymain .tdadd{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) auto}.daymain .tdadd #tdtext{grid-column:1/-1}}
@@ -3089,11 +3090,12 @@ function renderMain(){
   if(ui.series){ main.innerHTML = seriesHtml(); return; }
   const p = sel();
   if(!p){
-    main.innerHTML = `<div class="empty"><h2>What are you getting ready for?</h2>
+    main.innerHTML = `<button class="backbtn" data-a="back">Back to main page</button><div class="empty"><h2>What are you getting ready for?</h2>
       <p>Pick a project type and Prepared Pro builds the checklist, then shows you what is still missing before your deadline.</p>
       <div class="modes">${Object.entries(MODES).map(([k,m]) => `<button class="mode" data-a="new" data-mode="${k}"><b>${esc(m.name)}</b><span>${esc(m.blurb)}</span></button>`).join('')}</div>
       <p style="margin:6px 0 0"><button class="btn" data-a="new-tpl">Start from a template</button></p>
       <button class="link" data-a="sample">Load a sample project to look around</button>
+      <p class="hint phonehint">On a phone, press Back to main page at the top to see My Day, Contacts, Letters, Calendar and the rest of the menu.</p>
       <p class="hint safe"><b>Keep your work safe.</b> Everything you make stays on this device only. Add Prepared Pro to your Home Screen or install it, and now and then press Backup and restore to save a backup file.</p></div>`;
     return;
   }
@@ -4532,7 +4534,7 @@ async function verifyStoredLicense(){
 const splash = document.getElementById('splash'), helpdlg = document.getElementById('helpdlg');
 
 /* Version, install hint, backup nudge, support */
-const APP_VERSION = '3.51';
+const APP_VERSION = '3.52';
 const SUPPORT_EMAIL = 'AscentStudiosOnline@gmail.com';
 const instDlg = document.getElementById('insthint');
 function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
