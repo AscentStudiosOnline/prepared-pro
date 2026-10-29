@@ -4544,7 +4544,7 @@ async function verifyStoredLicense(){
 const splash = document.getElementById('splash'), helpdlg = document.getElementById('helpdlg');
 
 /* Version, install hint, backup nudge, support */
-const APP_VERSION = '3.55';
+const APP_VERSION = '3.56';
 const SUPPORT_EMAIL = 'AscentStudiosOnline@gmail.com';
 const instDlg = document.getElementById('insthint');
 function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
@@ -6715,6 +6715,13 @@ function bkHandleRaw(raw){
     choice.hidden = false;
   }
 }
+function fillTimes(a, b, d){
+  if(!a || !b || typeof a !== 'object' || typeof b !== 'object' || d > 6) return;
+  if(Array.isArray(a)){ if(!Array.isArray(b)) return; b.forEach(y => { if(y && typeof y === 'object' && typeof y.id === 'string'){ const x = a.find(z => z && z.id === y.id); if(x) fillTimes(x, y, d + 1); } }); return; }
+  Object.keys(b).forEach(k => { const x = a[k], y = b[k];
+    if((k === 'time' || k === 'start' || k === 'end') && x === '' && typeof y === 'string' && /^([01]\d|2[0-3]):[0-5]\d$/.test(y)) a[k] = y;
+    else if(x && y && typeof x === 'object' && typeof y === 'object') fillTimes(x, y, d + 1); });
+}
 function applyImport(mode){
   const ns = pendingImport; if(!ns) return;
   const msg = document.getElementById('bkmsg');
@@ -6733,7 +6740,7 @@ function applyImport(mode){
     let added = 0;
     ns.series.forEach(x => { if(!sids.has(x.id)){ state.series.push(x); sids.add(x.id); } });
     ns.tools.forEach(x => { if(!tids.has(x.id)) state.tools.push(x); });
-    ns.projects.forEach(p => { if(ids.has(p.id)) return; if(p.seriesId && !sids.has(p.seriesId)) p.seriesId = ''; state.projects.push(p); added++; });
+    ns.projects.forEach(p => { if(ids.has(p.id)){ fillTimes(state.projects.find(q => q.id === p.id), p, 0); return; } if(p.seriesId && !sids.has(p.seriesId)) p.seriesId = ''; state.projects.push(p); added++; });
     { const lid = new Set((state.letters || []).map(x => x.id)); state.letters = (state.letters || []).concat((ns.letters || []).filter(x => !lid.has(x.id))).slice(0, 300);
       { const cid3 = new Set((state.coupons || []).map(x => x.id)); state.coupons = (state.coupons || []).concat((ns.coupons || []).filter(x => !cid3.has(x.id))).slice(0, 200); state.shopMemo = Object.assign({}, ns.shopMemo || {}, state.shopMemo || {});
       const sid2 = new Set((state.shop || []).map(x => x.id)); state.shop = (state.shop || []).concat((ns.shop || []).filter(x => !sid2.has(x.id))).slice(0, 30);
@@ -6744,8 +6751,8 @@ function applyImport(mode){
     if(!state.bringTemplate || !state.bringTemplate.length) state.bringTemplate = ns.bringTemplate;
     if(!(state.release && state.release.body) && ns.release && ns.release.body) state.release = ns.release;
     { state.lib = normLib(state.lib); const lk = x => (x.title + '|' + x.author + '|' + x.where).toLowerCase(), lu = new Set(state.lib.map(lk)); (ns.lib || []).forEach(x => { if(!lu.has(lk(x)) && state.lib.length < 500){ state.lib.push(x); lu.add(lk(x)); } }); }
-    { state.todo = normTodo(state.todo); const tid = new Set(state.todo.map(x => x.id)), tk = x => (x.text + '|' + x.due + '|' + x.kind).toLowerCase(), tu = new Set(state.todo.map(tk)); (ns.todo || []).forEach(x => { if(!tid.has(x.id) && !tu.has(tk(x)) && state.todo.length < 500){ state.todo.push(x); tid.add(x.id); tu.add(tk(x)); } }); }
-    { state.rooms = normRooms(state.rooms); const rk = x => x.url + '|' + (x.date || '') + '|' + (x.start || '') + '|' + x.name, ru = new Set(state.rooms.map(rk)); (ns.rooms || []).forEach(x => { if(!ru.has(rk(x)) && state.rooms.length < 100){ state.rooms.push(x); ru.add(rk(x)); } }); }
+    { state.todo = normTodo(state.todo); const tk = x => (x.text + '|' + x.due + '|' + x.kind).toLowerCase(); normTodo(ns.todo || []).forEach(x => { const ex = state.todo.find(y => y.id === x.id) || state.todo.find(y => tk(y) === tk(x)); if(ex){ if(!ex.time && x.time) ex.time = x.time; } else if(state.todo.length < 500) state.todo.push(x); }); }
+    { state.rooms = normRooms(state.rooms); const rk = x => x.url + '|' + (x.date || '') + '|' + x.name; normRooms(ns.rooms || []).forEach(x => { const ex = state.rooms.find(y => y.id === x.id) || state.rooms.find(y => rk(y) === rk(x) && (!y.start || !x.start || y.start === x.start)); if(ex){ if(!ex.start && x.start) ex.start = x.start; if(!ex.end && x.end) ex.end = x.end; } else if(state.rooms.length < 100) state.rooms.push(x); }); }
     { if(!Array.isArray(state.contacts)) state.contacts = []; const cid = new Set(state.contacts.map(x => x.id)), ck = new Set(state.contacts.map(ctKey));
       (ns.contacts || []).forEach(c => { if(cid.has(c.id) || ck.has(ctKey(c)) || state.contacts.length >= 2000) return; state.contacts.push(c); cid.add(c.id); ck.add(ctKey(c)); }); }
     { const gid = new Set((state.groups || []).map(x => x.id)); state.groups = (state.groups || []).concat((ns.groups || []).filter(x => !gid.has(x.id)));
