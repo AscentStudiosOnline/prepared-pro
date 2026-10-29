@@ -746,7 +746,7 @@ dialog{border-radius:12px;box-shadow:0 26px 60px -22px rgba(40,26,6,.55)}
 .catrow .cathead{display:flex;gap:10px;align-items:flex-start}.catrow .cathead>div{flex:1;min-width:0}.catrow .cathead>.nbthumb{flex:none}.catphotos{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 8px}.catph{display:flex;flex-direction:column;gap:4px;align-items:flex-start}.catph .nbthumb{border-radius:8px;overflow:hidden;background:var(--line)}
 .day2{display:grid;grid-template-columns:minmax(0,1fr);gap:0 16px;grid-template-areas:"alerts" "main" "aside"}
 .dayalerts{grid-area:alerts}.daymain{grid-area:main}.dayaside{grid-area:aside}
-@media (min-width:1000px){.day2{grid-template-columns:minmax(0,1fr) 440px;grid-template-areas:"main alerts" "main aside";align-items:start}}
+@media (min-width:1100px){.day2{grid-template-columns:minmax(0,1fr) 400px;grid-template-areas:"main alerts" "main aside";align-items:start}}
 .mcal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}.mcal b{font:600 13px var(--sans);color:var(--muted);padding:2px 0}
 .mcd{min-height:50px;border:1px solid transparent;border-radius:8px;background:transparent;color:var(--ink);font:500 17px var(--sans);cursor:pointer;position:relative}
 .mcd:hover{background:var(--bg)}.mcd.today{border-color:var(--ready);font-weight:700}.mcd.has::after{content:"";position:absolute;left:50%;bottom:6px;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--ready)}
@@ -757,9 +757,10 @@ dialog{border-radius:12px;box-shadow:0 26px 60px -22px rgba(40,26,6,.55)}
 .lquick{display:flex;flex-wrap:wrap;gap:6px;margin:-6px 0 0}
 @media (min-width:1200px){.proj:has(.day2.c3){max-width:2000px}.day2.c3{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr) minmax(0,1fr)!important;grid-template-areas:"alerts main aside"!important;align-items:start}}.dayalerts:empty{display:none}
 @media (min-width:1200px){.day2.c3:has(.dayalerts:empty){grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)!important;grid-template-areas:"main aside"!important}}
-@media (min-width:701px){.day2 .tdadd{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) auto}.day2 .tdadd #tdtext{grid-column:1/-1}}
-.day2 .dpw{margin-bottom:16px}.day2 .dpw>.panel{margin-bottom:0}
-.tdadd input,.tdadd select{min-width:0;box-sizing:border-box}.tdadd input[type=date]{-webkit-appearance:none;appearance:none}
+@media (min-width:701px){.day2 .tdadd{grid-template-columns:repeat(auto-fit,minmax(125px,1fr))}.day2 .tdadd .btn{min-width:80px}.day2 .tdadd #tdtext{grid-column:1/-1}}
+.day2 .dpw:has(>.panel){margin-bottom:16px}.day2 .dpw>.panel{margin-bottom:0}
+.tdadd input,.tdadd select{min-width:0;box-sizing:border-box}.tdadd input[type=date],.tdadd input[type=time],.f input[type=time],.f input[type=date]{-webkit-appearance:none;appearance:none;min-width:0;max-width:100%;width:100%;box-sizing:border-box;display:block;text-align:left;overflow:hidden}.tdadd>*{min-width:0}
+.tdadd input[type=time]::-webkit-datetime-edit,.tdadd input[type=date]::-webkit-datetime-edit{padding:0}
 .qrs{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}.qrbox{margin:6px 0 0}
 input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none;height:22px;width:22px;margin-left:6px;cursor:pointer;opacity:.75;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%23888'/%3E%3Cpath d='M8 8l8 8M16 8l-8 8' stroke='white' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat}input[type=search]::-webkit-search-cancel-button:hover{opacity:1}
 .dcrow{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:4px 0}
@@ -4543,7 +4544,7 @@ async function verifyStoredLicense(){
 const splash = document.getElementById('splash'), helpdlg = document.getElementById('helpdlg');
 
 /* Version, install hint, backup nudge, support */
-const APP_VERSION = '3.54';
+const APP_VERSION = '3.55';
 const SUPPORT_EMAIL = 'AscentStudiosOnline@gmail.com';
 const instDlg = document.getElementById('insthint');
 function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
