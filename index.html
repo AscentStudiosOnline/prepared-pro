@@ -181,6 +181,9 @@ dialog.full{width:100vw!important;max-width:100vw;height:100vh;height:100dvh;max
 dialog.full form textarea,dialog.full label.f textarea,dialog.full div.f textarea{min-height:55vh!important;height:55vh!important}
 dialog.full .nbed{min-height:55vh;height:55vh;max-height:none}
 dialog.full form{min-height:100%}
+.xsave{display:none}
+dialog.full .xsave{display:block;position:fixed;top:calc(16px + env(safe-area-inset-top));right:160px;z-index:5;background:var(--ink);color:var(--bg);border-color:var(--ink)}
+dialog.full .row{padding-bottom:calc(22px + env(safe-area-inset-bottom))}
 .hint.safe{margin:18px 0 0;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
 .sample{border:1px solid var(--line);border-radius:6px;padding:12px 14px;background:var(--bg)}
 .sample h3{margin:0 0 4px;font:600 20px var(--serif)}
@@ -3768,6 +3771,7 @@ lockscr.addEventListener('keydown', e => { if(e.key === 'Escape') e.preventDefau
   const d = document.getElementById(id); if(!d) return; const h = d.querySelector('h2'), f = d.querySelector('form'); if(!h || !f) return;
   d.classList.add('xdlg'); const b = document.createElement('button'); b.type = 'button'; b.className = 'xbtn'; b.dataset.a = 'dlg-expand'; b.setAttribute('aria-pressed', 'false'); b.textContent = 'Full screen';
   f.insertBefore(b, f.firstChild);
+  const sv = document.createElement('button'); sv.type = 'submit'; sv.value = 'save'; sv.className = 'xbtn xsave'; sv.textContent = 'Save'; f.appendChild(sv);
   d.addEventListener('close', () => { d.classList.remove('full'); b.textContent = 'Full screen'; b.setAttribute('aria-pressed', 'false'); });
 });
 function ask(msg, label, fn){
