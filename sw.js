@@ -1,7 +1,7 @@
 // Prepared Pro service worker: keeps the app working offline.
 // Bump CACHE when you upload a new version so people get the update.
-const CACHE = 'preparedpro-v116';
-const FILES = ['./', 'index.html', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/ascent-emblem.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png', 'icons/apple-touch-icon.png', 'lib/docx.iife.js', 'lib/pptxgen.bundle.js'];
+const CACHE = 'preparedpro-v117';
+const FILES = ['./', 'index.html', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/ascent-emblem.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png', 'icons/apple-touch-icon.png', 'lib/docx.iife.js', 'lib/pptxgen.bundle.js', 'lib/qr.min.js'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)).then(() => self.skipWaiting()));
