@@ -309,6 +309,15 @@ button{cursor:pointer}
 #app[data-mw="m"] .day2.c4 .dayaside{display:block}
 #app[data-mw="s"] .nbwrap{grid-template-columns:minmax(0,1fr)}#app[data-mw="s"] .nbrail{display:none;position:static;max-height:none}#app[data-mw="s"] .nbwrap.rail-open .nbrail{display:grid}#app[data-mw="s"] .nbwrap.rail-open .nbmain{display:none}#app[data-mw="s"] .nbfoldbtn{display:flex;justify-content:space-between;width:100%;margin:0 0 12px}
 .pndlgbtn{margin:0 0 8px}
+.pntabs{display:flex;gap:4px;overflow-x:auto;padding:6px 8px 0;border-bottom:1px solid var(--line);flex:none}
+.pntab{display:inline-flex;align-items:center;border:1px solid var(--line);border-bottom:0;border-radius:8px 8px 0 0;background:var(--bg);max-width:190px;flex:none}
+.pntab.on{background:var(--surface);font-weight:700;box-shadow:inset 0 3px 0 var(--ready)}
+.pntab>button{background:none;border:0;font:inherit;color:inherit;cursor:pointer;min-height:40px;padding:0 8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pntab>.pntx{padding:0 8px;font-size:18px;color:var(--muted)}
+.pned .pnf{display:block;margin:0 0 8px;font-weight:600;font-size:14px}.pned .pnf input,.pned .pnf textarea,.pned .pnf select{display:block;width:100%;box-sizing:border-box;margin-top:3px;font:16px var(--sans);min-height:40px}
+.pnttl{font:600 17px var(--serif);margin:0 0 8px}details.pnmore{margin:8px 0 0}details.pnmore>summary{cursor:pointer;font-weight:600;padding:6px 0}
+.pnnt{width:100%;box-sizing:border-box;min-height:40px;margin:0 0 8px;font:600 16px var(--sans)}
+.pnned{width:100%;box-sizing:border-box;min-height:50vh;resize:vertical;font:16px/1.5 var(--sans)}
 .pnscr{float:right;margin:0 0 4px 10px}
 .pnq{width:100%;margin:0 0 8px;min-height:40px;box-sizing:border-box}
 .pnrow{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:10px 4px;min-height:44px;font:inherit;color:inherit;cursor:pointer}
@@ -1420,7 +1429,7 @@ input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;appeara
 <div class="go"><button class="btn" id="spgo" data-a="splash-close">Open Prepared Pro</button><button class="btn ghost" data-a="splash-help">Help</button></div>
 <p class="terms" id="spterms"></p></div>
 <p class="by"><b>Ascent Studios</b><span>&copy; 2026 Ascent Studios LLC. All rights reserved.</span><span id="spver"></span></p></div>
-<dialog id="helpdlg"><form method="dialog"><h2>Help</h2><p class="hint" style="font-size:15px;margin:0">Tap a heading to open it.</p><div class="btnrow" style="margin:8px 0"><button type="button" class="btn ghost sm" data-a="check-update">Check for updates now</button> <button type="button" class="btn ghost sm" data-a="tour">Take the picture tour</button> <button type="button" class="btn ghost sm" data-a="guides-show">Show the &ldquo;in 5 minutes&rdquo; guides again</button></div><div id="helpbody"><div class="hsearchw"><input type="search" id="hsearch" placeholder="Search Help, for example: backup, letters, license" aria-label="Search Help" autocomplete="off"><p class="hint" id="hsnone" hidden>Nothing found. Try one word, such as backup.</p></div><div class="hcards"><button type="button" class="hcard" data-hg="hg-1"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-talk"/></svg><span>Talks and lessons</span></button><button type="button" class="hcard" data-hg="hg-2"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-write"/></svg><span>Writing and research</span></button><button type="button" class="hcard" data-hg="hg-3"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-meet"/></svg><span>Meetings and events</span></button><button type="button" class="hcard" data-hg="hg-4"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-people"/></svg><span>People</span></button><button type="button" class="hcard" data-hg="hg-5"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-money"/></svg><span>Money and shopping</span></button><button type="button" class="hcard" data-hg="hg-6"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-note"/></svg><span>Notes and journal</span></button></div><h3 class="hgrp" id="hg-0"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-flag"/></svg>Start here</h3><details open><summary>Getting started</summary><p>Prepared Pro keeps everything you are preparing in one place, on your own device. Five steps get you going.</p><ol><li><b>Choose your setup.</b> The first time you open it on a device, a short tour ends with Choose your setup. Pick the kind of work you do, and you land on My Day with a Start here card. To change it later, press the three dots on My Day, then Choose your setup. The Start button at the top of the left column asks What do you want to do?</li><li><b>Start a project.</b> Press New project, give it a name, choose what you are preparing, and set the date it is due. Each kind starts with a checklist that fits it.</li><li><b>Open My Day.</b> My Day shows what is late, what is due today and what is coming this week, with the three colors explained in What the colors mean. The Overview has a Start anywhere section, so you do not have to work in order.</li><li><b>Add your people and notes.</b> Contacts keeps the people you write to and meet. The Notebook keeps your own notes and journal. Both can be linked to your projects.</li><li><b>Back up.</b> Everything is saved on your own device as you go. Now and then, press Backup and restore to save a copy, and use Sync Now! to move your work between your own devices.</li></ol><p>Looking for something? Use the search box at the top of this window. What is new is in the next section, and your computer or phone is covered in Windows, Android and Linux.</p></details><details><summary>What is new</summary><p>3.209: You can pin from inside an open window. When you open a note, contact, meeting, money entry, letter, catalog item or place, press Save and pin to side under its title. It saves, closes the window and shows it at the right. My Day has Pin My Day to the side and Choose what to pin in its three-dot menu.</p><p>3.208: The Pin to side button is no longer on the My Day screen. My Day can still be pinned from the Side panels link. Also fixed: the month calendar on My Day no longer runs past the edge of its window, and with a side panel open, My Day and Notebook now rearrange to fit the room that is left, so the calendar no longer spills out of its window.</p><p>3.207: Every main screen can now be pinned to the side as a whole: Contacts, Notebook, Emergency kit, Things I Track, Places, Finances, Meetings, Projects, Catalog, Letters and My Day. Press Pin to side at the top of the screen. The panel shows a searchable list. Tap one to see it, then Back to the list. Also, the extra Pin journal to side button in Notebook is gone; pin any note from its own row.</p><p>3.206: In Notebook, the extra Pin journal to side button is gone. Any note can be pinned to the side with the Pin to side button on its own row, so what you keep open is your choice. If you keep a journal, you can still pin it from the Journal panel on My Day or from Side panels.</p><p>3.205: Every screen that can be pinned has its own Pin to side button: Toolbox, a project's Outline and Sources, plus contacts, notes, finances, meetings, projects, Catalog, Letters and Journal. Pinned panels can all be made wider or narrower by dragging the bar between them.</p>
+<dialog id="helpdlg"><form method="dialog"><h2>Help</h2><p class="hint" style="font-size:15px;margin:0">Tap a heading to open it.</p><div class="btnrow" style="margin:8px 0"><button type="button" class="btn ghost sm" data-a="check-update">Check for updates now</button> <button type="button" class="btn ghost sm" data-a="tour">Take the picture tour</button> <button type="button" class="btn ghost sm" data-a="guides-show">Show the &ldquo;in 5 minutes&rdquo; guides again</button></div><div id="helpbody"><div class="hsearchw"><input type="search" id="hsearch" placeholder="Search Help, for example: backup, letters, license" aria-label="Search Help" autocomplete="off"><p class="hint" id="hsnone" hidden>Nothing found. Try one word, such as backup.</p></div><div class="hcards"><button type="button" class="hcard" data-hg="hg-1"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-talk"/></svg><span>Talks and lessons</span></button><button type="button" class="hcard" data-hg="hg-2"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-write"/></svg><span>Writing and research</span></button><button type="button" class="hcard" data-hg="hg-3"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-meet"/></svg><span>Meetings and events</span></button><button type="button" class="hcard" data-hg="hg-4"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-people"/></svg><span>People</span></button><button type="button" class="hcard" data-hg="hg-5"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-money"/></svg><span>Money and shopping</span></button><button type="button" class="hcard" data-hg="hg-6"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-note"/></svg><span>Notes and journal</span></button></div><h3 class="hgrp" id="hg-0"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-flag"/></svg>Start here</h3><details open><summary>Getting started</summary><p>Prepared Pro keeps everything you are preparing in one place, on your own device. Five steps get you going.</p><ol><li><b>Choose your setup.</b> The first time you open it on a device, a short tour ends with Choose your setup. Pick the kind of work you do, and you land on My Day with a Start here card. To change it later, press the three dots on My Day, then Choose your setup. The Start button at the top of the left column asks What do you want to do?</li><li><b>Start a project.</b> Press New project, give it a name, choose what you are preparing, and set the date it is due. Each kind starts with a checklist that fits it.</li><li><b>Open My Day.</b> My Day shows what is late, what is due today and what is coming this week, with the three colors explained in What the colors mean. The Overview has a Start anywhere section, so you do not have to work in order.</li><li><b>Add your people and notes.</b> Contacts keeps the people you write to and meet. The Notebook keeps your own notes and journal. Both can be linked to your projects.</li><li><b>Back up.</b> Everything is saved on your own device as you go. Now and then, press Backup and restore to save a copy, and use Sync Now! to move your work between your own devices.</li></ol><p>Looking for something? Use the search box at the top of this window. What is new is in the next section, and your computer or phone is covered in Windows, Android and Linux.</p></details><details><summary>What is new</summary><p>3.212: When more than one thing is pinned to the side, tabs appear along the top of the side area, one for each. The tab of anything showing is highlighted. Press a tab to bring that one forward, or its x to close it.</p><p>3.211: Things pinned to the side can now be changed right there: a contact, place, thing you track, catalog item, letter, meeting, money entry or project. Change a field and it saves by itself, and the main page updates. You can keep working on something else in the main page at the same time.</p><p>3.210: A note pinned to the side can now be written in. Change the title or the text and it saves by itself, so you can keep working in the main page while a note stays open beside it. Open the full editor is still there for pictures, files and formatting.</p><p>3.209: You can pin from inside an open window. When you open a note, contact, meeting, money entry, letter, catalog item or place, press Save and pin to side under its title. It saves, closes the window and shows it at the right. My Day has Pin My Day to the side and Choose what to pin in its three-dot menu.</p><p>3.208: The Pin to side button is no longer on the My Day screen. My Day can still be pinned from the Side panels link. Also fixed: the month calendar on My Day no longer runs past the edge of its window, and with a side panel open, My Day and Notebook now rearrange to fit the room that is left, so the calendar no longer spills out of its window.</p><p>3.207: Every main screen can now be pinned to the side as a whole: Contacts, Notebook, Emergency kit, Things I Track, Places, Finances, Meetings, Projects, Catalog, Letters and My Day. Press Pin to side at the top of the screen. The panel shows a searchable list. Tap one to see it, then Back to the list. Also, the extra Pin journal to side button in Notebook is gone; pin any note from its own row.</p><p>3.206: In Notebook, the extra Pin journal to side button is gone. Any note can be pinned to the side with the Pin to side button on its own row, so what you keep open is your choice. If you keep a journal, you can still pin it from the Journal panel on My Day or from Side panels.</p><p>3.205: Every screen that can be pinned has its own Pin to side button: Toolbox, a project's Outline and Sources, plus contacts, notes, finances, meetings, projects, Catalog, Letters and Journal. Pinned panels can all be made wider or narrower by dragging the bar between them.</p>
 <p>3.202: Pin your journal to the side and write in it as the day goes on. Press Pin to side on the Journal box on My Day, or add My journal from Side panels. A text box for today's entry stays open at the right while you study or work. It saves by itself a moment after you stop typing, into today's entry in your Notebook. Add the time puts a time stamp where you are writing. If your journal is protected, it is saved scrambled, and the panel asks you to unlock it first.</p>
 <p>3.201: Catalog items and Letters can be pinned to the side too. Each has a Pin to side button. A pinned item shows its details in the right-hand panel with a button to open it.</p>
 <p>3.200: Pin to side, everywhere. Contacts, Notebook notes, money entries, meetings and projects now each have a Pin to side button. It opens the item in the right-hand panel and keeps it there while you work in other parts of the app. Projects, money entries and meetings can be pinned for the first time. The Side panels link still lets you pick anything from a list.</p>
@@ -4056,8 +4065,9 @@ function pnBody0(pane){
     return txt ? '<div class="btnrow" style="margin:0 0 6px"><button type="button" class="btn ghost sm" data-a="pn-copy" data-id="' + esc(pane.id) + '">Copy all sources</button></div>' + txt.split('\n\n').map(x => '<div class="pnsrc">' + pnLinkify(x) + '</div>').join('') : '<p class="hint">No sources in this project yet.</p>'; }
   if(k === 'outline'){ const p = (state.projects || []).find(x => x.id === ref); if(!p) return '<p class="hint">Choose a project above.</p>'; const L = p.outline || [];
     return L.length ? '<ol style="margin:0;padding-left:22px">' + L.map(x => '<li class="pnsrc"><b>' + esc(x.title || 'Untitled') + '</b>' + (x.status && x.status !== 'empty' ? ' <span class="cat">' + esc(x.status) + '</span>' : '') + (x.purpose ? '<br><span class="cat">' + esc(x.purpose) + '</span>' : '') + '</li>').join('') + '</ol>' : '<p class="hint">This project has no outline yet.</p>'; }
-  if(k === 'note'){ const n = nbEnsure(state).notes.find(x => x.id === ref); if(!n) return '<p class="hint">Choose a note above.</p>'; const locked = jrIsEnc(n.text), im = (n.imgs || []).slice(0, 12);
-    return '<h4>' + esc(n.title || 'Untitled') + '</h4>' + (locked ? '<p class="hint">This note is locked. Open the note to unlock it.</p>' : (jrT(n.text).trim() ? '<div class="sbstext">' + esc(jrT(n.text)) + '</div>' : '')) + im.map(i => '<span class="sbsimg" role="button" tabindex="0" data-sbsph="' + esc(i) + '" data-img="' + esc(i) + '" aria-label="Show this picture larger"></span>').join('') + (n.files || []).map(f => '<p style="margin:4px 0"><button type="button" class="btn ghost sm" data-a="nbf-open" data-id="' + esc(f.id) + '">Open file: ' + esc(f.name) + '</button></p>').join('') + '<div class="btnrow" style="margin:8px 0 0"><button type="button" class="btn ghost sm" data-a="td-note" data-nid="' + esc(n.id) + '">Open the note</button></div>'; }
+  if(k === 'note'){ const n = nbEnsure(state).notes.find(x => x.id === ref); if(!n) return '<p class="hint">Choose a note above.</p>'; const locked = jrIsEnc(n.text) && !jrKey, im = (n.imgs || []).slice(0, 12);
+    return (locked ? '<h4>' + esc(n.title || 'Untitled') + '</h4><p class="hint">This note is protected. Unlock your journal to read and write it here.</p><div class="btnrow" style="margin:0 0 8px"><button type="button" class="btn sm" data-a="jr-unlock">Unlock journal</button></div>'
+      : '<input type="text" class="pnnt" data-pnnt="' + esc(pane.id) + '" value="' + esc(n.title || '') + '" maxlength="160" aria-label="Note title"><textarea class="pnned" data-pnned="' + esc(pane.id) + '" rows="16" aria-label="Write in this note" placeholder="Write here. It saves by itself."></textarea><p class="hint pnnst" data-pnst="' + esc(pane.id) + '" style="margin:2px 0 8px"></p>') + im.map(i => '<span class="sbsimg" role="button" tabindex="0" data-sbsph="' + esc(i) + '" data-img="' + esc(i) + '" aria-label="Show this picture larger"></span>').join('') + (n.files || []).map(f => '<p style="margin:4px 0"><button type="button" class="btn ghost sm" data-a="nbf-open" data-id="' + esc(f.id) + '">Open file: ' + esc(f.name) + '</button></p>').join('') + '<div class="btnrow" style="margin:8px 0 0"><button type="button" class="btn ghost sm" data-a="td-note" data-nid="' + esc(n.id) + '">Open the full editor</button></div>'; }
   if(k === 'contact'){ const c = (state.contacts || []).find(x => x.id === ref); if(!c) return '<p class="hint">Choose a contact above.</p>';
     const ph = [c.phone].concat(ctPhones(c).map(x => x.v)).filter(Boolean), em = [c.email].concat(ctEmails(c).map(x => x.v)).filter(Boolean);
     return '<h4>' + esc(c.name) + '</h4>' + ([c.role, c.org].filter(Boolean).length ? '<p>' + esc([c.role, c.org].filter(Boolean).join('. ')) + '</p>' : '') + ph.map(v => '<p><a href="' + esc(telUrl(v)) + '">' + esc(v) + '</a></p>').join('') + em.map(v => '<p><a href="mailto:' + esc(v) + '">' + esc(v) + '</a></p>').join('') + (c.address ? '<p>' + esc(c.address) + '</p>' : '') + (c.note ? '<p class="hint">' + esc(c.note) + '</p>' : '') + ctLinksHtml(c, false) + '<div class="btnrow" style="margin:8px 0 0"><button type="button" class="btn ghost sm" data-a="c-edit" data-id="' + esc(c.id) + '">Open the contact</button></div>'; }
@@ -4091,7 +4101,7 @@ function pnListRows(pane){
 function pnBody(pane){
   const k = pane.kind, ik = PN_LISTS[k];
   if(ik){
-    if(pane.ref && pnItems(ik).some(x => x[0] === pane.ref)) return '<div class="btnrow" style="margin:0 0 6px"><button type="button" class="btn ghost sm" data-a="pn-back" data-id="' + esc(pane.id) + '">Back to the list</button></div>' + pnBody0({id:pane.id, kind:ik, ref:pane.ref});
+    if(pane.ref && pnItems(ik).some(x => x[0] === pane.ref)) return '<div class="btnrow" style="margin:0 0 6px"><button type="button" class="btn ghost sm" data-a="pn-back" data-id="' + esc(pane.id) + '">Back to the list</button></div>' + pnItemBody({id:pane.id, kind:ik, ref:pane.ref});
     return '<input type="search" class="pnq" data-pnq="' + esc(pane.id) + '" value="' + esc(pane.q || '') + '" placeholder="Search" aria-label="Search this list" autocomplete="off"><div class="pnlist">' + pnListRows(pane) + '</div>';
   }
   if(k === 'kit'){
@@ -4105,8 +4115,47 @@ function pnBody(pane){
     L.sort((a, b) => String(a.date).localeCompare(String(b.date)) || String(a.time || '').localeCompare(String(b.time || '')));
     return '<h4>Coming up</h4>' + (L.length ? L.slice(0, 40).map(x => '<p class="pnsrc"><b>' + esc(fmtDate(x.date)) + (x.time ? ' ' + esc(fmtTime(x.time)) : '') + '</b><br>' + esc(x.title || '') + (x.detail ? ' <span class="cat">' + esc(x.detail) + '</span>' : '') + '</p>').join('') : '<p class="hint">Nothing coming up in the next four weeks.</p>');
   }
-  return pnBody0(pane);
+  return pnItemBody(pane);
 }
+/* Items pinned to the side can be changed there (3.211) */
+const PN_EDIT = {
+  contact:{get:() => state.contacts, f:[['name','Name','t',1],['role','Role or title','t'],['org','Organization','t'],['phone','Phone','tel'],['email','Email','email'],['address','Address','t'],['notes','Notes','a']]},
+  place:{get:() => state.places, f:[['name','Name','t',1],['address','Address','t'],['phone','Phone','tel'],['note','Note','t']]},
+  track:{get:() => state.track, f:[['name','Name','t',1],['sub','Details','t'],['when','When','t'],['purpose','What it is for','t'],['note','Note','a']]},
+  cat:{get:() => state.catalog, f:[['name','Name','t',1],['sku','Code or SKU','t'],['note','Note','a']]},
+  letter:{get:() => state.letters, f:[['name','Name','t',1],['body','Letter','a']]},
+  room:{get:() => state.rooms, f:[['name','Name','t',1],['date','Date','date'],['start','Starts','time'],['end','Ends','time'],['place','Place','t']]},
+  fin:{get:() => Array.isArray(state.ledger) ? state.ledger : [], f:[['date','Date','date'],['who','Who','t'],['cat','Category','t'],['note','Note','t']]},
+  project:{get:() => state.projects, f:[['title','Title','t',1],['due','Due date','date'],['stage','Stage','sel']]}
+};
+function pnEditHtml(p){
+  const E = PN_EDIT[p.kind]; if(!E) return ''; const o = E.get().find(x => x.id === p.ref); if(!o) return '';
+  const at = ' data-pnk="' + p.kind + '" data-pnr="' + esc(p.ref) + '"';
+  return '<div class="pnttl"><b>' + esc(o.name || o.title || o.who || 'Entry') + '</b></div><div class="pned">' + E.f.map(f => { const a = at + ' data-pnf="' + f[0] + '"' + (f[3] ? ' data-req="1"' : '');
+    const inp = f[2] === 'a' ? '<textarea' + a + ' rows="' + (p.kind === 'letter' ? 14 : 4) + '"></textarea>' : f[2] === 'sel' ? '<select' + a + '>' + STAGES.map(x => '<option>' + esc(x) + '</option>').join('') + '</select>' : '<input type="' + (f[2] === 't' ? 'text' : f[2]) + '"' + a + (f[2] === 't' || f[2] === 'tel' || f[2] === 'email' ? ' maxlength="300" autocomplete="off"' : '') + '>';
+    return '<label class="f pnf">' + esc(f[1]) + inp + '</label>'; }).join('') + '<p class="hint pnfst" style="margin:0 0 6px"></p></div>';
+}
+function pnItemBody(p){
+  if(PN_EDIT[p.kind] && p.ref){ const h = pnEditHtml(p); if(h) return h + '<details class="pnmore" open><summary>More about this</summary>' + pnBody0(p) + '</details>'; }
+  return pnBody0(p);
+}
+const pnFDirty = {}; let pnFTimer = {};
+function pnFieldFill(){
+  document.querySelectorAll('[data-pnf]').forEach(el => {
+    const key = el.dataset.pnk + '|' + el.dataset.pnr + '|' + el.dataset.pnf; if(pnFDirty[key] || document.activeElement === el) return;
+    const E = PN_EDIT[el.dataset.pnk], o = E && E.get().find(x => x.id === el.dataset.pnr); if(!o) return;
+    const v = o[el.dataset.pnf] == null ? '' : String(o[el.dataset.pnf]); if(el.value !== v) el.value = v;
+  });
+}
+function pnFieldSave(el, done){
+  const E = PN_EDIT[el.dataset.pnk], o = E && E.get().find(x => x.id === el.dataset.pnr); if(!o) return; const f = el.dataset.pnf, key = el.dataset.pnk + '|' + el.dataset.pnr + '|' + f;
+  const v = el.value; if(el.dataset.req && !v.trim()) return;
+  o[f] = el.tagName === 'TEXTAREA' ? v.slice(0, 60000) : v.slice(0, 300); if('updated' in o) o.updated = ymd(today());
+  pnFDirty[key] = false; save(); const st = el.closest('.pned') && el.closest('.pned').querySelector('.pnfst'); if(st) st.textContent = 'Saved at ' + new Date().toLocaleTimeString(undefined, {hour:'numeric', minute:'2-digit'}) + '.';
+  if(done){ const k = key; setTimeout(() => { try{ render(true); }catch(e){} }, 0); }
+}
+document.addEventListener('input', e => { const el = e.target; if(!el || !el.dataset || el.dataset.pnf === undefined) return; if(el.tagName === 'SELECT' || el.type === 'date' || el.type === 'time') return; const key = el.dataset.pnk + '|' + el.dataset.pnr + '|' + el.dataset.pnf; pnFDirty[key] = true; const st = el.closest('.pned').querySelector('.pnfst'); if(st) st.textContent = 'Typing…'; clearTimeout(pnFTimer[key]); pnFTimer[key] = setTimeout(() => pnFieldSave(el, false), 600); });
+document.addEventListener('change', e => { const el = e.target; if(!el || !el.dataset || el.dataset.pnf === undefined) return; const key = el.dataset.pnk + '|' + el.dataset.pnr + '|' + el.dataset.pnf; clearTimeout(pnFTimer[key]); pnFieldSave(el, true); });
 function pnScreenKind(){
   if(ui.notebook) return 'l-note';
   const m = ui.meetings;
@@ -4127,12 +4176,43 @@ function pnScreenBtn(){
   d.innerHTML = '<button type="button" class="btn ghost sm" data-a="pn-open" data-k="' + k + '" data-ref="">Pin to side</button>';
   const bb = main.querySelector('.backbtn'); if(bb && bb.parentNode) bb.parentNode.insertBefore(d, bb.nextSibling); else main.insertBefore(d, main.firstChild);
 }
+/* A note pinned to the side can be written in (3.210) */
+const pnNtDirty = {}; let pnNtTimer = 0;
+async function pnNoteFill(){
+  for(const el of document.querySelectorAll('textarea[data-pnned]')){
+    const id = el.dataset.pnned; if(pnNtDirty[id]) continue; const p = pnl.list.find(x => x.id === id), n = p && nbEnsure(state).notes.find(x => x.id === p.ref); if(!n) continue;
+    let t = String(n.text || ''); if(jrIsEnc(t)){ if(!jrKey) continue; try{ t = await jrDec(t); }catch(e){ continue; } }
+    if(!pnNtDirty[id] && el.value !== t) el.value = t;
+  }
+}
+async function pnNoteSave(id){
+  const el = document.querySelector('textarea[data-pnned="' + id + '"]'), ti = document.querySelector('input[data-pnnt="' + id + '"]'), st = document.querySelector('[data-pnst="' + id + '"]'); if(!el) return;
+  const p = pnl.list.find(x => x.id === id), n = p && nbEnsure(state).notes.find(x => x.id === p.ref); if(!n) return; const txt = el.value, enc = jrIsEnc(n.text);
+  if(enc && !jrKey){ if(st) st.textContent = 'Unlock your journal to save.'; return; }
+  try{ n.text = (enc ? await jrEnc(txt) : txt).slice(0, 60000); if(enc) jrTouch(); }catch(e){ if(st) st.textContent = 'Could not save. Try again.'; return; }
+  if(ti && ti.value.trim()) n.title = ti.value.trim().slice(0, 160);
+  n.updated = ymd(today()); pnNtDirty[id] = el.value !== txt; save(); if(st) st.textContent = 'Saved at ' + new Date().toLocaleTimeString(undefined, {hour:'numeric', minute:'2-digit'}) + '.';
+}
+document.addEventListener('input', e => { const t = e.target; if(!t || !t.dataset || (t.dataset.pnned === undefined && t.dataset.pnnt === undefined)) return; const id = t.dataset.pnned !== undefined ? t.dataset.pnned : t.dataset.pnnt; pnNtDirty[id] = true; const st = document.querySelector('[data-pnst="' + id + '"]'); if(st) st.textContent = 'Typing…'; clearTimeout(pnNtTimer); pnNtTimer = setTimeout(() => pnNoteSave(id), 700); });
+window.addEventListener('pagehide', () => { Object.keys(pnNtDirty).forEach(id => { if(pnNtDirty[id]) pnNoteSave(id); }); });
+document.addEventListener('visibilitychange', () => { if(document.hidden) Object.keys(pnNtDirty).forEach(id => { if(pnNtDirty[id]) pnNoteSave(id); }); });
 function pnPaneHtml(pane, i, n){
   const kn = (PN_KINDS.find(x => x[0] === pane.kind) || [])[1] || '', items = pnItems(pane.kind), needs = !PN_NOSEL.includes(pane.kind);
   return '<section class="pane" data-pn="' + esc(pane.id) + '" style="flex:' + pane.w + ' 1 0" aria-label="' + esc(kn) + '"><div class="pnhead"><span class="pngrip" draggable="true" data-pngrip="' + esc(pane.id) + '" title="Drag to move this panel" aria-hidden="true">&#8942;&#8942;</span><b>' + esc(kn) + '</b>'
     + '<button type="button" class="btn ghost sm" data-a="pn-left" data-id="' + esc(pane.id) + '" aria-label="Move this panel left"' + (i === 0 ? ' disabled' : '') + '>&#9664;</button><button type="button" class="btn ghost sm" data-a="pn-right" data-id="' + esc(pane.id) + '" aria-label="Move this panel right"' + (i === n - 1 ? ' disabled' : '') + '>&#9654;</button><button type="button" class="btn ghost sm" data-a="pn-close" data-id="' + esc(pane.id) + '" aria-label="Close this panel">Close</button>'
     + (needs ? '<select class="pnsel" data-pnsel="' + esc(pane.id) + '" aria-label="Which one to show"><option value="">' + (items.length ? 'Choose one' : 'Nothing saved yet') + '</option>' + items.map(x => '<option value="' + esc(x[0]) + '"' + (x[0] === pane.ref ? ' selected' : '') + '>' + esc(x[1]) + '</option>').join('') + '</select>' : '')
     + '</div><div class="pnbody">' + pnBody(pane) + '</div></section>';
+}
+function pnTitle(p){
+  const kn = (PN_KINDS.find(x => x[0] === p.kind) || [])[1] || '';
+  let nm = ''; if(p.ref && !PN_LISTS[p.kind]){ const it = pnItems(p.kind).find(x => x[0] === p.ref); if(it) nm = it[1]; }
+  if(p.kind === 'journal') return 'My journal';
+  return nm ? String(nm) : String(kn);
+}
+function pnTabsHtml(sh){
+  if(pnl.list.length < 2) return '';
+  return '<div class="pntabs" role="tablist" aria-label="Everything pinned to the side">' + pnl.list.map(p => { const on = sh.includes(p), t = pnTitle(p);
+    return '<span class="pntab' + (on ? ' on' : '') + '"><button type="button" role="tab" aria-selected="' + (on ? 'true' : 'false') + '" data-a="pn-tab" data-id="' + esc(p.id) + '" title="' + esc(t) + '">' + esc(t) + '</button><button type="button" class="pntx" data-a="pn-close" data-id="' + esc(p.id) + '" aria-label="Close ' + esc(t) + '">&times;</button></span>'; }).join('') + '</div>';
 }
 function panesRender(force){
   const ap = document.getElementById('app'), host = document.getElementById('panehost'); if(!ap || !host) return;
@@ -4141,14 +4221,16 @@ function panesRender(force){
   ap.dataset.panes = String(n); ap.style.setProperty('--pw', pnWidth(n) + 'px');
   { const mw = window.innerWidth - pnSideW() - pnWidth(n); ap.dataset.mw = mw < 1000 ? 's' : mw < 1450 ? 'm' : 'l'; }
   const folded = pnl.list.length - n;
-  const html = '<div class="pndiv pnmain" role="separator" aria-orientation="vertical" tabindex="0" aria-label="Drag to change how wide the side panels are" data-pndiv="main"></div><div class="pnwrap" style="flex-direction:column"><div style="display:flex;flex:1;min-height:0;min-width:0">' + sh.map((p, i) => (i ? '<div class="pndiv" role="separator" aria-orientation="vertical" tabindex="0" aria-label="Drag to change the panel widths" data-pndiv="' + i + '"></div>' : '') + pnPaneHtml(p, i, n)).join('') + '</div>' + (folded > 0 ? '<div class="pnfold">' + folded + ' more panel' + (folded > 1 ? 's are' : ' is') + ' folded away. Widen the window to see ' + (folded > 1 ? 'them' : 'it') + '.</div>' : '') + '</div>';
+  const html = '<div class="pndiv pnmain" role="separator" aria-orientation="vertical" tabindex="0" aria-label="Drag to change how wide the side panels are" data-pndiv="main"></div><div class="pnwrap" style="flex-direction:column">' + pnTabsHtml(sh) + '<div style="display:flex;flex:1;min-height:0;min-width:0">' + sh.map((p, i) => (i ? '<div class="pndiv" role="separator" aria-orientation="vertical" tabindex="0" aria-label="Drag to change the panel widths" data-pndiv="' + i + '"></div>' : '') + pnPaneHtml(p, i, n)).join('') + '</div>' + (folded > 0 ? '<div class="pnfold">' + folded + ' more panel' + (folded > 1 ? 's are' : ' is') + ' folded away. Widen the window to see ' + (folded > 1 ? 'them' : 'it') + '.</div>' : '') + '</div>';
   const key = html + '|' + n;
-  if(!force && key === pnLast) return;
+  if(!force && key === pnLast){ try{ pnNoteFill(); pnFieldFill(); }catch(e){} return; }
   const tops = {}; host.querySelectorAll('.pane').forEach(e => { const b = e.querySelector('.pnbody'); if(b) tops[e.dataset.pn] = b.scrollTop; });
   host.innerHTML = html; pnLast = key;
   host.querySelectorAll('.pane').forEach(e => { const b = e.querySelector('.pnbody'); if(b && tops[e.dataset.pn]) b.scrollTop = tops[e.dataset.pn]; });
   host.querySelectorAll('[data-img]').forEach(nbLoadThumb);
   try{ pnJrFill(); }catch(e){}
+  try{ pnNoteFill(); }catch(e){}
+  try{ pnFieldFill(); }catch(e){}
 }
 function pnAdd(kind, ref, quiet){
   if(pnMax() < 1){ toast('Side panels need a wider window, about 900 pixels or more. Widen the window, or turn the device sideways.'); return false; }
@@ -4209,7 +4291,8 @@ function pnAction(a, b){
   if(a === 'pn-trk'){ const id = trkCtx && trkCtx.id; if(!id){ toast('Save it first, then it can be shown beside your work.'); return; } trkdlg.close('cancel'); setTimeout(() => pnAdd('track', id), 60); return; }
   if(a === 'pn-open'){ pnAdd(b.dataset.k, b.dataset.ref); return; }
   if(i < 0) return;
-  if(a === 'pn-pick'){ pnl.list[i].ref = b.dataset.ref || ''; pnSave(); panesRender(true); }
+  if(a === 'pn-tab'){ const q = pnl.list[i]; if(q && !pnShown().includes(q)){ pnl.list.splice(i, 1); pnl.list.unshift(q); pnSave(); } panesRender(true); const e = document.querySelector('.pane[data-pn="' + id + '"]'); if(e && e.scrollIntoView) e.scrollIntoView({block:'nearest', inline:'nearest'}); }
+  else if(a === 'pn-pick'){ pnl.list[i].ref = b.dataset.ref || ''; pnSave(); panesRender(true); }
   else if(a === 'pn-back'){ pnl.list[i].ref = ''; pnSave(); panesRender(true); }
   else if(a === 'pn-close'){ pnl.list.splice(i, 1); pnSave(); panesRender(true); }
   else if(a === 'pn-left' && i > 0){ const t = pnl.list[i]; pnl.list[i] = pnl.list[i - 1]; pnl.list[i - 1] = t; pnSave(); panesRender(true); }
@@ -6137,7 +6220,7 @@ async function verifyStoredLicense(){
 const splash = document.getElementById('splash'), helpdlg = document.getElementById('helpdlg');
 
 /* Version, install hint, backup nudge, support */
-const APP_VERSION = '3.209';
+const APP_VERSION = '3.212';
 const SUPPORT_EMAIL = 'AscentStudiosOnline@gmail.com';
 const instDlg = document.getElementById('insthint');
 function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
