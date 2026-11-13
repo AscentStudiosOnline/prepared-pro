@@ -302,6 +302,10 @@ button{cursor:pointer}
 .pnbody{flex:1;overflow:auto;padding:10px 12px;font-size:15px;min-width:0}
 .pnbody h4{margin:0 0 6px;font-size:16px}
 .pnbody p{margin:0 0 8px}
+.pnscr{float:right;margin:0 0 4px 10px}
+.pnq{width:100%;margin:0 0 8px;min-height:40px;box-sizing:border-box}
+.pnrow{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:10px 4px;min-height:44px;font:inherit;color:inherit;cursor:pointer}
+.pnrow:hover,.pnrow:focus-visible{background:var(--soft,rgba(128,128,128,.12))}
 .pnsrc{padding:6px 0;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
 .pnbody a{overflow-wrap:anywhere}
 .pndiv{flex:0 0 10px;cursor:col-resize;background:var(--line);touch-action:none;position:relative}
@@ -1409,7 +1413,7 @@ input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;appeara
 <div class="go"><button class="btn" id="spgo" data-a="splash-close">Open Prepared Pro</button><button class="btn ghost" data-a="splash-help">Help</button></div>
 <p class="terms" id="spterms"></p></div>
 <p class="by"><b>Ascent Studios</b><span>&copy; 2026 Ascent Studios LLC. All rights reserved.</span><span id="spver"></span></p></div>
-<dialog id="helpdlg"><form method="dialog"><h2>Help</h2><p class="hint" style="font-size:15px;margin:0">Tap a heading to open it.</p><div class="btnrow" style="margin:8px 0"><button type="button" class="btn ghost sm" data-a="check-update">Check for updates now</button> <button type="button" class="btn ghost sm" data-a="tour">Take the picture tour</button> <button type="button" class="btn ghost sm" data-a="guides-show">Show the &ldquo;in 5 minutes&rdquo; guides again</button></div><div id="helpbody"><div class="hsearchw"><input type="search" id="hsearch" placeholder="Search Help, for example: backup, letters, license" aria-label="Search Help" autocomplete="off"><p class="hint" id="hsnone" hidden>Nothing found. Try one word, such as backup.</p></div><div class="hcards"><button type="button" class="hcard" data-hg="hg-1"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-talk"/></svg><span>Talks and lessons</span></button><button type="button" class="hcard" data-hg="hg-2"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-write"/></svg><span>Writing and research</span></button><button type="button" class="hcard" data-hg="hg-3"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-meet"/></svg><span>Meetings and events</span></button><button type="button" class="hcard" data-hg="hg-4"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-people"/></svg><span>People</span></button><button type="button" class="hcard" data-hg="hg-5"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-money"/></svg><span>Money and shopping</span></button><button type="button" class="hcard" data-hg="hg-6"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-note"/></svg><span>Notes and journal</span></button></div><h3 class="hgrp" id="hg-0"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-flag"/></svg>Start here</h3><details open><summary>Getting started</summary><p>Prepared Pro keeps everything you are preparing in one place, on your own device. Five steps get you going.</p><ol><li><b>Choose your setup.</b> The first time you open it on a device, a short tour ends with Choose your setup. Pick the kind of work you do, and you land on My Day with a Start here card. To change it later, press the three dots on My Day, then Choose your setup. The Start button at the top of the left column asks What do you want to do?</li><li><b>Start a project.</b> Press New project, give it a name, choose what you are preparing, and set the date it is due. Each kind starts with a checklist that fits it.</li><li><b>Open My Day.</b> My Day shows what is late, what is due today and what is coming this week, with the three colors explained in What the colors mean. The Overview has a Start anywhere section, so you do not have to work in order.</li><li><b>Add your people and notes.</b> Contacts keeps the people you write to and meet. The Notebook keeps your own notes and journal. Both can be linked to your projects.</li><li><b>Back up.</b> Everything is saved on your own device as you go. Now and then, press Backup and restore to save a copy, and use Sync Now! to move your work between your own devices.</li></ol><p>Looking for something? Use the search box at the top of this window. What is new is in the next section, and your computer or phone is covered in Windows, Android and Linux.</p></details><details><summary>What is new</summary><p>3.205: Every screen that can be pinned has its own Pin to side button: Toolbox, a project's Outline and Sources, plus contacts, notes, finances, meetings, projects, Catalog, Letters and Journal. Pinned panels can all be made wider or narrower by dragging the bar between them.</p>
+<dialog id="helpdlg"><form method="dialog"><h2>Help</h2><p class="hint" style="font-size:15px;margin:0">Tap a heading to open it.</p><div class="btnrow" style="margin:8px 0"><button type="button" class="btn ghost sm" data-a="check-update">Check for updates now</button> <button type="button" class="btn ghost sm" data-a="tour">Take the picture tour</button> <button type="button" class="btn ghost sm" data-a="guides-show">Show the &ldquo;in 5 minutes&rdquo; guides again</button></div><div id="helpbody"><div class="hsearchw"><input type="search" id="hsearch" placeholder="Search Help, for example: backup, letters, license" aria-label="Search Help" autocomplete="off"><p class="hint" id="hsnone" hidden>Nothing found. Try one word, such as backup.</p></div><div class="hcards"><button type="button" class="hcard" data-hg="hg-1"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-talk"/></svg><span>Talks and lessons</span></button><button type="button" class="hcard" data-hg="hg-2"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-write"/></svg><span>Writing and research</span></button><button type="button" class="hcard" data-hg="hg-3"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-meet"/></svg><span>Meetings and events</span></button><button type="button" class="hcard" data-hg="hg-4"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-people"/></svg><span>People</span></button><button type="button" class="hcard" data-hg="hg-5"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-money"/></svg><span>Money and shopping</span></button><button type="button" class="hcard" data-hg="hg-6"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-note"/></svg><span>Notes and journal</span></button></div><h3 class="hgrp" id="hg-0"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-flag"/></svg>Start here</h3><details open><summary>Getting started</summary><p>Prepared Pro keeps everything you are preparing in one place, on your own device. Five steps get you going.</p><ol><li><b>Choose your setup.</b> The first time you open it on a device, a short tour ends with Choose your setup. Pick the kind of work you do, and you land on My Day with a Start here card. To change it later, press the three dots on My Day, then Choose your setup. The Start button at the top of the left column asks What do you want to do?</li><li><b>Start a project.</b> Press New project, give it a name, choose what you are preparing, and set the date it is due. Each kind starts with a checklist that fits it.</li><li><b>Open My Day.</b> My Day shows what is late, what is due today and what is coming this week, with the three colors explained in What the colors mean. The Overview has a Start anywhere section, so you do not have to work in order.</li><li><b>Add your people and notes.</b> Contacts keeps the people you write to and meet. The Notebook keeps your own notes and journal. Both can be linked to your projects.</li><li><b>Back up.</b> Everything is saved on your own device as you go. Now and then, press Backup and restore to save a copy, and use Sync Now! to move your work between your own devices.</li></ol><p>Looking for something? Use the search box at the top of this window. What is new is in the next section, and your computer or phone is covered in Windows, Android and Linux.</p></details><details><summary>What is new</summary><p>3.207: Every main screen can now be pinned to the side as a whole: Contacts, Notebook, Emergency kit, Things I Track, Places, Finances, Meetings, Projects, Catalog, Letters and My Day. Press Pin to side at the top of the screen. The panel shows a searchable list. Tap one to see it, then Back to the list. Also, the extra Pin journal to side button in Notebook is gone; pin any note from its own row.</p><p>3.206: In Notebook, the extra Pin journal to side button is gone. Any note can be pinned to the side with the Pin to side button on its own row, so what you keep open is your choice. If you keep a journal, you can still pin it from the Journal panel on My Day or from Side panels.</p><p>3.205: Every screen that can be pinned has its own Pin to side button: Toolbox, a project's Outline and Sources, plus contacts, notes, finances, meetings, projects, Catalog, Letters and Journal. Pinned panels can all be made wider or narrower by dragging the bar between them.</p>
 <p>3.202: Pin your journal to the side and write in it as the day goes on. Press Pin to side on the Journal box on My Day, or add My journal from Side panels. A text box for today's entry stays open at the right while you study or work. It saves by itself a moment after you stop typing, into today's entry in your Notebook. Add the time puts a time stamp where you are writing. If your journal is protected, it is saved scrambled, and the panel asks you to unlock it first.</p>
 <p>3.201: Catalog items and Letters can be pinned to the side too. Each has a Pin to side button. A pinned item shows its details in the right-hand panel with a button to open it.</p>
 <p>3.200: Pin to side, everywhere. Contacts, Notebook notes, money entries, meetings and projects now each have a Pin to side button. It opens the item in the right-hand panel and keeps it there while you work in other parts of the app. Projects, money entries and meetings can be pinned for the first time. The Side panels link still lets you pick anything from a list.</p>
@@ -4009,8 +4013,9 @@ function renderMain(){
 
 /* ---------- Side panels (3.145): reference panes beside the main page. Layout is remembered on this device only, never in a backup or sync. ---------- */
 const PN_KEY = 'pp.panes';
-const PN_KINDS = [['sources','Sources for a project'],['outline','Outline of a project'],['toolbox','Toolbox'],['note','A Notebook note'],['contact','A contact'],['place','A place'],['track','Something I track'],['project','A project'],['fin','A money entry'],['room','A meeting or room'],['cat','A catalog item'],['letter','A letter'],['journal','My journal']];
-const PN_NOSEL = ['toolbox', 'journal'];
+const PN_KINDS = [['l-contact','Contacts (whole list)'],['l-note','Notebook (all notes)'],['kit','Emergency kit'],['l-track','Things I Track (whole list)'],['l-place','Places (whole list)'],['l-fin','Finances (all entries)'],['l-room','Meetings (whole list)'],['l-project','Projects (whole list)'],['l-cat','Catalog (all items)'],['l-letter','Letters (all)'],['day','My Day and calendar'],['sources','Sources for a project'],['outline','Outline of a project'],['toolbox','Toolbox'],['note','A Notebook note'],['contact','A contact'],['place','A place'],['track','Something I track'],['project','A project'],['fin','A money entry'],['room','A meeting or room'],['cat','A catalog item'],['letter','A letter'],['journal','My journal']];
+const PN_NOSEL = ['toolbox', 'journal', 'kit', 'day', 'l-contact', 'l-note', 'l-track', 'l-place', 'l-fin', 'l-room', 'l-project', 'l-cat', 'l-letter'];
+const PN_LISTS = {'l-contact':'contact', 'l-note':'note', 'l-track':'track', 'l-place':'place', 'l-fin':'fin', 'l-room':'room', 'l-project':'project', 'l-cat':'cat', 'l-letter':'letter'};
 function pnNewId(){ return 'pn' + Math.random().toString(36).slice(2, 8); }
 function pnLoad(){
   try{ const v = JSON.parse(localStorage.getItem(PN_KEY) || ''); if(v && Array.isArray(v.list)) return {hw:Math.max(0, +v.hw || 0), list:v.list.filter(x => x && PN_KINDS.some(k => k[0] === x.kind)).slice(0, 8).map(x => ({id:String(x.id || pnNewId()).slice(0, 20), kind:x.kind, ref:String(x.ref || '').slice(0, 40), w:+x.w > 0 ? +x.w : 1}))}; }catch(e){}
@@ -4037,7 +4042,7 @@ function pnItems(kind){
   return [];
 }
 function pnLinkify(t){ return esc(t).replace(/(https?:\/\/[^\s<]+)/g, u => '<a href="' + u + '" target="_blank" rel="noopener noreferrer">' + u + '</a>'); }
-function pnBody(pane){
+function pnBody0(pane){
   const k = pane.kind, ref = pane.ref;
   if(k === 'toolbox'){ const L = tbList(); return L.length ? L.slice().sort((a, b) => String(a.group || '').localeCompare(String(b.group || ''), undefined, {sensitivity:'base'}) || a.name.localeCompare(b.name, undefined, {sensitivity:'base'})).map(t => tbRow(t)).join('') : '<p class="hint">Your Toolbox is empty. Add tools from Toolbox in the project list.</p>'; }
   if(k === 'sources'){ const p = (state.projects || []).find(x => x.id === ref); if(!p) return '<p class="hint">Choose a project above.</p>'; const txt = bibliography(p).trim();
@@ -4068,6 +4073,52 @@ function pnBody(pane){
     const pl = it.placeId ? (state.places || []).find(y => y.id === it.placeId) : null, rows = [['Kind', (TRK_KINDS[it.kind] || {}).l || ''], ['Details', it.sub], ['How often', it.freq], ['When', it.when], ['What for', it.purpose], ['Note', it.note]].filter(r => r[1]);
     return '<h4>' + esc(it.name) + '</h4>' + rows.map(r => '<p><b>' + esc(r[0]) + ':</b> ' + esc(r[1]) + '</p>').join('') + (it.kind === 'car' && fuelLine(it.id) ? '<p>' + esc(fuelLine(it.id)) + '</p>' : '') + (pl ? '<p><b>Place:</b> ' + esc(plcText(pl)) + (pl.address ? ' <a href="' + esc(mapsUrl(pl.address)) + '" target="_blank" rel="noopener noreferrer">Map</a>' : '') + '</p>' : '') + ((it.dues || []).length ? '<p><b>Coming up:</b></p>' + it.dues.map(d => '<p class="cat" style="margin:0 0 4px">' + esc(d.label || 'Reminder') + (d.date ? ', ' + esc(fmtDate(d.date)) : '') + '</p>').join('') : '') + '<div class="btnrow" style="margin:8px 0 0"><button type="button" class="btn ghost sm" data-a="trk-edit" data-id="' + esc(it.id) + '">Open it</button></div>'; }
   return '';
+}
+/* Whole screens in a side panel (3.207): a searchable list, tap one to see it, Back to the list */
+function pnListRows(pane){
+  const ik = PN_LISTS[pane.kind], q = String(pane.q || '').trim().toLowerCase(), all = pnItems(ik), L = (q ? all.filter(x => String(x[1]).toLowerCase().includes(q)) : all).slice(0, 200);
+  if(!all.length) return '<p class="hint">Nothing saved here yet.</p>';
+  if(!L.length) return '<p class="hint">Nothing matches that.</p>';
+  return L.map(x => '<button type="button" class="pnrow" data-a="pn-pick" data-id="' + esc(pane.id) + '" data-ref="' + esc(x[0]) + '">' + esc(x[1]) + '</button>').join('') + (all.length > 200 && !q ? '<p class="hint">Showing the first 200. Search to find the rest.</p>' : '');
+}
+function pnBody(pane){
+  const k = pane.kind, ik = PN_LISTS[k];
+  if(ik){
+    if(pane.ref && pnItems(ik).some(x => x[0] === pane.ref)) return '<div class="btnrow" style="margin:0 0 6px"><button type="button" class="btn ghost sm" data-a="pn-back" data-id="' + esc(pane.id) + '">Back to the list</button></div>' + pnBody0({id:pane.id, kind:ik, ref:pane.ref});
+    return '<input type="search" class="pnq" data-pnq="' + esc(pane.id) + '" value="' + esc(pane.q || '') + '" placeholder="Search" aria-label="Search this list" autocomplete="off"><div class="pnlist">' + pnListRows(pane) + '</div>';
+  }
+  if(k === 'kit'){
+    const E = kitPeople(), S = kitSafe(), K = kitItems();
+    return '<h4>Emergency contacts</h4>' + (E.length ? E.map(c => '<p><b>' + esc(c.name) + '</b>' + ([c.role, c.org].filter(Boolean).length ? '<br><span class="cat">' + esc([c.role, c.org].filter(Boolean).join('. ')) + '</span>' : '') + kitPhones(c).map(v => '<br><a href="' + esc(telUrl(v)) + '">' + esc(v) + '</a>').join('') + '</p>').join('') : '<p class="hint">No one is on the emergency list yet.</p>')
+      + '<h4>Safe place</h4>' + (S.length ? S.map(x => '<p><b>' + esc(x.name) + '</b>' + (x.address ? '<br>' + esc(x.address) : '') + (x.phone ? '<br><a href="' + esc(telUrl(x.phone)) + '">' + esc(x.phone) + '</a>' : '') + '</p>').join('') : '<p class="hint">No safe place added yet.</p>')
+      + '<h4>Kit</h4>' + (K.length ? K.map(x => '<p class="pnsrc">' + esc(x.name) + (x.need ? ' <span class="cat">still to get</span>' : '') + '</p>').join('') : '<p class="hint">Nothing on the kit list yet.</p>');
+  }
+  if(k === 'day'){
+    let L = []; try{ L = upcoming().slice(); }catch(e){}
+    L.sort((a, b) => String(a.date).localeCompare(String(b.date)) || String(a.time || '').localeCompare(String(b.time || '')));
+    return '<h4>Coming up</h4>' + (L.length ? L.slice(0, 40).map(x => '<p class="pnsrc"><b>' + esc(fmtDate(x.date)) + (x.time ? ' ' + esc(fmtTime(x.time)) : '') + '</b><br>' + esc(x.title || '') + (x.detail ? ' <span class="cat">' + esc(x.detail) + '</span>' : '') + '</p>').join('') : '<p class="hint">Nothing coming up in the next four weeks.</p>');
+  }
+  return pnBody0(pane);
+}
+function pnScreenKind(){
+  if(ui.notebook) return 'l-note';
+  const m = ui.meetings;
+  if(m === 'letters') return 'l-letter';
+  if(m === 'catalog') return 'l-cat';
+  if(m === 'track') return ui.trkf === 'kit' ? 'kit' : ui.trkf === 'places' ? 'l-place' : 'l-track';
+  if(m === 'giving') return 'l-fin';
+  if(m === 'day') return 'day';
+  if(m && m !== 'lib' && m !== 'toolbox' && m !== 'shop' && m !== 'costs' && m !== 'review') return 'l-room';
+  if(!m && ui.contacts) return 'l-contact';
+  return '';
+}
+function pnScreenBtn(){
+  const main = document.getElementById('main'); if(!main) return;
+  const old = document.getElementById('pnscr'); if(old) old.remove();
+  const k = pnScreenKind(); if(!k) return;
+  const d = document.createElement('div'); d.id = 'pnscr'; d.className = 'pnscr';
+  d.innerHTML = '<button type="button" class="btn ghost sm" data-a="pn-open" data-k="' + k + '" data-ref="">Pin to side</button>';
+  const bb = main.querySelector('.backbtn'); if(bb && bb.parentNode) bb.parentNode.insertBefore(d, bb.nextSibling); else main.insertBefore(d, main.firstChild);
 }
 function pnPaneHtml(pane, i, n){
   const kn = (PN_KINDS.find(x => x[0] === pane.kind) || [])[1] || '', items = pnItems(pane.kind), needs = !PN_NOSEL.includes(pane.kind);
@@ -4121,11 +4172,14 @@ function pnAction(a, b){
   if(a === 'pn-trk'){ const id = trkCtx && trkCtx.id; if(!id){ toast('Save it first, then it can be shown beside your work.'); return; } trkdlg.close('cancel'); setTimeout(() => pnAdd('track', id), 60); return; }
   if(a === 'pn-open'){ pnAdd(b.dataset.k, b.dataset.ref); return; }
   if(i < 0) return;
-  if(a === 'pn-close'){ pnl.list.splice(i, 1); pnSave(); panesRender(true); }
+  if(a === 'pn-pick'){ pnl.list[i].ref = b.dataset.ref || ''; pnSave(); panesRender(true); }
+  else if(a === 'pn-back'){ pnl.list[i].ref = ''; pnSave(); panesRender(true); }
+  else if(a === 'pn-close'){ pnl.list.splice(i, 1); pnSave(); panesRender(true); }
   else if(a === 'pn-left' && i > 0){ const t = pnl.list[i]; pnl.list[i] = pnl.list[i - 1]; pnl.list[i - 1] = t; pnSave(); panesRender(true); }
   else if(a === 'pn-right' && i < pnShown().length - 1){ const t = pnl.list[i]; pnl.list[i] = pnl.list[i + 1]; pnl.list[i + 1] = t; pnSave(); panesRender(true); }
   else if(a === 'pn-copy'){ const p = (state.projects || []).find(x => x.id === pnl.list[i].ref); if(p) copyText(bibliography(p), 'Sources copied.'); }
 }
+document.addEventListener('input', e => { const t = e.target.closest && e.target.closest('[data-pnq]'); if(!t) return; const p = pnl.list.find(x => x.id === t.dataset.pnq); if(!p) return; p.q = t.value; const box = t.parentNode.querySelector('.pnlist'); if(box) box.innerHTML = pnListRows(p); });
 document.getElementById('pnkind').addEventListener('change', pnKindSync);
 document.getElementById('pnform').addEventListener('submit', e => { const v = e.submitter && e.submitter.value; if(v !== 'ok') return; const k = document.getElementById('pnkind').value, r = document.getElementById('pnref').value; setTimeout(() => pnAdd(k, PN_NOSEL.includes(k) ? '' : r), 0); });
 document.getElementById('pnclearall').addEventListener('click', () => { pnl.list = []; pnSave(); panesRender(true); document.getElementById('pndlg').close(); });
@@ -4160,6 +4214,7 @@ function render(keepScroll){
   const main = document.getElementById('main'), top = main.scrollTop;
   renderList(); renderMain(); dayBadge(); backupStatusLine(); licenseStatusLine(); calendarStatusLine();
   { const ob = document.getElementById('orgbtn'); if(ob) ob.hidden = !shareOn(); }
+  try{ pnScreenBtn(); }catch(e){}
   try{ panesRender(); }catch(e){}
   { const old = document.getElementById('calfrom'); if(old) old.remove();
     if(calFrom){ if((calFrom.pid === '__day' && ui.meetings === 'day') || (calFrom.pid !== '__day' && ui.view === 'detail' && !ui.meetings && !ui.contacts && !ui.notebook && state.selected === calFrom.pid)) main.insertAdjacentHTML('afterbegin', '<div id="calfrom" style="margin:0 0 10px"><button type="button" class="btn ghost" data-a="cal-back">Back to the calendar</button></div>'); else calFrom = null; } }
@@ -6045,7 +6100,7 @@ async function verifyStoredLicense(){
 const splash = document.getElementById('splash'), helpdlg = document.getElementById('helpdlg');
 
 /* Version, install hint, backup nudge, support */
-const APP_VERSION = '3.205';
+const APP_VERSION = '3.207';
 const SUPPORT_EMAIL = 'AscentStudiosOnline@gmail.com';
 const instDlg = document.getElementById('insthint');
 function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
@@ -14750,7 +14805,7 @@ document.addEventListener('input', e => { if(e.target && e.target.id === 'tbq'){
 tbform.file.addEventListener('change', () => { const f = tbform.file.files[0]; if(!ctx || ctx.kind !== 'tbx') return; if(!f){ ctx.newFile = null; return; } if(f.size > TB_MAXFILE){ toast('That file is over 25 MB, which is too big to keep inside the app. Use the "where it is" box instead.'); tbform.file.value = ''; ctx.newFile = null; return; } ctx.newFile = f; });
 tbdlg.addEventListener('close', () => { if(ctx && ctx.kind === 'tbx') ctx = null; });
 document.getElementById('jrdlg').addEventListener('close', () => { if(tbdlg.open) tbSyncPw(); });
-function jrNbBtn(){ return '<button type="button" class="btn ghost" data-a="pn-open" data-k="journal" data-ref="">Pin journal to side</button>' + (jrOn() ? (jrKey ? '<button class="btn ghost" data-a="jr-lock">Lock journal</button>' : '<button class="btn ghost" data-a="jr-unlock">Unlock journal</button>') : '<button class="btn ghost" data-a="jr-protect">Protect journal</button>'); }
+function jrNbBtn(){ return (jrOn() ? (jrKey ? '<button class="btn ghost" data-a="jr-lock">Lock journal</button>' : '<button class="btn ghost" data-a="jr-unlock">Unlock journal</button>') : '<button class="btn ghost" data-a="jr-protect">Protect journal</button>'); }
 function jrEdSync(){
   const r = document.getElementById('nbjrrow'); if(!r || typeof nbform === 'undefined') return; const fid = jrFid(), inJ = !!fid && nbform.folder.value === fid; r.hidden = !inJ; if(!inJ) return;
   r.innerHTML = jrOn() ? (jrKey ? 'This entry is saved scrambled with your journal passphrase. <button type="button" class="link" data-a="jr-lock">Lock journal</button>' : 'Your journal is protected. <button type="button" class="link" data-a="jr-unlock">Unlock journal</button>') : 'Entries in the Journal folder can be kept private with a passphrase. <button type="button" class="link" data-a="jr-protect">Protect journal</button>';
