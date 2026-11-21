@@ -53,7 +53,40 @@ window.applyPrefs = function(pr){
     else { S('--surface', pc); S('--line', mix(pc, T.ink, .22)); }
   }
 };
-window.ppEff = function(){ try{ const raw = localStorage.getItem('preparedpro.v1'); const s = raw ? (JSON.parse(raw) || {}) : {}; const p = Object.assign({}, s.prefs); let id = ''; try{ id = localStorage.getItem('pp.dayview') || ''; }catch(e){}
+/* Squeezed saving (3.294): when a phone's storage is too small for the plain copy, Prepared Pro saves a squeezed copy instead. */
+window.ppLz = (function(){
+  const PRE = '\u0001LZ1';
+  const wid = j => { let n = 256 + j, w = 0; while(n){ w++; n = Math.floor(n / 2); } return w < 9 ? 9 : w; };
+  function enc(str){
+    const b = new TextEncoder().encode(str), out = []; let acc = 0, nb = 0, j = 0;
+    const put = code => { const w = wid(j++); acc = acc * Math.pow(2, w) + code; nb += w; while(nb >= 15){ const sh = Math.pow(2, nb - 15), v = Math.floor(acc / sh); out.push(String.fromCharCode(32 + v)); acc -= v * sh; nb -= 15; } };
+    if(b.length){ const dict = new Map(); let next = 257, p = b[0];
+      for(let i = 1; i < b.length; i++){ const c = b[i], key = p * 256 + c, hit = dict.get(key); if(hit !== undefined) p = hit; else { put(p); dict.set(key, next++); p = c; } }
+      put(p); }
+    put(256);
+    if(nb > 0){ out.push(String.fromCharCode(32 + acc * Math.pow(2, 15 - nb))); }
+    return PRE + out.join('');
+  }
+  function dec(t){
+    const s = t.slice(PRE.length), n = s.length; let pos = 0, acc = 0, nb = 0, j = 0;
+    const read = w => { while(nb < w){ if(pos >= n) return -1; acc = acc * 32768 + (s.charCodeAt(pos++) - 32); nb += 15; } const sh = Math.pow(2, nb - w), v = Math.floor(acc / sh); acc -= v * sh; nb -= w; return v; };
+    let buf = new Uint8Array(1 << 16), bl = 0; const pre = [], suf = [], fst = [];
+    const push = x => { if(bl >= buf.length){ const nbuf = new Uint8Array(buf.length * 2); nbuf.set(buf); buf = nbuf; } buf[bl++] = x; };
+    const expand = code => { const tmp = []; let c = code; while(c >= 257){ tmp.push(suf[c - 257]); c = pre[c - 257]; } tmp.push(c); for(let i = tmp.length - 1; i >= 0; i--) push(tmp[i]); };
+    let code = read(wid(j++)); if(code < 0 || code === 256) return '';
+    expand(code); let prev = code;
+    for(;;){ code = read(wid(j++)); if(code < 0 || code === 256) break;
+      const fp = prev < 256 ? prev : fst[prev - 257], nextCode = 257 + pre.length;
+      if(code > nextCode) throw new Error('bad squeezed data');
+      const f = code === nextCode ? fp : (code < 256 ? code : fst[code - 257]);
+      pre.push(prev); suf.push(f); fst.push(fp);
+      expand(code); prev = code; }
+    return new TextDecoder().decode(buf.subarray(0, bl));
+  }
+  return {PRE:PRE, enc:enc, dec:dec, isPacked:t => typeof t === 'string' && t.charCodeAt(0) === 1 && t.indexOf(PRE) === 0, unpack:t => (typeof t === 'string' && t.charCodeAt(0) === 1 && t.indexOf(PRE) === 0) ? dec(t) : t};
+})();
+window.ppRaw = function(){ const t = localStorage.getItem('preparedpro.v1'); return t ? window.ppLz.unpack(t) : t; };
+window.ppEff = function(){ try{ const raw = window.ppRaw(); const s = raw ? (JSON.parse(raw) || {}) : {}; const p = Object.assign({}, s.prefs); let id = ''; try{ id = localStorage.getItem('pp.dayview') || ''; }catch(e){}
   const V = Array.isArray(s.dviews) ? s.dviews : [], v = V.find(x => x && x.id === id) || V[0];
   if(v && v.look && typeof v.look === 'object') return window.ppMerge(p, v.look);
   return p; }catch(e){ return null; } };
@@ -1495,7 +1528,7 @@ input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;appeara
 <div class="go"><button class="btn" id="spgo" data-a="splash-close">Open Prepared Pro</button><button class="btn ghost" data-a="splash-help">Help</button></div>
 <p class="terms" id="spterms"></p></div>
 <p class="by"><b>Ascent Studios</b><span>&copy; 2026 Ascent Studios LLC. All rights reserved.</span><span id="spver"></span></p></div>
-<dialog id="helpdlg"><form method="dialog"><h2>Help</h2><p class="hint" style="font-size:15px;margin:0">Tap a heading to open it.</p><div class="btnrow" style="margin:8px 0"><button type="button" class="btn ghost sm" data-a="check-update">Check for updates now</button> <button type="button" class="btn ghost sm" data-a="tour">Take the picture tour</button> <button type="button" class="btn ghost sm" data-a="guides-show">Show the &ldquo;in 5 minutes&rdquo; guides again</button></div><div id="helpbody"><div class="hsearchw"><input type="search" id="hsearch" placeholder="Search Help, for example: backup, letters, license" aria-label="Search Help" autocomplete="off"><p class="hint" id="hsnone" hidden>Nothing found. Try one word, such as backup.</p></div><div class="hcards"><button type="button" class="hcard" data-hg="hg-1"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-talk"/></svg><span>Talks and lessons</span></button><button type="button" class="hcard" data-hg="hg-2"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-write"/></svg><span>Writing and research</span></button><button type="button" class="hcard" data-hg="hg-3"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-meet"/></svg><span>Meetings and events</span></button><button type="button" class="hcard" data-hg="hg-4"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-people"/></svg><span>People</span></button><button type="button" class="hcard" data-hg="hg-5"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-money"/></svg><span>Money and shopping</span></button><button type="button" class="hcard" data-hg="hg-6"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-note"/></svg><span>Notes and journal</span></button></div><h3 class="hgrp" id="hg-0"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-flag"/></svg>Start here</h3><details open><summary>Getting started</summary><p>Prepared Pro keeps everything you are preparing in one place, on your own device. Five steps get you going.</p><ol><li><b>Choose your setup.</b> The first time you open it on a device, a short tour ends with Choose your setup. Pick the kind of work you do, and you land on My Day with a Start here card. To change it later, press Settings in the left column, then Getting started, then Choose your setup. The Start button at the top of the left column asks What do you want to do?</li><li><b>Start a project.</b> Press New project, give it a name, choose what you are preparing, and set the date it is due. Each kind starts with a checklist that fits it.</li><li><b>Open My Day.</b> My Day shows what is late, what is due today and what is coming this week, with the three colors explained in What the colors mean. The Overview has a Start anywhere section, so you do not have to work in order.</li><li><b>Add your people and notes.</b> Contacts keeps the people you write to and meet. The Notebook keeps your own notes and journal. Both can be linked to your projects.</li><li><b>Back up.</b> Everything is saved on your own device as you go. Now and then, press Backup and restore to save a copy, and use Sync Now! to move your work between your own devices.</li></ol><p>Looking for something? Use the search box at the top of this window. What is new is in the next section, and your computer or phone is covered in Windows, Android and Linux.</p></details><details><summary>What is new</summary><p>3.293: Add a contact from a business card. In Contacts press Add from a business card, take a photo of the card, copy the words from it with your device (press and hold the text in the photo, then Copy), and paste them in. Prepared Pro sorts them into name, title, company, phone, email, website and address for you to check, and keeps the card photo with the contact.</p><p>3.292: Side panels now follow your text size. When you choose a larger Text size in Settings, the panels pinned at the side, including Help, grow with it instead of staying small.</p><p>3.291: Plainer top of the left column. The three small buttons now have words under them: Lock, Hide list and Backup. A few Help lines that said layout now say view, to match the buttons.</p><p>3.290: Help now takes you there. Open a Help heading and press Take me there to jump straight to the real screen or setting, such as hiding or moving the clock, text size, colors, Backup, the Calendar, Contacts and more. The setting is outlined for a moment so you can see it. Contacts can now hold up to 6 more pictures besides the round main one. Open a contact and look under More pictures.</p><p>3.289: Easier to find your projects. Press Projects and the middle of the screen now shows all your projects as big buttons, the one you used last first. The little arrow beside Projects folds the list away. Side panels you save in a view stay with that view and no longer follow you into other views. On an iPad, pressing and holding a left button to pin it now works, and Prepared Pro tucks the left column away for you if the panel needs the room.</p><p>3.288: More pins. Calendar, Journal, Things I Track, Shopping, Calculator, Search Everything and Series in the left column now have a pin, and so does every project and series in the lists under Projects and Series. A pinned Calculator, Search Everything, Shopping list, series or list of series works right in the side panel. Press and hold on a button, project or series on a touch screen to pin or unpin it, with a shorter hold and no iPad text pop-up in the way. Calendar's pin was being erased by the this-week count and is fixed.</p>
+<dialog id="helpdlg"><form method="dialog"><h2>Help</h2><p class="hint" style="font-size:15px;margin:0">Tap a heading to open it.</p><div class="btnrow" style="margin:8px 0"><button type="button" class="btn ghost sm" data-a="check-update">Check for updates now</button> <button type="button" class="btn ghost sm" data-a="tour">Take the picture tour</button> <button type="button" class="btn ghost sm" data-a="guides-show">Show the &ldquo;in 5 minutes&rdquo; guides again</button></div><div id="helpbody"><div class="hsearchw"><input type="search" id="hsearch" placeholder="Search Help, for example: backup, letters, license" aria-label="Search Help" autocomplete="off"><p class="hint" id="hsnone" hidden>Nothing found. Try one word, such as backup.</p></div><div class="hcards"><button type="button" class="hcard" data-hg="hg-1"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-talk"/></svg><span>Talks and lessons</span></button><button type="button" class="hcard" data-hg="hg-2"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-write"/></svg><span>Writing and research</span></button><button type="button" class="hcard" data-hg="hg-3"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-meet"/></svg><span>Meetings and events</span></button><button type="button" class="hcard" data-hg="hg-4"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-people"/></svg><span>People</span></button><button type="button" class="hcard" data-hg="hg-5"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-money"/></svg><span>Money and shopping</span></button><button type="button" class="hcard" data-hg="hg-6"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-note"/></svg><span>Notes and journal</span></button></div><h3 class="hgrp" id="hg-0"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-flag"/></svg>Start here</h3><details open><summary>Getting started</summary><p>Prepared Pro keeps everything you are preparing in one place, on your own device. Five steps get you going.</p><ol><li><b>Choose your setup.</b> The first time you open it on a device, a short tour ends with Choose your setup. Pick the kind of work you do, and you land on My Day with a Start here card. To change it later, press Settings in the left column, then Getting started, then Choose your setup. The Start button at the top of the left column asks What do you want to do?</li><li><b>Start a project.</b> Press New project, give it a name, choose what you are preparing, and set the date it is due. Each kind starts with a checklist that fits it.</li><li><b>Open My Day.</b> My Day shows what is late, what is due today and what is coming this week, with the three colors explained in What the colors mean. The Overview has a Start anywhere section, so you do not have to work in order.</li><li><b>Add your people and notes.</b> Contacts keeps the people you write to and meet. The Notebook keeps your own notes and journal. Both can be linked to your projects.</li><li><b>Back up.</b> Everything is saved on your own device as you go. Now and then, press Backup and restore to save a copy, and use Sync Now! to move your work between your own devices.</li></ol><p>Looking for something? Use the search box at the top of this window. What is new is in the next section, and your computer or phone is covered in Windows, Android and Linux.</p></details><details><summary>What is new</summary><p>3.295: Safer saving. Backup now shows a storage meter for this device and warns you before it fills. On a Mac or PC, once you choose a backup folder, Prepared Pro can also save a backup there by itself once a day when something has changed, keeping the last 7 days (you can turn this off in Backup). Backup reminders now come after a week of changes, and the reminder button repeats your last backup in one tap.</p><p>3.294: Fixes This device is not saving your changes on a phone. When a phone's storage is nearly full, Prepared Pro now saves a squeezed copy of your work, about four times smaller, so saving keeps working. If saving really cannot work, the red warning still appears.</p><p>3.293: Add a contact from a business card. In Contacts press Add from a business card, take a photo of the card, copy the words from it with your device (press and hold the text in the photo, then Copy), and paste them in. Prepared Pro sorts them into name, title, company, phone, email, website and address for you to check, and keeps the card photo with the contact.</p><p>3.292: Side panels now follow your text size. When you choose a larger Text size in Settings, the panels pinned at the side, including Help, grow with it instead of staying small.</p><p>3.291: Plainer top of the left column. The three small buttons now have words under them: Lock, Hide list and Backup. A few Help lines that said layout now say view, to match the buttons.</p><p>3.290: Help now takes you there. Open a Help heading and press Take me there to jump straight to the real screen or setting, such as hiding or moving the clock, text size, colors, Backup, the Calendar, Contacts and more. The setting is outlined for a moment so you can see it. Contacts can now hold up to 6 more pictures besides the round main one. Open a contact and look under More pictures.</p><p>3.289: Easier to find your projects. Press Projects and the middle of the screen now shows all your projects as big buttons, the one you used last first. The little arrow beside Projects folds the list away. Side panels you save in a view stay with that view and no longer follow you into other views. On an iPad, pressing and holding a left button to pin it now works, and Prepared Pro tucks the left column away for you if the panel needs the room.</p><p>3.288: More pins. Calendar, Journal, Things I Track, Shopping, Calculator, Search Everything and Series in the left column now have a pin, and so does every project and series in the lists under Projects and Series. A pinned Calculator, Search Everything, Shopping list, series or list of series works right in the side panel. Press and hold on a button, project or series on a touch screen to pin or unpin it, with a shorter hold and no iPad text pop-up in the way. Calendar's pin was being erased by the this-week count and is fixed.</p>
 <p>3.287: For real estate agents. Two ready-made templates, Real estate: selling a home (listing) and Real estate: helping a buyer, each with the steps from listing or pre-approval through closing. A Real estate agent setup in Choose your setup, with Listings, Buyers and Open house notes folders and a Before a showing routine. A new Home and commission tab in the Calculator works out the monthly cost of a home (loan, tax, insurance and fees) and your commission take-home.</p>
 <p>3.286: Fixed: choosing a book in Finances no longer opens the Files app. (The Restore button added in 3.280 used the same internal name as the book buttons.)</p>
 <p>3.285: A simpler start. New people now see a short list of buttons (My Day, Projects, Calendar, Notebook and Search) with a More buttons button at the bottom to see the rest, and Fewer buttons to go back. Anyone who already has work in Prepared Pro keeps every button. The Start here card on My Day is down to four steps and begins with What do you want to do? The pins in the left column show when you point at a button, or press and hold a button on a touch screen.</p>
@@ -2492,6 +2525,7 @@ input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;appeara
     <div class="bkbig"><button type="button" class="btn bkbigb" data-a="bk-export">Save a backup</button><button type="button" class="btn ghost bkbigb" data-a="bk-restore-pick">Restore from a backup</button></div>
     <input type="file" id="bkfile" accept=".json,application/json" style="display:none" aria-label="Choose a backup file to restore">
     <p class="hint" id="bkinfo"></p>
+    <div id="bkmeterw" style="margin:0 0 4px"><p class="hint" id="bkmeter" style="margin:0 0 4px;font-size:14px"></p><div style="height:8px;background:var(--line);border-radius:6px;overflow:hidden"><div id="bkmeterbar" style="height:100%;width:0;background:var(--ready)"></div></div></div>
     <div id="bkunlock" hidden><label class="f">This backup has a password<input id="bkpwr" type="password" maxlength="100" autocomplete="current-password"></label><div class="btnrow" style="margin:0"><button type="button" class="btn" data-a="bk-unlock">Unlock this backup</button></div></div>
     <div id="bkmsg" role="status" class="hint" style="font-size:14px"></div><div id="bkundo" class="btnrow" hidden><span class="hint" style="font-size:14px">A restore replaced what was here. A safety copy of your text and settings was kept (pictures and voice memos are not in it).</span><button type="button" class="btn ghost" data-a="bk-undorestore">Put back what I had before the restore</button></div><div id="bkshbtn" class="btnrow" hidden><button type="button" class="btn" data-a="bk-sharenow">Choose where to send it</button></div>
     <label class="chk" id="bkuselaywrap" hidden style="margin:6px 0"><input type="checkbox" id="bkuselay"> <span>Also take the My Day views and button layout from this backup. <span class="hint">Without this tick, your My Day views stay as they are on this device.</span></span></label>
@@ -2510,6 +2544,7 @@ input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;appeara
     <p class="hint" style="margin:-4px 0 0;font-size:14px">With a password, your backup is locked. If you forget it, nobody can open that backup, not even Ascent Studios, so write it down somewhere safe.</p>
     <div class="btnrow" style="margin:0"><button type="button" class="btn ghost" data-a="bk-send">Send or save a backup</button><button type="button" class="btn ghost" data-a="bk-folder" id="bkfolderbtn" hidden>Save to a folder</button></div>
     <p class="hint" id="bkfolderhint" hidden style="margin:-4px 0 0;font-size:14px"></p><div class="btnrow" style="margin:0"><button type="button" class="iedit" data-a="bk-folderchg" id="bkfolderchg" hidden>Change folder</button></div>
+    <label class="chk" id="bkautow" hidden style="margin:0"><input type="checkbox" id="bkautochk"> <span><b>Also back up to this folder by itself</b> once a day, when something has changed. It keeps the last 7 days.</span></label><p class="hint" id="bkautohint" hidden style="margin:-4px 0 0;font-size:14px"></p>
     <p class="hint" id="bksendhint" style="margin:-4px 0 0;font-size:14px">Send or save opens your device's share sheet, so you can AirDrop it, put it in Dropbox or Files, or email it. On a computer that cannot share, it saves the file as usual.</p>
     <fieldset class="nbpics" style="margin:0 0 8px"><legend>Voice memos</legend><p class="hint" id="bkvmuse" style="margin:0 0 6px"></p><div class="btnrow" style="margin:0"><button type="button" class="btn ghost sm" data-a="vm-export">Save a recordings file</button></div><label class="f" style="font-weight:400">Add recordings from a recordings file<input type="file" id="bkvmfile" accept=".json,application/json"></label><p class="hint" id="bkvmmsg" role="status" style="margin:0;font-size:14px"></p><p class="hint" style="margin:0;font-size:14px">Voice memos are kept on this device and are not inside the regular backup file, because recordings are large. Save a recordings file now and then, or use Save to Files on any memo.</p></fieldset>
     <fieldset class="ways"><legend>Take it with you, or clear this computer</legend>
@@ -2845,7 +2880,7 @@ function tbMigrate(s){
 }
 function load(){
   try{
-    const raw = localStorage.getItem(STORE);
+    const raw = window.ppRaw();
     if(raw){ const s = JSON.parse(raw); if(s && Array.isArray(s.projects)){
       s.tools = Array.isArray(s.tools) ? s.tools : [];
       s.series = Array.isArray(s.series) ? s.series : [];
@@ -3009,14 +3044,26 @@ function syncStages(){
   for(const p of state.projects){ if(p.stage === 'Delivered') continue; const s = autoStage(p); if(p.stage !== s){ p.stage = s; changed = true; } }
   return changed;
 }
+
+/* Writes the saved copy. Plain first; if the phone says it is full, a squeezed copy is saved instead (about 4 times smaller). */
+let stSqueeze = false, stTimer = 0, stPend = null;
+function stFlush(){ if(stTimer){ clearTimeout(stTimer); stTimer = 0; } if(stPend == null) return; const j = stPend; stPend = null; try{ localStorage.setItem(STORE, window.ppLz.enc(j)); }catch(e){ stSqueeze = false; } }
+function stWrite(json){
+  if(!stSqueeze){
+    try{ localStorage.setItem(STORE, json); return; }
+    catch(e){ localStorage.setItem(STORE, window.ppLz.enc(json)); stSqueeze = true; setTimeout(() => { try{ toast('This device is almost out of storage, so Prepared Pro is saving a squeezed copy to keep your work safe. Save a backup file when you can.', true); }catch(x){} }, 300); return; }
+  }
+  stPend = json; if(!stTimer) stTimer = setTimeout(stFlush, 600);
+}
+window.addEventListener('pagehide', stFlush); document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'hidden') stFlush(); });
 function save(){
   if(window.__wiping) return;
   evMemo = null; plcListsRefresh(); syncStages(); try{ localStorage.setItem('pp.chg', String((+localStorage.getItem('pp.chg') || 0) + 1)); }catch(e){}
   try{
     const json = JSON.stringify(state);
     let out = json;
-    if(otherWin){ try{ const cur = localStorage.getItem(STORE); if(cur && cur !== lastWrote && cur !== json){ localStorage.setItem(STORE + '.other', cur); const ns = normState(JSON.parse(cur)); if(ns){ syncMerge(ns); out = JSON.stringify(state); } } }catch(e){ try{ console.warn('Prepared Pro: could not merge the other window', e); }catch(x){} } }
-    localStorage.setItem(STORE, out); lastWrote = out;
+    if(otherWin){ try{ const cur = window.ppRaw(); if(cur && cur !== lastWrote && cur !== json){ localStorage.setItem(STORE + '.other', cur); const ns = normState(JSON.parse(cur)); if(ns){ syncMerge(ns); out = JSON.stringify(state); } } }catch(e){ try{ console.warn('Prepared Pro: could not merge the other window', e); }catch(x){} } }
+    stWrite(out); lastWrote = out;
     if(!storageOk){ storageOk = true; ppBanner('savewarn', ''); toast('Saving works again.', true); }
   }catch(e){
     if(storageOk) toast('This browser is not saving your changes. Free up space or allow site storage.');
@@ -5716,7 +5763,7 @@ function ppOther(){
   if(document.querySelector('dialog[open]')){ otherWin = true; ppBanner('otherwarn', '<b>Prepared Pro was changed in another window.</b> This window refreshes when you close what you are editing.'); return; }
   clearTimeout(ppT); ppT = setTimeout(() => { if(document.querySelector('dialog[open]')){ ppOther(); } else ppReload(); }, 1500);
 }
-window.addEventListener('storage', e => { if(e.key !== STORE || e.newValue === null || e.newValue === lastWrote) return; ppOther(); });
+window.addEventListener('storage', e => { if(e.key !== STORE || e.newValue === null) return; let nv = e.newValue; try{ nv = window.ppLz.unpack(nv); }catch(x){} if(nv === lastWrote) return; ppOther(); });
 document.addEventListener('close', () => { if(otherWin) setTimeout(() => { if(otherWin && !document.querySelector('dialog[open]')) ppReload(); }, 300); }, true);
 /* unsaved typing in a window: ask before it is thrown away */
 const dscdlg = document.getElementById('dscdlg'); let dscFor = null;
@@ -6609,7 +6656,7 @@ async function verifyStoredLicense(){
 const splash = document.getElementById('splash'), helpdlg = document.getElementById('helpdlg');
 
 /* Version, install hint, backup nudge, support */
-const APP_VERSION = '3.293';
+const APP_VERSION = '3.295';
 const SUPPORT_EMAIL = 'AscentStudiosOnline@gmail.com';
 const instDlg = document.getElementById('insthint');
 function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
@@ -6706,9 +6753,9 @@ function afterSplash(){
   const now = Date.now(), WEEK = 7*864e5;
   if(needsInstallHint() && now - (+lsGet('preparedpro.instHint') || 0) > WEEK){ instDlg.showModal(); return; }
   const bkAge = state.lastBackup ? Math.round((today() - parseD(state.lastBackup)) / DAY) : null;
-  if(bkAge !== null && ((bkAge > 30 && realWork() >= 1) || (bkAge > 14 && chgCount() >= 30)) && now - (+lsGet('preparedpro.bkNudge') || 0) > WEEK){
+  if(bkAge !== null && ((bkAge > 30 && realWork() >= 1) || (bkAge > 7 && chgCount() >= 15)) && now - (+lsGet('preparedpro.bkNudge') || 0) > WEEK){
     lsSet('preparedpro.bkNudge', String(now));
-    ask('Your last backup was ' + bkAge + ' days ago. A fresh backup file protects your newer work if this device is reset or its data is cleared. It takes a few seconds.', 'Back up now', () => openBackup());
+    ask('Your last backup was ' + bkAge + ' days ago. A fresh backup file protects your newer work if this device is reset or its data is cleared. It takes a few seconds.', 'Back up now', () => { if(bkLast() && !bkLast().locked) bkQuick(); else openBackup(); });
     return;
   }
   if(!state.lastBackup && (state.projects.length >= 3 || chgCount() >= 30 || realLedger() >= 10) && now - (+lsGet('preparedpro.bkNudge') || 0) > WEEK){
@@ -8072,7 +8119,7 @@ async function bkFolderHandle(pick){
 async function bkFolderRefresh(){
   const b = document.getElementById('bkfolderbtn'), c = document.getElementById('bkfolderchg'), h = document.getElementById('bkfolderhint'); if(!b) return;
   const ok = typeof window.showDirectoryPicker === 'function'; b.hidden = !ok; if(!ok){ c.hidden = true; h.hidden = true; return; }
-  let d = null; try{ d = await fsGet(); }catch(e){} c.hidden = !d; h.hidden = false;
+  let d = null; try{ d = await fsGet(); }catch(e){} c.hidden = !d; h.hidden = false; try{ bkAutoUi(!!d); }catch(e){}
   h.textContent = d ? 'Save to a folder puts a dated backup file into the folder "' + d.name + '".' : 'Choose a folder once, such as your Dropbox folder, a USB drive or a network drive. Later backups go straight there.';
 }
 async function bkFolderGo(pick){
@@ -8464,9 +8511,56 @@ async function bkQuick(){
   }
   exportBackup(last.m === 'shared');
 }
+
+/* Storage meter, daily folder backup (3.295) */
+const ST_LIMIT = 5000000;
+function stUsed(){ let n = 0; try{ for(let i = 0; i < localStorage.length; i++){ const k = localStorage.key(i); n += k.length + String(localStorage.getItem(k) || '').length; } }catch(e){ return -1; } return n; }
+function stPct(){ const u = stUsed(); return u < 0 ? -1 : Math.min(100, Math.round(u / ST_LIMIT * 100)); }
+function stMeterDraw(){
+  const t = document.getElementById('bkmeter'), bar = document.getElementById('bkmeterbar'); if(!t || !bar) return;
+  const u = stUsed(); if(u < 0){ t.textContent = 'This browser would not say how full its storage is.'; bar.style.width = '0'; return; }
+  const pct = Math.min(100, Math.round(u / ST_LIMIT * 100)), mb = Math.max(0.1, Math.round(u / 100000) / 10);
+  t.textContent = 'Storage on this device: Prepared Pro is using about ' + mb + ' MB of the roughly 5 MB this browser allows (' + pct + '%).' + (stSqueeze ? ' Your data is being squeezed to fit.' : '') + (pct >= 85 ? ' It is nearly full. Save a backup file now.' : '');
+  bar.style.width = Math.max(2, pct) + '%'; bar.style.background = pct >= 85 ? 'var(--behind)' : pct >= 60 ? 'var(--started)' : 'var(--ready)';
+}
+function stWarnCheck(){
+  try{
+    const pct = stPct(); if(pct < 0) return;
+    if(((stSqueeze && pct >= 60) || pct >= 85) && lsGet('pp.stfullhide') !== ymd(today())) ppBanner('stfull', '<b>This device\'s storage for Prepared Pro is ' + pct + '% full.</b> Save a backup file now so nothing is lost. <button type="button" class="btn" data-a="backup">Save a backup file</button> <button type="button" class="iedit" data-ppb-close="stfull">Hide today</button>');
+    else ppBanner('stfull', '');
+  }catch(e){}
+}
+let bkAuto = false;
+function bkAutoOn(){ return lsGet('pp.autobk') !== 'off'; }
+function bkAutoUi(has){
+  const w = document.getElementById('bkautow'), c = document.getElementById('bkautochk'), h = document.getElementById('bkautohint'); if(!w) return;
+  w.hidden = !has; if(c) c.checked = bkAutoOn(); const d = lsGet('pp.autobkday');
+  if(h){ h.hidden = !has || !bkAutoOn(); h.textContent = d ? 'Last automatic backup: ' + fmtLong(d) + '.' : 'No automatic backup yet. The first one happens the next time you open Prepared Pro after making a change.'; }
+}
+async function bkAutoTry(){
+  try{
+    if(typeof window.showDirectoryPicker !== 'function' || !bkAutoOn() || window.__wiping) return;
+    const last = bkLast(); if(!last || last.m !== 'folder' || last.locked) return;
+    if(document.querySelector('dialog[open]')) return;
+    if(!(chgCount() > 0) || lsGet('pp.autobkday') === ymd(today())) return;
+    const h = await fsGet(); if(!h) return;
+    let perm = 'denied'; try{ perm = await h.queryPermission({mode:'readwrite'}); }catch(e){}
+    if(perm !== 'granted'){ if(lsGet('pp.autobkask') !== ymd(today())) ppBanner('autobk', 'Time for your daily backup to the folder "' + esc(h.name) + '". <button type="button" class="btn" data-a="bk-auto-now">Back up now</button> <button type="button" class="iedit" data-ppb-close="autobk">Not today</button>'); return; }
+    ppBanner('autobk', ''); lsSet('pp.autobkday', ymd(today())); bkAuto = true; bkQuickNow = false; exportBackup(false, h);
+  }catch(e){ bkAuto = false; }
+}
+document.addEventListener('click', async e => {
+  const x = e.target.closest && e.target.closest('[data-ppb-close]'); if(x){ const id = x.dataset.ppbClose; ppBanner(id, ''); if(id === 'stfull') lsSet('pp.stfullhide', ymd(today())); if(id === 'autobk') lsSet('pp.autobkask', ymd(today())); return; }
+  const g = e.target.closest && e.target.closest('[data-a="bk-auto-now"]'); if(!g) return; e.stopPropagation();
+  let h = null; try{ h = await bkFolderHandle(false); }catch(err){ toast('Prepared Pro could not open the backup folder. Open Backup and press Save to a folder.'); return; }
+  ppBanner('autobk', ''); lsSet('pp.autobkday', ymd(today())); bkAuto = true; bkQuickNow = true; exportBackup(false, h);
+}, true);
+document.addEventListener('change', e => { if(e.target && e.target.id === 'bkautochk'){ lsSet('pp.autobk', e.target.checked ? 'on' : 'off'); bkAutoUi(true); } });
+setTimeout(() => { if(!navigator.webdriver){ stWarnCheck(); bkAutoTry(); } }, 7000);
+document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'visible' && !navigator.webdriver){ stWarnCheck(); bkAutoTry(); } });
 function bkSave(text, locked, images, dev, iso){
   const d = new Date(iso), p2 = n => String(n).padStart(2, '0'), stamp = ymd(d) + '-' + p2(d.getHours()) + p2(d.getMinutes());
-  const name = 'prepared-pro-backup' + (dev ? '-' + fileSlug(dev).toLowerCase() : '') + '-' + stamp + (locked ? '-locked' : '') + '.json';
+  const name = bkAuto ? 'prepared-pro-auto-backup' + (dev ? '-' + fileSlug(dev).toLowerCase() : '') + '-' + ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'][d.getDay()] + '.json' : 'prepared-pro-backup' + (dev ? '-' + fileSlug(dev).toLowerCase() : '') + '-' + stamp + (locked ? '-locked' : '') + '.json'; bkAuto = false;
   const blob = new Blob([text], {type:'application/json'}), want = bkWantShare, wantF = bkFolderH; bkWantShare = false; bkFolderH = null;
   const msg = document.getElementById('bkmsg'), tail = (images ? ' It includes your Notebook pictures.' : '') + (locked ? ' It is locked with your password.' : '');
   const done = (how, fn) => { document.getElementById('bkshbtn').hidden = how !== 'blocked';
@@ -8493,7 +8587,7 @@ async function bkDecrypt(env, pw){
 }
 const bkdlg = document.getElementById('bkdlg');
 function bkUndoShow(){ const el = document.getElementById('bkundo'); if(!el) return; let has = false; try{ has = !!localStorage.getItem('preparedpro.v1.beforerestore'); }catch(e){} el.hidden = !has; }
-function openBackup(){ bkUndoShow(); bkFolderRefresh(); { const ok = canShareFiles(), b = document.querySelector('[data-a="bk-send"]'), h = document.getElementById('bksendhint'); if(b) b.hidden = !ok; if(h) h.textContent = ok ? "Send or save opens your device's share sheet, so you can AirDrop it, put it in Dropbox or Files, or email it." : (/Mac/.test(navigator.userAgent || '') ? 'This browser cannot open AirDrop by itself. Press Save a backup file, then in Finder right-click the file, choose Share, then AirDrop. Safari on a Mac can send it directly.' : 'Press Save a backup file. It goes to your Downloads folder. Then copy it somewhere safe, such as a cloud folder, a USB drive or an email to yourself.'); } document.getElementById('bkdev').value = bkDeviceGuess(); ['bkpw1', 'bkpw2', 'bkpwr'].forEach(i => { document.getElementById(i).value = ''; }); document.getElementById('bkunlock').hidden = true; pendingEnc = null; nbBackupInfo(); document.getElementById('bkmsg').textContent = ''; document.getElementById('bkchoice').hidden = true; document.getElementById('bkfile').value = ''; pendingImport = null; backupInfo(); bkdlg.showModal(); }
+function openBackup(){ bkUndoShow(); bkFolderRefresh(); try{ stMeterDraw(); }catch(e){} { const ok = canShareFiles(), b = document.querySelector('[data-a="bk-send"]'), h = document.getElementById('bksendhint'); if(b) b.hidden = !ok; if(h) h.textContent = ok ? "Send or save opens your device's share sheet, so you can AirDrop it, put it in Dropbox or Files, or email it." : (/Mac/.test(navigator.userAgent || '') ? 'This browser cannot open AirDrop by itself. Press Save a backup file, then in Finder right-click the file, choose Share, then AirDrop. Safari on a Mac can send it directly.' : 'Press Save a backup file. It goes to your Downloads folder. Then copy it somewhere safe, such as a cloud folder, a USB drive or an email to yourself.'); } document.getElementById('bkdev').value = bkDeviceGuess(); ['bkpw1', 'bkpw2', 'bkpwr'].forEach(i => { document.getElementById(i).value = ''; }); document.getElementById('bkunlock').hidden = true; pendingEnc = null; nbBackupInfo(); document.getElementById('bkmsg').textContent = ''; document.getElementById('bkchoice').hidden = true; document.getElementById('bkfile').value = ''; pendingImport = null; backupInfo(); bkdlg.showModal(); }
 document.getElementById('bkfile').addEventListener('change', e => {
   const file = e.target.files && e.target.files[0], msg = document.getElementById('bkmsg'), choice = document.getElementById('bkchoice');
   choice.hidden = true; pendingImport = null; if(!file) return;
@@ -9547,7 +9641,7 @@ function syncScan(){ if(window.__wiping) return;
     Object.keys(m.h).forEach(k => { if(!(k in cur)){ delete m.h[k]; delete m.t[k]; if(m.on) m.d[k] = now; changed = true; } });
     Object.keys(m.d).forEach(k => { if(now - m.d[k] > SYNC_KEEP){ delete m.d[k]; changed = true; } });
     if(!m.on){ m.on = 1; changed = true; }
-    if(changed && !ppReloading && !otherWin) try{ localStorage.setItem(STORE, JSON.stringify(state)); }catch(e){}
+    if(changed && !ppReloading && !otherWin) try{ stWrite(JSON.stringify(state)); }catch(e){}
   }catch(e){}
 }
 function syncRebase(){ const m = syncMeta(), cur = syncCurrent(); m.h = {}; Object.keys(cur).forEach(k => { m.h[k] = syncHash(cur[k]); }); m.on = 1; }
