@@ -85,13 +85,85 @@ window.ppLz = (function(){
   }
   return {PRE:PRE, enc:enc, dec:dec, isPacked:t => typeof t === 'string' && t.charCodeAt(0) === 1 && t.indexOf(PRE) === 0, unpack:t => (typeof t === 'string' && t.charCodeAt(0) === 1 && t.indexOf(PRE) === 0) ? dec(t) : t};
 })();
-window.ppRaw = function(){ const t = localStorage.getItem('preparedpro.v1'); return t ? window.ppLz.unpack(t) : t; };
-window.ppEff = function(){ try{ const raw = window.ppRaw(); const s = raw ? (JSON.parse(raw) || {}) : {}; const p = Object.assign({}, s.prefs); let id = ''; try{ id = localStorage.getItem('pp.dayview') || ''; }catch(e){}
+/* ---------- Permanent storage (3.297): the saved text lives in the browser's large database (IndexedDB), not the 5 MB localStorage ---------- */
+window.ppDb = (function(){
+  const D = {mode:'ls', cur:null, ready:false, db:null, chan:null, id:Math.random().toString(36).slice(2), busy:false, pend:null, failing:false, readonly:false, migrated:false, hasBR:false, otherJson:null, litePrev:''};
+  const LSK = 'preparedpro.v1';
+  function lsRaw(){ try{ const t = localStorage.getItem(LSK); return t ? window.ppLz.unpack(t) : null; }catch(e){ return null; } }
+  function open(){ return new Promise((res, rej) => { let r, done = false; const tm = setTimeout(() => { if(!done){ done = true; rej(new Error('timeout')); } }, 4000);
+    try{ if(!window.indexedDB) throw new Error('no indexedDB'); r = indexedDB.open('pp-state', 1); }catch(e){ clearTimeout(tm); done = true; return rej(e); }
+    r.onupgradeneeded = () => { try{ if(!r.result.objectStoreNames.contains('kv')) r.result.createObjectStore('kv'); }catch(e){} };
+    r.onsuccess = () => { clearTimeout(tm); if(done){ try{ r.result.close(); }catch(e){} return; } done = true; res(r.result); };
+    r.onerror = () => { clearTimeout(tm); if(!done){ done = true; rej(r.error || new Error('idb error')); } };
+    r.onblocked = () => {}; }); }
+  D.get = k => new Promise((res, rej) => { try{ const q = D.db.transaction('kv', 'readonly').objectStore('kv').get(k); q.onsuccess = () => res(q.result); q.onerror = () => rej(q.error || new Error('get')); }catch(e){ rej(e); } });
+  D.put = (k, v) => new Promise((res, rej) => { try{ const t = D.db.transaction('kv', 'readwrite'); t.objectStore('kv').put(v, k); t.oncomplete = () => res(true); t.onerror = t.onabort = () => rej(t.error || new Error('put')); }catch(e){ rej(e); } });
+  D.del = k => new Promise((res) => { try{ const t = D.db.transaction('kv', 'readwrite'); t.objectStore('kv').delete(k); t.oncomplete = t.onerror = t.onabort = () => res(); }catch(e){ res(); } });
+  D.has = k => new Promise((res) => { try{ const q = D.db.transaction('kv', 'readonly').objectStore('kv').count(IDBKeyRange.only(k)); q.onsuccess = () => res(q.result > 0); q.onerror = () => res(false); }catch(e){ res(false); } });
+  D.boot = async function(){
+    const was = (() => { try{ return localStorage.getItem('pp.idbdone') === '1'; }catch(e){ return false; } })();
+    const raw = lsRaw();
+    let tries = was ? 3 : 1, err = null;
+    for(let i = 0; i < tries && !D.db; i++){ try{ D.db = await open(); }catch(e){ err = e; await new Promise(r => setTimeout(r, 700)); } }
+    if(!D.db){
+      D.mode = 'ls'; D.cur = raw;
+      if(was && !raw){ D.readonly = true; D.degraded = true; }   /* saved data is in the database but it will not open: never start empty and overwrite it */
+      return;
+    }
+    try{
+      const rec = await D.get('state'); let lsNewer = false; try{ lsNewer = localStorage.getItem('pp.lsnewer') === '1'; }catch(e){}
+      if(raw && (!rec || !rec.json || lsNewer)){
+        const ts = Date.now();
+        if(rec && rec.json) await D.put('prev', rec);
+        await D.put('legacy', {json:raw, ts:ts});
+        await D.put('state', {json:raw, ts:ts});
+        const back = await D.get('state'); if(!back || back.json !== raw) throw new Error('verify failed');
+        try{ localStorage.removeItem(LSK); localStorage.removeItem(LSK + '.other'); localStorage.removeItem('pp.lsnewer'); localStorage.setItem('pp.idbdone', '1'); }catch(e){}
+        D.cur = raw; D.migrated = true;
+      } else if(rec && typeof rec.json === 'string'){
+        D.cur = rec.json;
+        if(raw){ try{ localStorage.removeItem(LSK); }catch(e){} }
+        try{ localStorage.setItem('pp.idbdone', '1'); }catch(e){}
+      } else { D.cur = null; try{ localStorage.setItem('pp.idbdone', '1'); }catch(e){} }
+      D.hasBR = await D.has('beforerestore');
+      D.mode = 'idb';
+      try{ D.chan = new BroadcastChannel('pp-state'); }catch(e){}
+      try{ const lg = await D.get('legacy'); if(lg && lg.ts && Date.now() - lg.ts > 30 * 864e5) await D.del('legacy'); }catch(e){}
+    }catch(e){
+      try{ D.db.close(); }catch(x){} D.db = null; D.mode = 'ls'; D.cur = raw;
+      if(was && !raw){ D.readonly = true; D.degraded = true; }
+    }
+  };
+  D.send = () => { try{ if(D.chan) D.chan.postMessage({from:D.id, ts:Date.now()}); }catch(e){} };
+  D.save = function(json){
+    D.cur = json; D.pend = json; if(D.busy) return; D.busy = true;
+    const run = () => { const j = D.pend; D.pend = null; D.put('state', {json:j, ts:Date.now()}).then(() => { D.failing = false; D.send(); try{ if(localStorage.getItem('pp.lsnewer') === '1'){ localStorage.removeItem('pp.lsnewer'); localStorage.removeItem(LSK); } }catch(e){}
+      if(D.pend != null) run(); else D.busy = false; }, e => { D.busy = false; D.failing = true; D.pend = null; try{ window.ppIdbFailed && window.ppIdbFailed(j, e); }catch(x){} }); };
+    run();
+  };
+  D.flushNow = function(){ if(D.mode === 'idb' && D.pend != null && D.busy){ const j = D.pend; D.pend = null; try{ D.put('state', {json:j, ts:Date.now()}).catch(() => {}); }catch(e){} } };
+  D.lite = function(st){ try{ const t = JSON.stringify({prefs:st.prefs || {}, dviews:(Array.isArray(st.dviews) ? st.dviews : []).map(v => ({id:v && v.id, look:v && v.look}))}); if(t !== D.litePrev){ D.litePrev = t; localStorage.setItem('preparedpro.lite', t); } }catch(e){} };
+  D.brSet = function(str){ if(D.mode === 'idb'){ D.hasBR = true; D.put('beforerestore', {json:str, ts:Date.now()}).catch(() => { D.hasBR = false; }); } else { try{ localStorage.setItem(LSK + '.beforerestore', str); }catch(e){} } };
+  D.brHas = function(){ if(D.mode === 'idb') return D.hasBR; try{ return !!localStorage.getItem(LSK + '.beforerestore'); }catch(e){ return false; } };
+  D.brGet = async function(){ if(D.mode === 'idb'){ const r = await D.get('beforerestore'); return r && r.json || null; } try{ return localStorage.getItem(LSK + '.beforerestore'); }catch(e){ return null; } };
+  D.brClear = function(){ if(D.mode === 'idb'){ D.hasBR = false; D.del('beforerestore'); } try{ localStorage.removeItem(LSK + '.beforerestore'); }catch(e){} };
+  D.keepOther = function(cur){ if(D.mode === 'idb') D.put('other', {json:cur, ts:Date.now()}).catch(() => {}); else { try{ localStorage.setItem(LSK + '.other', cur); }catch(e){} } };
+  D.wipe = async function(){ D.readonly = true; D.pend = null; try{ if(D.db){ await new Promise(r => { try{ const t = D.db.transaction('kv', 'readwrite'); t.objectStore('kv').clear(); t.oncomplete = t.onerror = t.onabort = () => r(); }catch(e){ r(); } }); D.db.close(); D.db = null; } }catch(e){} };
+  return D;
+})();
+window.ppRaw = function(){ const D = window.ppDb; if(D.ready && D.mode === 'idb') return D.cur; try{ const t = localStorage.getItem('preparedpro.v1'); return t ? window.ppLz.unpack(t) : t; }catch(e){ return null; } };
+window.ppEff = function(){ try{ let raw = window.ppRaw(); if(!raw && !window.ppDb.ready){ try{ raw = localStorage.getItem('preparedpro.lite'); }catch(e){} } const s = raw ? (JSON.parse(raw) || {}) : {}; const p = Object.assign({}, s.prefs); let id = ''; try{ id = localStorage.getItem('pp.dayview') || ''; }catch(e){}
   const V = Array.isArray(s.dviews) ? s.dviews : [], v = V.find(x => x && x.id === id) || V[0];
   if(v && v.look && typeof v.look === 'object') return window.ppMerge(p, v.look);
   return p; }catch(e){ return null; } };
 (function(){ try{ const raw = localStorage.getItem('preparedpro.v1'); window.applyPrefs(window.ppEff()); }catch(e){ window.applyPrefs(null); }
-  try{ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(){ try{ const raw = localStorage.getItem('preparedpro.v1'); window.applyPrefs(window.ppEff()); }catch(e){} }); }catch(e){}
+  try{ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(){ try{ window.applyPrefs(window.ppEff()); }catch(e){} }); }catch(e){}
+})();
+/* the program starts once the saved copy has been read from the browser's database */
+(function(){ const D = window.ppDb;
+  function go(){ const s = document.getElementById('ppmain'); if(!s || D.started) return; D.started = true; const n = document.createElement('script'); n.textContent = s.textContent; document.body.appendChild(n); }
+  function ready(){ D.ready = true; try{ window.applyPrefs(window.ppEff()); }catch(e){} if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go); else go(); }
+  D.boot().then(ready, ready);
 })();
 </script>
 <style>
@@ -1528,7 +1600,7 @@ input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;appeara
 <div class="go"><button class="btn" id="spgo" data-a="splash-close">Open Prepared Pro</button><button class="btn ghost" data-a="splash-help">Help</button></div>
 <p class="terms" id="spterms"></p></div>
 <p class="by"><b>Ascent Studios</b><span>&copy; 2026 Ascent Studios LLC. All rights reserved.</span><span id="spver"></span></p></div>
-<dialog id="helpdlg"><form method="dialog"><h2>Help</h2><p class="hint" style="font-size:15px;margin:0">Tap a heading to open it.</p><div class="btnrow" style="margin:8px 0"><button type="button" class="btn ghost sm" data-a="check-update">Check for updates now</button> <button type="button" class="btn ghost sm" data-a="tour">Take the picture tour</button> <button type="button" class="btn ghost sm" data-a="guides-show">Show the &ldquo;in 5 minutes&rdquo; guides again</button></div><div id="helpbody"><div class="hsearchw"><input type="search" id="hsearch" placeholder="Search Help, for example: backup, letters, license" aria-label="Search Help" autocomplete="off"><p class="hint" id="hsnone" hidden>Nothing found. Try one word, such as backup.</p></div><div class="hcards"><button type="button" class="hcard" data-hg="hg-1"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-talk"/></svg><span>Talks and lessons</span></button><button type="button" class="hcard" data-hg="hg-2"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-write"/></svg><span>Writing and research</span></button><button type="button" class="hcard" data-hg="hg-3"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-meet"/></svg><span>Meetings and events</span></button><button type="button" class="hcard" data-hg="hg-4"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-people"/></svg><span>People</span></button><button type="button" class="hcard" data-hg="hg-5"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-money"/></svg><span>Money and shopping</span></button><button type="button" class="hcard" data-hg="hg-6"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-note"/></svg><span>Notes and journal</span></button></div><h3 class="hgrp" id="hg-0"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-flag"/></svg>Start here</h3><details open><summary>Getting started</summary><p>Prepared Pro keeps everything you are preparing in one place, on your own device. Five steps get you going.</p><ol><li><b>Choose your setup.</b> The first time you open it on a device, a short tour ends with Choose your setup. Pick the kind of work you do, and you land on My Day with a Start here card. To change it later, press Settings in the left column, then Getting started, then Choose your setup. The Start button at the top of the left column asks What do you want to do?</li><li><b>Start a project.</b> Press New project, give it a name, choose what you are preparing, and set the date it is due. Each kind starts with a checklist that fits it.</li><li><b>Open My Day.</b> My Day shows what is late, what is due today and what is coming this week, with the three colors explained in What the colors mean. The Overview has a Start anywhere section, so you do not have to work in order.</li><li><b>Add your people and notes.</b> Contacts keeps the people you write to and meet. The Notebook keeps your own notes and journal. Both can be linked to your projects.</li><li><b>Back up.</b> Everything is saved on your own device as you go. Now and then, press Backup and restore to save a copy, and use Sync Now! to move your work between your own devices.</li></ol><p>Looking for something? Use the search box at the top of this window. What is new is in the next section, and your computer or phone is covered in Windows, Android and Linux.</p></details><details><summary>What is new</summary><p>3.296: The storage meter in Backup is now accurate on iPhone, iPad and Safari, which allow about 5 MB, half of what it showed before. Prepared Pro now warns you in time, and if your device does fill up it keeps saving a squeezed copy.</p><p>3.295: Safer saving. Backup now shows a storage meter for this device and warns you before it fills. On a Mac or PC, once you choose a backup folder, Prepared Pro can also save a backup there by itself once a day when something has changed, keeping the last 7 days (you can turn this off in Backup). Backup reminders now come after a week of changes, and the reminder button repeats your last backup in one tap.</p><p>3.294: Fixes This device is not saving your changes on a phone. When a phone's storage is nearly full, Prepared Pro now saves a squeezed copy of your work, about four times smaller, so saving keeps working. If saving really cannot work, the red warning still appears.</p><p>3.293: Add a contact from a business card. In Contacts press Add from a business card, take a photo of the card, copy the words from it with your device (press and hold the text in the photo, then Copy), and paste them in. Prepared Pro sorts them into name, title, company, phone, email, website and address for you to check, and keeps the card photo with the contact.</p><p>3.292: Side panels now follow your text size. When you choose a larger Text size in Settings, the panels pinned at the side, including Help, grow with it instead of staying small.</p><p>3.291: Plainer top of the left column. The three small buttons now have words under them: Lock, Hide list and Backup. A few Help lines that said layout now say view, to match the buttons.</p><p>3.290: Help now takes you there. Open a Help heading and press Take me there to jump straight to the real screen or setting, such as hiding or moving the clock, text size, colors, Backup, the Calendar, Contacts and more. The setting is outlined for a moment so you can see it. Contacts can now hold up to 6 more pictures besides the round main one. Open a contact and look under More pictures.</p><p>3.289: Easier to find your projects. Press Projects and the middle of the screen now shows all your projects as big buttons, the one you used last first. The little arrow beside Projects folds the list away. Side panels you save in a view stay with that view and no longer follow you into other views. On an iPad, pressing and holding a left button to pin it now works, and Prepared Pro tucks the left column away for you if the panel needs the room.</p><p>3.288: More pins. Calendar, Journal, Things I Track, Shopping, Calculator, Search Everything and Series in the left column now have a pin, and so does every project and series in the lists under Projects and Series. A pinned Calculator, Search Everything, Shopping list, series or list of series works right in the side panel. Press and hold on a button, project or series on a touch screen to pin or unpin it, with a shorter hold and no iPad text pop-up in the way. Calendar's pin was being erased by the this-week count and is fixed.</p>
+<dialog id="helpdlg"><form method="dialog"><h2>Help</h2><p class="hint" style="font-size:15px;margin:0">Tap a heading to open it.</p><div class="btnrow" style="margin:8px 0"><button type="button" class="btn ghost sm" data-a="check-update">Check for updates now</button> <button type="button" class="btn ghost sm" data-a="tour">Take the picture tour</button> <button type="button" class="btn ghost sm" data-a="guides-show">Show the &ldquo;in 5 minutes&rdquo; guides again</button></div><div id="helpbody"><div class="hsearchw"><input type="search" id="hsearch" placeholder="Search Help, for example: backup, letters, license" aria-label="Search Help" autocomplete="off"><p class="hint" id="hsnone" hidden>Nothing found. Try one word, such as backup.</p></div><div class="hcards"><button type="button" class="hcard" data-hg="hg-1"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-talk"/></svg><span>Talks and lessons</span></button><button type="button" class="hcard" data-hg="hg-2"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-write"/></svg><span>Writing and research</span></button><button type="button" class="hcard" data-hg="hg-3"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-meet"/></svg><span>Meetings and events</span></button><button type="button" class="hcard" data-hg="hg-4"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-people"/></svg><span>People</span></button><button type="button" class="hcard" data-hg="hg-5"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-money"/></svg><span>Money and shopping</span></button><button type="button" class="hcard" data-hg="hg-6"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-note"/></svg><span>Notes and journal</span></button></div><h3 class="hgrp" id="hg-0"><svg class="i" aria-hidden="true" focusable="false"><use href="#ic-flag"/></svg>Start here</h3><details open><summary>Getting started</summary><p>Prepared Pro keeps everything you are preparing in one place, on your own device. Five steps get you going.</p><ol><li><b>Choose your setup.</b> The first time you open it on a device, a short tour ends with Choose your setup. Pick the kind of work you do, and you land on My Day with a Start here card. To change it later, press Settings in the left column, then Getting started, then Choose your setup. The Start button at the top of the left column asks What do you want to do?</li><li><b>Start a project.</b> Press New project, give it a name, choose what you are preparing, and set the date it is due. Each kind starts with a checklist that fits it.</li><li><b>Open My Day.</b> My Day shows what is late, what is due today and what is coming this week, with the three colors explained in What the colors mean. The Overview has a Start anywhere section, so you do not have to work in order.</li><li><b>Add your people and notes.</b> Contacts keeps the people you write to and meet. The Notebook keeps your own notes and journal. Both can be linked to your projects.</li><li><b>Back up.</b> Everything is saved on your own device as you go. Now and then, press Backup and restore to save a copy, and use Sync Now! to move your work between your own devices.</li></ol><p>Looking for something? Use the search box at the top of this window. What is new is in the next section, and your computer or phone is covered in Windows, Android and Linux.</p></details><details><summary>What is new</summary><p>3.297: Your saved work now lives in your browser's large database instead of the small 5 MB box, so it can no longer run out of room. The change happens by itself the first time you open this version, and a safety copy of your old data is kept. The storage line in Backup now says how much your work takes.</p><p>3.296: The storage meter in Backup is now accurate on iPhone, iPad and Safari, which allow about 5 MB, half of what it showed before. Prepared Pro now warns you in time, and if your device does fill up it keeps saving a squeezed copy.</p><p>3.295: Safer saving. Backup now shows a storage meter for this device and warns you before it fills. On a Mac or PC, once you choose a backup folder, Prepared Pro can also save a backup there by itself once a day when something has changed, keeping the last 7 days (you can turn this off in Backup). Backup reminders now come after a week of changes, and the reminder button repeats your last backup in one tap.</p><p>3.294: Fixes This device is not saving your changes on a phone. When a phone's storage is nearly full, Prepared Pro now saves a squeezed copy of your work, about four times smaller, so saving keeps working. If saving really cannot work, the red warning still appears.</p><p>3.293: Add a contact from a business card. In Contacts press Add from a business card, take a photo of the card, copy the words from it with your device (press and hold the text in the photo, then Copy), and paste them in. Prepared Pro sorts them into name, title, company, phone, email, website and address for you to check, and keeps the card photo with the contact.</p><p>3.292: Side panels now follow your text size. When you choose a larger Text size in Settings, the panels pinned at the side, including Help, grow with it instead of staying small.</p><p>3.291: Plainer top of the left column. The three small buttons now have words under them: Lock, Hide list and Backup. A few Help lines that said layout now say view, to match the buttons.</p><p>3.290: Help now takes you there. Open a Help heading and press Take me there to jump straight to the real screen or setting, such as hiding or moving the clock, text size, colors, Backup, the Calendar, Contacts and more. The setting is outlined for a moment so you can see it. Contacts can now hold up to 6 more pictures besides the round main one. Open a contact and look under More pictures.</p><p>3.289: Easier to find your projects. Press Projects and the middle of the screen now shows all your projects as big buttons, the one you used last first. The little arrow beside Projects folds the list away. Side panels you save in a view stay with that view and no longer follow you into other views. On an iPad, pressing and holding a left button to pin it now works, and Prepared Pro tucks the left column away for you if the panel needs the room.</p><p>3.288: More pins. Calendar, Journal, Things I Track, Shopping, Calculator, Search Everything and Series in the left column now have a pin, and so does every project and series in the lists under Projects and Series. A pinned Calculator, Search Everything, Shopping list, series or list of series works right in the side panel. Press and hold on a button, project or series on a touch screen to pin or unpin it, with a shorter hold and no iPad text pop-up in the way. Calendar's pin was being erased by the this-week count and is fixed.</p>
 <p>3.287: For real estate agents. Two ready-made templates, Real estate: selling a home (listing) and Real estate: helping a buyer, each with the steps from listing or pre-approval through closing. A Real estate agent setup in Choose your setup, with Listings, Buyers and Open house notes folders and a Before a showing routine. A new Home and commission tab in the Calculator works out the monthly cost of a home (loan, tax, insurance and fees) and your commission take-home.</p>
 <p>3.286: Fixed: choosing a book in Finances no longer opens the Files app. (The Restore button added in 3.280 used the same internal name as the book buttons.)</p>
 <p>3.285: A simpler start. New people now see a short list of buttons (My Day, Projects, Calendar, Notebook and Search) with a More buttons button at the bottom to see the rest, and Fewer buttons to go back. Anyone who already has work in Prepared Pro keeps every button. The Start here card on My Day is down to four steps and begins with What do you want to do? The pins in the left column show when you point at a button, or press and hold a button on a touch screen.</p>
@@ -2722,7 +2794,7 @@ input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;appeara
   </form>
 </dialog>
 
-<script>
+<script type="text/plain" id="ppmain">
 'use strict';
 /* ---------- Templates ---------- */
 const MODES = {
@@ -2856,6 +2928,7 @@ const uid = () => Math.random().toString(36).slice(2,9) + Date.now().toString(36
 const STORE = 'preparedpro.v1';
 let state = load();
 try{ state.listOpen = {}; }catch(e){}
+try{ window.ppDb.lite(state); }catch(e){}
 try{ if(localStorage.getItem('preparedpro.side') === '1') document.getElementById('app').dataset.side = 'hidden'; }catch(e){}
 let ui = {view:'detail', meetings: state.projects.length ? 'day' : false, filter:'all', open:{}, page:'overview', menu:false, series:null};
 let storageOk = true, lastWrote = null, otherWin = false, ppReloading = false;
@@ -3049,20 +3122,25 @@ function syncStages(){
 let stSqueeze = false, stTimer = 0, stPend = null;
 function stFlush(){ if(stTimer){ clearTimeout(stTimer); stTimer = 0; } if(stPend == null) return; const j = stPend; stPend = null; try{ localStorage.setItem(STORE, window.ppLz.enc(j)); }catch(e){ stSqueeze = false; } }
 function stWrite(json){
+  const D = window.ppDb;
+  if(D.readonly) return;
+  if(D.mode === 'idb' && !D.failing){ D.save(json); D.lite(state); return; }
   if(!stSqueeze){
     try{ localStorage.setItem(STORE, json); return; }
     catch(e){ localStorage.setItem(STORE, window.ppLz.enc(json)); stSqueeze = true; setTimeout(() => { try{ toast('This device is almost out of storage, so Prepared Pro is saving a squeezed copy to keep your work safe. Save a backup file when you can.', true); }catch(x){} }, 300); return; }
   }
   stPend = json; if(!stTimer) stTimer = setTimeout(stFlush, 600);
 }
-window.addEventListener('pagehide', stFlush); document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'hidden') stFlush(); });
+window.addEventListener('pagehide', () => { stFlush(); window.ppDb.flushNow(); }); document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'hidden'){ stFlush(); window.ppDb.flushNow(); } });
+/* if the browser's database ever refuses a save, fall back to the small copy so nothing is lost */
+window.ppIdbFailed = function(j){ try{ localStorage.setItem('pp.lsnewer', '1'); }catch(e){} try{ stWrite(window.ppDb.cur != null ? window.ppDb.cur : j); }catch(e){ storageOk = false; ppBanner('savewarn', '<b>This device is not saving your changes.</b> Save a backup file now so nothing is lost. <button type="button" class="btn" data-a="backup">Save a backup file</button>'); } };
 function save(){
   if(window.__wiping) return;
   evMemo = null; plcListsRefresh(); syncStages(); try{ localStorage.setItem('pp.chg', String((+localStorage.getItem('pp.chg') || 0) + 1)); }catch(e){}
   try{
     const json = JSON.stringify(state);
     let out = json;
-    if(otherWin){ try{ const cur = window.ppRaw(); if(cur && cur !== lastWrote && cur !== json){ localStorage.setItem(STORE + '.other', cur); const ns = normState(JSON.parse(cur)); if(ns){ syncMerge(ns); out = JSON.stringify(state); } } }catch(e){ try{ console.warn('Prepared Pro: could not merge the other window', e); }catch(x){} } }
+    if(otherWin){ try{ const cur = window.ppDb.mode === 'idb' ? window.ppDb.otherJson : window.ppRaw(); if(cur && cur !== lastWrote && cur !== json){ window.ppDb.keepOther(cur); const ns = normState(JSON.parse(cur)); if(ns){ syncMerge(ns); out = JSON.stringify(state); } } }catch(e){ try{ console.warn('Prepared Pro: could not merge the other window', e); }catch(x){} } }
     stWrite(out); lastWrote = out;
     if(!storageOk){ storageOk = true; ppBanner('savewarn', ''); toast('Saving works again.', true); }
   }catch(e){
@@ -4797,7 +4875,7 @@ document.addEventListener('click', e => { const b = e.target.closest && e.target
   setTimeout(() => ask('This removes your projects, notes, pictures, voice memos and settings from this browser and cannot be undone. Only do this if your backup file is saved somewhere safe. Remove everything from this computer?', 'Remove everything', () => {
     window.__wiping = true; try{ localStorage.clear(); }catch(x){}
     const names = ['preparedpro-nb', 'preparedpro-vm', 'preparedpro-tb', 'pp-fs'];
-    Promise.all(names.map(n => new Promise(r => { try{ const q = indexedDB.deleteDatabase(n); q.onsuccess = q.onerror = q.onblocked = () => r(); }catch(x){ r(); } }))).then(() => { try{ if(window.caches) caches.keys().then(k => k.forEach(x => caches.delete(x))); }catch(x){} setTimeout(() => location.reload(), 400); });
+    Promise.all([window.ppDb.wipe()].concat(names.map(n => new Promise(r => { try{ const q = indexedDB.deleteDatabase(n); q.onsuccess = q.onerror = q.onblocked = () => r(); }catch(x){ r(); } })))).then(() => { try{ if(window.caches) caches.keys().then(k => k.forEach(x => caches.delete(x))); }catch(x){} setTimeout(() => location.reload(), 400); });
   }), 120); });
 const gsdlg = document.getElementById('gsdlg');
 function gsSnip(text, words){
@@ -5674,9 +5752,9 @@ function lockBtnText(){ const b = document.getElementById('lockbtn'); if(b) b.te
   const on = !!lockCfg(); document.querySelectorAll('.lockq').forEach(q => { q.dataset.on = on ? '1' : '0'; const t = on ? 'Unlocked. Press to lock Prepared Pro now' : 'Set a password so you can lock Prepared Pro'; q.title = t; q.setAttribute('aria-label', t); }); }
 function lockForgot(){
   ask('Forgot the password? The only way back in is to erase everything stored in Prepared Pro on this device and turn the lock off. If you have a backup file you can restore it afterward. Erase and unlock?', 'Erase and unlock', () => {
-    try{ localStorage.removeItem('preparedpro.v1'); localStorage.removeItem(LOCK_KEY); }catch(e){}
+    window.__wiping = true; try{ localStorage.removeItem('preparedpro.v1'); localStorage.removeItem(LOCK_KEY); }catch(e){}
     try{ indexedDB.databases && indexedDB.databases().then(L => L.forEach(d => { if(d.name && /prepared/i.test(d.name)) indexedDB.deleteDatabase(d.name); })); }catch(e){}
-    location.reload();
+    window.ppDb.wipe().then(() => location.reload(), () => location.reload());
   });
 }
 ['pointerdown','keydown','touchstart','wheel'].forEach(ev => document.addEventListener(ev, () => { if(!lockActive) lastAct = Date.now(); }, {passive:true, capture:true}));
@@ -5763,7 +5841,9 @@ function ppOther(){
   if(document.querySelector('dialog[open]')){ otherWin = true; ppBanner('otherwarn', '<b>Prepared Pro was changed in another window.</b> This window refreshes when you close what you are editing.'); return; }
   clearTimeout(ppT); ppT = setTimeout(() => { if(document.querySelector('dialog[open]')){ ppOther(); } else ppReload(); }, 1500);
 }
-window.addEventListener('storage', e => { if(e.key !== STORE || e.newValue === null) return; let nv = e.newValue; try{ nv = window.ppLz.unpack(nv); }catch(x){} if(nv === lastWrote) return; ppOther(); });
+if(window.ppDb.chan) window.ppDb.chan.onmessage = async e => { try{ if(!e.data || e.data.from === window.ppDb.id) return; const rec = await window.ppDb.get('state'); if(!rec || !rec.json || rec.json === lastWrote) return; window.ppDb.otherJson = rec.json; ppOther(); }catch(x){} };
+if(window.ppDb.degraded) ppBanner('dbdown', '<b>Prepared Pro cannot open your saved work right now.</b> Nothing has been lost and nothing will be changed. Close every Prepared Pro tab, restart the browser, and open it again. <button type="button" class="btn" data-a="reloadnow">Try again</button>');
+window.addEventListener('storage', e => { if(window.ppDb.mode === 'idb') return; if(e.key !== STORE || e.newValue === null) return; let nv = e.newValue; try{ nv = window.ppLz.unpack(nv); }catch(x){} if(nv === lastWrote) return; ppOther(); });
 document.addEventListener('close', () => { if(otherWin) setTimeout(() => { if(otherWin && !document.querySelector('dialog[open]')) ppReload(); }, 300); }, true);
 /* unsaved typing in a window: ask before it is thrown away */
 const dscdlg = document.getElementById('dscdlg'); let dscFor = null;
@@ -6656,7 +6736,7 @@ async function verifyStoredLicense(){
 const splash = document.getElementById('splash'), helpdlg = document.getElementById('helpdlg');
 
 /* Version, install hint, backup nudge, support */
-const APP_VERSION = '3.296';
+const APP_VERSION = '3.297';
 const SUPPORT_EMAIL = 'AscentStudiosOnline@gmail.com';
 const instDlg = document.getElementById('insthint');
 function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
@@ -8516,11 +8596,12 @@ async function bkQuick(){
 /* Browsers count storage in 2-byte characters. Safari (iPhone, iPad, Mac) allows about 5 MB, Chrome and Edge about 10 MB. */
 const ST_SAFARI = (() => { const u = navigator.userAgent || ''; return /iPad|iPhone|iPod/.test(u) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) || (/Safari/.test(u) && !/Chrome|Chromium|Edg|OPR|Android|Firefox/.test(u)); })();
 const ST_LIMIT = ST_SAFARI ? 2500000 : 5000000, ST_MB = ST_SAFARI ? 5 : 10;
-function stUsed(){ let n = 0; try{ for(let i = 0; i < localStorage.length; i++){ const k = localStorage.key(i); n += k.length + String(localStorage.getItem(k) || '').length; } }catch(e){ return -1; } return n; }
-function stPct(){ const u = stUsed(); return u < 0 ? -1 : Math.min(100, Math.round(u / ST_LIMIT * 100)); }
+function stUsed(){ if(window.ppDb.mode === 'idb') return (window.ppDb.cur || '').length; let n = 0; try{ for(let i = 0; i < localStorage.length; i++){ const k = localStorage.key(i); n += k.length + String(localStorage.getItem(k) || '').length; } }catch(e){ return -1; } return n; }
+function stPct(){ if(window.ppDb.mode === 'idb') return 0; const u = stUsed(); return u < 0 ? -1 : Math.min(100, Math.round(u / ST_LIMIT * 100)); }
 function stMeterDraw(){
   const t = document.getElementById('bkmeter'), bar = document.getElementById('bkmeterbar'); if(!t || !bar) return;
   const u = stUsed(); if(u < 0){ t.textContent = 'This browser would not say how full its storage is.'; bar.style.width = '0'; return; }
+  if(window.ppDb.mode === 'idb'){ const mb2 = Math.max(0.1, Math.round(u / 100000) / 10); t.textContent = 'Storage on this device: your saved work takes about ' + mb2 + ' MB. Prepared Pro keeps it in your browser\'s large database, so there is plenty of room. Pictures and voice memos are kept separately.'; bar.style.width = '2%'; bar.style.background = 'var(--ready)'; return; }
   const pct = Math.min(100, Math.round(u / ST_LIMIT * 100)), mb = Math.max(0.1, Math.round(u * 2 / 100000) / 10);
   t.textContent = 'Storage on this device: Prepared Pro is using about ' + mb + ' MB of the roughly ' + ST_MB + ' MB this browser allows (' + pct + '%).' + (stSqueeze ? ' Your data is being squeezed to fit.' : '') + (pct >= 85 ? ' It is nearly full. Save a backup file now.' : '');
   bar.style.width = Math.max(2, pct) + '%'; bar.style.background = pct >= 85 ? 'var(--behind)' : pct >= 60 ? 'var(--started)' : 'var(--ready)';
@@ -8588,7 +8669,7 @@ async function bkDecrypt(env, pw){
   return new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM', iv:bkUnB64(env.iv)}, key, bkUnB64(env.data)));
 }
 const bkdlg = document.getElementById('bkdlg');
-function bkUndoShow(){ const el = document.getElementById('bkundo'); if(!el) return; let has = false; try{ has = !!localStorage.getItem('preparedpro.v1.beforerestore'); }catch(e){} el.hidden = !has; }
+function bkUndoShow(){ const el = document.getElementById('bkundo'); if(!el) return; let has = false; try{ has = window.ppDb.brHas(); }catch(e){} el.hidden = !has; }
 function openBackup(){ bkUndoShow(); bkFolderRefresh(); try{ stMeterDraw(); }catch(e){} { const ok = canShareFiles(), b = document.querySelector('[data-a="bk-send"]'), h = document.getElementById('bksendhint'); if(b) b.hidden = !ok; if(h) h.textContent = ok ? "Send or save opens your device's share sheet, so you can AirDrop it, put it in Dropbox or Files, or email it." : (/Mac/.test(navigator.userAgent || '') ? 'This browser cannot open AirDrop by itself. Press Save a backup file, then in Finder right-click the file, choose Share, then AirDrop. Safari on a Mac can send it directly.' : 'Press Save a backup file. It goes to your Downloads folder. Then copy it somewhere safe, such as a cloud folder, a USB drive or an email to yourself.'); } document.getElementById('bkdev').value = bkDeviceGuess(); ['bkpw1', 'bkpw2', 'bkpwr'].forEach(i => { document.getElementById(i).value = ''; }); document.getElementById('bkunlock').hidden = true; pendingEnc = null; nbBackupInfo(); document.getElementById('bkmsg').textContent = ''; document.getElementById('bkchoice').hidden = true; document.getElementById('bkfile').value = ''; pendingImport = null; backupInfo(); bkdlg.showModal(); }
 document.getElementById('bkfile').addEventListener('change', e => {
   const file = e.target.files && e.target.files[0], msg = document.getElementById('bkmsg'), choice = document.getElementById('bkchoice');
@@ -10005,7 +10086,7 @@ function applyImport2(mode){
   }
   if(mode === 'replace'){
     const keep = state.lastBackup, lic = state.license, prefs = state.prefs, mname = state.myName, mme = state.me;
-    try{ localStorage.setItem('preparedpro.v1.beforerestore', JSON.stringify(state)); }catch(e){}
+    try{ window.ppDb.brSet(JSON.stringify(state)); }catch(e){}
     state = {v:1, catalog:ns.catalog || [], track:ns.track || [], trackCats:ns.trackCats || [], places:ns.places || [], shop:ns.shop || [], coupons:ns.coupons || [], shopMemo:ns.shopMemo || {}, mout:ns.mout || {}, projects:ns.projects, tools:ns.tools, toolbox:ns.toolbox || [], orgInfo:ns.orgInfo || {name:'', logo:''}, series:ns.series, bringTemplate:ns.bringTemplate, templates:ns.templates || [], contacts:ns.contacts || [], groups:ns.groups || [], rooms:ns.rooms || [], lib:ns.lib || [], todo:ns.todo || [], routines:ns.routines || [], ledger:ns.ledger || [], budgets:ns.budgets || [], invoices:ns.invoices || [], books:ns.books || [], worth:ns.worth || [], release:ns.release, nb:ns.nb, selected:ns.selected, lastBackup:keep, lines:ns.lines && ns.lines.length ? ns.lines : defaultLines(), letters:ns.letters || [], lsent:ns.lsent || [], heads:ns.heads || [], dviews:layKeep() && state.dviews && state.dviews.length ? state.dviews : (ns.dviews && ns.dviews.length ? ns.dviews : (state.dviews || [])), layout:Object.keys(ns.layout || {}).length ? Object.assign({}, layAll(), layShared(ns.layout)) : (state.layout || layAll())};
     nbRestoreImages(ns, true); syncAdopt(ns.sync);
     if(lic) state.license = lic;
@@ -15960,7 +16041,7 @@ document.addEventListener('click', e => {
   else if(a === 'bk-confirm'){ applyImport('replace'); document.getElementById('bkchoice').innerHTML = bkChoiceHtml(pendingImport); }
   else if(a === 'bk-cancel'){ document.getElementById('bkchoice').innerHTML = bkChoiceHtml(pendingImport); document.getElementById('bkmsg').textContent = 'Nothing was changed.'; }
   else if(a === 'reloadnow'){ location.reload(); }
-  else if(a === 'bk-undorestore'){ try{ const raw = localStorage.getItem('preparedpro.v1.beforerestore'); if(!raw) return; state = JSON.parse(raw); dvChecked = null; save(); localStorage.removeItem('preparedpro.v1.beforerestore'); ui.view = state.projects.length ? 'list' : 'detail'; render(true); try{ navApply(); }catch(x){} bkUndoShow(); document.getElementById('bkmsg').textContent = 'Put back what you had before the restore.'; }catch(x){ toast('That could not be put back.'); } }
+  else if(a === 'bk-undorestore'){ window.ppDb.brGet().then(raw => { try{ if(!raw) return; state = JSON.parse(raw); dvChecked = null; save(); window.ppDb.brClear(); ui.view = state.projects.length ? 'list' : 'detail'; render(true); try{ navApply(); }catch(x){} bkUndoShow(); document.getElementById('bkmsg').textContent = 'Put back what you had before the restore.'; }catch(x){ toast('That could not be put back.'); } }); }
   else if(a === 'dsc-keep'){ dscdlg.close(); }
   else if(a === 'dsc-save'){ const d = dscFor; dscdlg.close(); if(d && d.open){ const sb = d.querySelector('button[value="save"]'); if(sb) sb.click(); } }
   else if(a === 'dsc-discard'){ const d = dscFor; dscdlg.close(); if(d && d.open){ d.dataset.skipguard = '1'; d.close('cancel'); } }
@@ -16475,7 +16556,7 @@ async function checkUpdates(){
 document.addEventListener('click', e => { if(e.target.closest && e.target.closest('[data-a="check-update"]')) checkUpdates(); });
 try{ if(/[?&]u=\d+/.test(location.search)) history.replaceState(null, '', location.pathname); }catch(e){}
 if('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')){
-  window.addEventListener('load', () => { try{ navigator.serviceWorker.register('sw.js').catch(()=>{}); }catch(e){} });
+  { const regSw = () => { try{ navigator.serviceWorker.register('sw.js').catch(()=>{}); }catch(e){} }; if(document.readyState === 'complete') regSw(); else window.addEventListener('load', regSw); }
 }
 </script>
 </body>
